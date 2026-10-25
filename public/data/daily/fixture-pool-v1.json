@@ -1,0 +1,31 @@
+{
+  "id": "fixture-pool-v1",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "dailyAlgorithmVersion": "fnv1a32-mulberry32-v1",
+  "caseIds": [
+    "fixture-01-ready",
+    "fixture-02-hidden-visa",
+    "fixture-03-expired",
+    "fixture-04-no-visa",
+    "fixture-05-resident",
+    "fixture-06-referral",
+    "fixture-07-onward",
+    "fixture-08-alternatives"
+  ],
+  "count": 5,
+  "difficulty": {
+    "EASY": {
+      "min": 1,
+      "max": 2
+    },
+    "MEDIUM": {
+      "min": 2,
+      "max": 3
+    },
+    "HARD": {
+      "min": 1,
+      "max": 2
+    }
+  }
+}

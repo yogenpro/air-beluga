@@ -1,0 +1,78 @@
+{
+  "id": "fixture-05-resident",
+  "version": 1,
+  "title": "Illustrative: residence permit alternative",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "illustrative-rules-v1",
+  "travelDate": "2026-10-24",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "LHR",
+      "destinationCountry": "GB",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Emi Lake",
+    "nationality": "XZ"
+  },
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "XZ",
+      "holder": "Emi Lake",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {}
+    },
+    {
+      "id": "residence-permit",
+      "type": "RESIDENCE_PERMIT",
+      "issuingCountry": "GB",
+      "holder": "Emi Lake",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {
+        "status": "TRAINING-RESIDENT",
+        "destinationCountry": "GB"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": [
+    "The passenger says: I live at the destination and brought my resident card."
+  ],
+  "questions": [
+    {
+      "id": "ask-permit",
+      "label": "Ask for residence permit",
+      "response": "Here is my current training residence permit.",
+      "revealsDocumentIds": ["residence-permit"],
+      "justified": true
+    },
+    {
+      "id": "ask-onward",
+      "label": "Ask for onward ticket",
+      "response": "I am returning home; this training route has no onward-ticket condition.",
+      "revealsDocumentIds": [],
+      "justified": false
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "resident-evidence",
+        "requiredDocumentIds": ["passport", "residence-permit"],
+        "requiredQuestionIds": ["ask-permit"]
+      }
+    ]
+  },
+  "rationale": "The invented resident exception accepts a current training residence permit in place of a visitor visa. Requesting that permit establishes the required evidence without extra questions.",
+  "ruleIds": ["training-passport", "training-permit"]
+}

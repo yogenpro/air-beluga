@@ -1,0 +1,71 @@
+{
+  "id": "fixture-06-referral",
+  "version": 1,
+  "title": "Illustrative: authorized supervisor referral",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "difficulty": "HARD",
+  "ruleSnapshotId": "illustrative-rules-v1",
+  "travelDate": "2026-10-24",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "LHR",
+      "destinationCountry": "GB",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Finn Ash",
+    "nationality": "XZ"
+  },
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "XZ",
+      "holder": "Finn Ash",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {}
+    },
+    {
+      "id": "residence-permit",
+      "type": "RESIDENCE_PERMIT",
+      "issuingCountry": "GB",
+      "holder": "Finn Ash",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {
+        "status": "TRAINING-MANUAL-REVIEW",
+        "destinationCountry": "GB"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "residence-permit"],
+  "clues": [
+    "The permit is marked TRAINING-MANUAL-REVIEW. The training reference explicitly requires supervisor review if the status cannot be clarified."
+  ],
+  "questions": [
+    {
+      "id": "ask-status",
+      "label": "Ask about the manual-review status",
+      "response": "I cannot provide a status confirmation. This case needs the supervisor review described in the training rule.",
+      "revealsDocumentIds": [],
+      "justified": true
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "ESCALATE",
+    "paths": [
+      {
+        "id": "confirmed-referral",
+        "requiredDocumentIds": ["passport", "residence-permit"],
+        "requiredQuestionIds": ["ask-status"]
+      }
+    ]
+  },
+  "rationale": "The training referral rule requires an authorized supervisor handoff after the status inquiry remains unresolved. Neither acceptance nor denial is warranted from these facts. Escalation is correct only for this authored condition.",
+  "ruleIds": ["training-referral"]
+}

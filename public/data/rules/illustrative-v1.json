@@ -1,0 +1,74 @@
+{
+  "id": "illustrative-rules-v1",
+  "asOfDate": "2026-10-24",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "rules": [
+    {
+      "id": "training-passport",
+      "title": "Training passport validity",
+      "body": "Invented exercise rule: present a passport valid on the travel date. An expired sole passport requires denial when no replacement can be obtained.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["GB", "IE"],
+        "transitCountries": ["GB"]
+      },
+      "sources": []
+    },
+    {
+      "id": "training-visa",
+      "title": "Training visitor permission",
+      "body": "Invented exercise rule: fictional XZ visitors need a current TRAINING-VISITOR visa with at least one entry remaining, unless an explicitly stated training exception applies. Resolve an available permission inquiry before denial.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["GB", "IE"],
+        "transitCountries": ["GB"]
+      },
+      "sources": []
+    },
+    {
+      "id": "training-permit",
+      "title": "Training resident exception",
+      "body": "Invented exercise rule: a current TRAINING-RESIDENT permit may replace a visitor visa. The permit must actually be presented.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["GB", "IE"],
+        "transitCountries": ["GB"]
+      },
+      "sources": []
+    },
+    {
+      "id": "training-referral",
+      "title": "Training supervisor referral",
+      "body": "Invented exercise rule: a TRAINING-MANUAL-REVIEW permit whose status cannot be clarified after the offered inquiry requires supervisor escalation. Escalation is not a fallback for other cases.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["GB", "IE"],
+        "transitCountries": ["GB"]
+      },
+      "sources": []
+    },
+    {
+      "id": "training-onward",
+      "title": "Training connecting journey",
+      "body": "Invented exercise rule: for the authored SFO\u2013LHR\u2013DUB connection, also request and receive the confirmed onward booking. This is not a statement of actual transit law.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["GB", "IE"],
+        "transitCountries": ["GB"]
+      },
+      "sources": []
+    },
+    {
+      "id": "training-alternative",
+      "title": "Training alternative passports",
+      "body": "Invented exercise rule: the authored dual-document passenger may present either a current fictional XY passport or a current visitor visa in addition to the initial passport.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["GB", "IE"],
+        "transitCountries": ["GB"]
+      },
+      "sources": []
+    }
+  ]
+}

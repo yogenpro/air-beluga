@@ -1,0 +1,79 @@
+{
+  "id": "fixture-02-hidden-visa",
+  "version": 1,
+  "title": "Illustrative: request a visa before acceptance",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "illustrative-rules-v1",
+  "travelDate": "2026-10-24",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "LHR",
+      "destinationCountry": "GB",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Bo Reed",
+    "nationality": "XZ"
+  },
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "XZ",
+      "holder": "Bo Reed",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {}
+    },
+    {
+      "id": "visa",
+      "type": "VISA",
+      "issuingCountry": "GB",
+      "holder": "Bo Reed",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {
+        "category": "TRAINING-VISITOR",
+        "destinationCountry": "GB",
+        "entriesRemaining": 1
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": [
+    "The passenger says: I have my travel permission in another folder."
+  ],
+  "questions": [
+    {
+      "id": "ask-visa",
+      "label": "Ask for destination visa",
+      "response": "Here is my training visitor visa.",
+      "revealsDocumentIds": ["visa"],
+      "justified": true
+    },
+    {
+      "id": "ask-onward",
+      "label": "Ask for onward booking",
+      "response": "There is no onward segment on this booking.",
+      "revealsDocumentIds": [],
+      "justified": false
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "request-visa",
+        "requiredDocumentIds": ["passport", "visa"],
+        "requiredQuestionIds": ["ask-visa"]
+      }
+    ]
+  },
+  "rationale": "The training visitor rule requires the visa to be presented. Possessing it in a folder is insufficient until the agent asks for it. A premature check-in is incorrect.",
+  "ruleIds": ["training-passport", "training-visa"]
+}

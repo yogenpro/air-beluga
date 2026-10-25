@@ -1,0 +1,64 @@
+{
+  "id": "fixture-01-ready",
+  "version": 1,
+  "title": "Illustrative: complete initial evidence",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "difficulty": "EASY",
+  "ruleSnapshotId": "illustrative-rules-v1",
+  "travelDate": "2026-10-24",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "LHR",
+      "destinationCountry": "GB",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Ari Vale",
+    "nationality": "XZ"
+  },
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "XZ",
+      "holder": "Ari Vale",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {}
+    },
+    {
+      "id": "visa",
+      "type": "VISA",
+      "issuingCountry": "GB",
+      "holder": "Ari Vale",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {
+        "category": "TRAINING-VISITOR",
+        "destinationCountry": "GB",
+        "entriesRemaining": 1
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "visa"],
+  "clues": [
+    "Both documents are offered at the counter. The invented visitor rule applies."
+  ],
+  "questions": [],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "presented",
+        "requiredDocumentIds": ["passport", "visa"],
+        "requiredQuestionIds": []
+      }
+    ]
+  },
+  "rationale": "Under the invented training rule, the presented passport and unused visitor visa are valid on the authored travel date. Accept for airline check-in; this does not guarantee border admission.",
+  "ruleIds": ["training-passport", "training-visa"]
+}

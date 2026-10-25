@@ -1,0 +1,93 @@
+{
+  "id": "fixture-08-alternatives",
+  "version": 1,
+  "title": "Illustrative: two discoverable acceptance paths",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "difficulty": "HARD",
+  "ruleSnapshotId": "illustrative-rules-v1",
+  "travelDate": "2026-10-24",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "LHR",
+      "destinationCountry": "GB",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Hal Pine",
+    "nationality": "XZ"
+  },
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "XZ",
+      "holder": "Hal Pine",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {}
+    },
+    {
+      "id": "second-passport",
+      "type": "PASSPORT",
+      "issuingCountry": "XY",
+      "holder": "Hal Pine",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {}
+    },
+    {
+      "id": "visa",
+      "type": "VISA",
+      "issuingCountry": "GB",
+      "holder": "Hal Pine",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {
+        "category": "TRAINING-VISITOR",
+        "destinationCountry": "GB",
+        "entriesRemaining": 1
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": [
+    "The passenger says: I hold a second passport from fictional country XY, and I also have a visitor visa. Either may meet the invented training rule."
+  ],
+  "questions": [
+    {
+      "id": "ask-second-passport",
+      "label": "Ask for second passport",
+      "response": "Here is my fictional XY passport.",
+      "revealsDocumentIds": ["second-passport"],
+      "justified": true
+    },
+    {
+      "id": "ask-visa",
+      "label": "Ask for destination visa",
+      "response": "Here is my training visitor visa.",
+      "revealsDocumentIds": ["visa"],
+      "justified": true
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "second-passport-route",
+        "requiredDocumentIds": ["passport", "second-passport"],
+        "requiredQuestionIds": ["ask-second-passport"]
+      },
+      {
+        "id": "visa-route",
+        "requiredDocumentIds": ["passport", "visa"],
+        "requiredQuestionIds": ["ask-visa"]
+      }
+    ]
+  },
+  "rationale": "The invented alternative-evidence rule permits either the presented XY passport or the presented visitor visa. Each question is justified; neither hidden document can authorize premature check-in.",
+  "ruleIds": ["training-passport", "training-alternative"]
+}

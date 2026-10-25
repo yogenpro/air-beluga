@@ -1,0 +1,350 @@
+import { ContentBundleSchema, ILLUSTRATIVE_NOTICE } from './schemas';
+import type { ContentBundle, DailyPool, Difficulty } from '../core/types';
+
+export class ContentValidationError extends Error {
+  constructor(public readonly issues: string[]) {
+    super(
+      `Invalid content:\n${issues.map((issue) => `- ${issue}`).join('\n')}`,
+    );
+    this.name = 'ContentValidationError';
+  }
+}
+
+export const DIFFICULTIES: readonly Difficulty[] = ['EASY', 'MEDIUM', 'HARD'];
+
+export function dailyPoolIssues(
+  pool: DailyPool,
+  cases: ContentBundle['cases'],
+): string[] {
+  const issues: string[] = [];
+  if (pool.caseIds.length < pool.count) issues.push('insufficient pool size');
+  let minimum = 0;
+  let capacity = 0;
+  for (const difficulty of DIFFICULTIES) {
+    const available = cases.filter(
+      (item) =>
+        pool.caseIds.includes(item.id) && item.difficulty === difficulty,
+    ).length;
+    const limits = pool.difficulty[difficulty];
+    if (available < limits.min) issues.push(`insufficient ${difficulty} cases`);
+    minimum += limits.min;
+    capacity += Math.min(limits.max, available);
+  }
+  if (minimum > pool.count || capacity < pool.count) {
+    issues.push('difficulty constraints cannot meet daily count');
+  }
+  return issues;
+}
+
+export function validateContent(input: unknown): ContentBundle {
+  const parsed = ContentBundleSchema.safeParse(input);
+  if (!parsed.success) {
+    throw new ContentValidationError(
+      parsed.error.issues.map(
+        (issue) => `${issue.path.join('.')}: ${issue.message}`,
+      ),
+    );
+  }
+  const bundle = parsed.data;
+  const issues: string[] = [];
+  const fail = (context: string, message: string) =>
+    issues.push(`${context}: ${message}`);
+  const unique = (values: string[], context: string) => {
+    if (new Set(values).size !== values.length) fail(context, 'duplicate IDs');
+  };
+  const references = (values: string[], allowed: string[], context: string) => {
+    unique(values, context);
+    for (const value of values) {
+      if (!allowed.includes(value)) fail(context, `unknown reference ${value}`);
+    }
+  };
+  const notice = (
+    item: { verificationStatus: string; notice: string },
+    context: string,
+  ) => {
+    if (
+      item.verificationStatus === 'ILLUSTRATIVE_ONLY' &&
+      item.notice !== ILLUSTRATIVE_NOTICE
+    ) {
+      fail(
+        context,
+        'illustrative content must carry the explicit fixture notice',
+      );
+    }
+  };
+
+  const categories = [
+    'ruleSnapshots',
+    'cases',
+    'stages',
+    'dailyPools',
+  ] as const;
+  const paths: string[] = [];
+  for (const category of categories) {
+    const assets = bundle.manifest[category];
+    const actualIds = bundle[category].map((item) => item.id);
+    unique(actualIds, category);
+    references(
+      assets.map((item) => item.id),
+      actualIds,
+      `manifest.${category}`,
+    );
+    references(
+      actualIds,
+      assets.map((item) => item.id),
+      category,
+    );
+    paths.push(...assets.map((item) => item.path));
+  }
+  unique(paths, 'manifest asset paths');
+
+  for (const snapshot of bundle.ruleSnapshots) {
+    notice(snapshot, snapshot.id);
+    unique(
+      snapshot.rules.map((rule) => rule.id),
+      `${snapshot.id}.rules`,
+    );
+    for (const rule of snapshot.rules) {
+      if (
+        snapshot.verificationStatus === 'VERIFIED' &&
+        rule.sources.length === 0
+      ) {
+        fail(rule.id, 'verified rules require source URLs');
+      }
+      for (const source of rule.sources) {
+        if (source.verifiedDate > snapshot.asOfDate) {
+          fail(rule.id, 'source verification is later than the snapshot');
+        }
+        if (
+          source.effectiveFrom &&
+          source.effectiveUntil &&
+          source.effectiveFrom > source.effectiveUntil
+        ) {
+          fail(rule.id, 'source effective date range is reversed');
+        }
+      }
+    }
+  }
+
+  for (const item of bundle.cases) {
+    const context = item.id;
+    notice(item, context);
+    const snapshot = bundle.ruleSnapshots.find(
+      (entry) => entry.id === item.ruleSnapshotId,
+    );
+    if (!snapshot)
+      fail(context, `unknown rule snapshot ${item.ruleSnapshotId}`);
+    if (snapshot && item.travelDate < snapshot.asOfDate) {
+      fail(context, 'travel date predates rule snapshot');
+    }
+    if (item.verificationStatus === 'VERIFIED') {
+      if (!item.review)
+        fail(context, 'verified cases require a recorded review');
+      if (snapshot?.verificationStatus !== 'VERIFIED') {
+        fail(context, 'verified case requires a verified rule snapshot');
+      }
+    }
+    const documentIds = item.documents.map((document) => document.id);
+    const questionIds = item.questions.map((question) => question.id);
+    unique(documentIds, `${context}.documents`);
+    unique(questionIds, `${context}.questions`);
+    unique(
+      item.resolution.paths.map((path) => path.id),
+      `${context}.paths`,
+    );
+    references(
+      item.initiallyPresentedDocumentIds,
+      documentIds,
+      `${context}.initial`,
+    );
+    for (const document of item.documents) {
+      if (document.holder !== item.passenger.displayName) {
+        fail(
+          context,
+          `document ${document.id} holder does not match passenger`,
+        );
+      }
+      const attributes = document.attributes;
+      if (
+        document.type === 'VISA' &&
+        (!attributes.category ||
+          !attributes.destinationCountry ||
+          attributes.entriesRemaining === undefined)
+      )
+        fail(
+          context,
+          `visa ${document.id} lacks category, destination or entries`,
+        );
+      if (
+        document.type === 'RESIDENCE_PERMIT' &&
+        (!attributes.status || !attributes.destinationCountry)
+      )
+        fail(context, `permit ${document.id} lacks status or destination`);
+      if (
+        document.type === 'ONWARD_TICKET' &&
+        (!attributes.bookingReference || !attributes.destinationCountry)
+      )
+        fail(context, `ticket ${document.id} lacks booking or destination`);
+    }
+    const reachable = new Set(item.initiallyPresentedDocumentIds);
+    for (const question of item.questions) {
+      references(
+        question.revealsDocumentIds,
+        documentIds,
+        `${context}.${question.id}`,
+      );
+      for (const documentId of question.revealsDocumentIds)
+        reachable.add(documentId);
+    }
+    for (const path of item.resolution.paths) {
+      const pathContext = `${context}.${path.id}`;
+      references(path.requiredDocumentIds, documentIds, pathContext);
+      references(path.requiredQuestionIds, questionIds, pathContext);
+      if (path.requiredDocumentIds.length === 0) {
+        fail(pathContext, 'a resolution needs document evidence');
+      }
+      // Asking the path's required questions must itself produce its evidence.
+      // A path may not silently rely on an optional, unspecified inquiry.
+      const pathEvidence = new Set([
+        ...item.initiallyPresentedDocumentIds,
+        ...item.questions
+          .filter((question) => path.requiredQuestionIds.includes(question.id))
+          .flatMap((question) => question.revealsDocumentIds),
+      ]);
+      for (const documentId of path.requiredDocumentIds) {
+        if (!reachable.has(documentId) || !pathEvidence.has(documentId)) {
+          fail(pathContext, `unreachable required evidence ${documentId}`);
+        }
+        const document = item.documents.find(
+          (entry) => entry.id === documentId,
+        );
+        if (document && item.resolution.expectedDecision === 'CHECK_IN') {
+          if (
+            document.validFrom > item.travelDate ||
+            document.validUntil < item.travelDate
+          ) {
+            fail(
+              pathContext,
+              `check-in relies on invalid document ${documentId}`,
+            );
+          }
+          if (
+            document.type === 'VISA' &&
+            document.attributes.entriesRemaining === 0
+          ) {
+            fail(
+              pathContext,
+              `check-in relies on exhausted visa ${documentId}`,
+            );
+          }
+        }
+      }
+      for (const question of item.questions) {
+        if (
+          path.requiredQuestionIds.includes(question.id) &&
+          !question.justified
+        ) {
+          fail(
+            pathContext,
+            `required question ${question.id} must be justified`,
+          );
+        }
+        if (
+          item.resolution.expectedDecision === 'DENY' &&
+          question.justified &&
+          !path.requiredQuestionIds.includes(question.id)
+        ) {
+          fail(
+            pathContext,
+            `denial leaves relevant inquiry ${question.id} unresolved`,
+          );
+        }
+      }
+    }
+    for (let index = 1; index < item.itinerary.length; index++) {
+      if (item.itinerary[index - 1]!.to !== item.itinerary[index]!.from) {
+        fail(context, 'itinerary legs are disconnected');
+      }
+    }
+    if (snapshot) {
+      references(
+        item.ruleIds,
+        snapshot.rules.map((rule) => rule.id),
+        `${context}.rules`,
+      );
+      const firstLeg = item.itinerary[0]!;
+      const destination = item.itinerary.at(-1)!.destinationCountry;
+      const transitCountries = item.itinerary
+        .slice(0, -1)
+        .map((leg) => leg.destinationCountry);
+      for (const rule of snapshot.rules.filter((entry) =>
+        item.ruleIds.includes(entry.id),
+      )) {
+        if (
+          !rule.scope.departureAirports.includes(firstLeg.from) ||
+          !rule.scope.destinationCountries.includes(destination) ||
+          transitCountries.some(
+            (country) => !rule.scope.transitCountries.includes(country),
+          )
+        )
+          fail(context, `rule ${rule.id} is outside itinerary scope`);
+        for (const source of rule.sources) {
+          if (
+            (source.effectiveFrom && item.travelDate < source.effectiveFrom) ||
+            (source.effectiveUntil && item.travelDate > source.effectiveUntil)
+          )
+            fail(context, `rule ${rule.id} source does not cover travel date`);
+        }
+      }
+    }
+  }
+
+  for (const stage of bundle.stages) {
+    notice(stage, stage.id);
+    references(
+      stage.caseIds,
+      bundle.cases.map((item) => item.id),
+      stage.id,
+    );
+    for (const item of bundle.cases.filter((entry) =>
+      stage.caseIds.includes(entry.id),
+    )) {
+      if (item.itinerary[0]!.from !== stage.departureAirport) {
+        fail(stage.id, `case ${item.id} departs from another airport`);
+      }
+      if (item.travelDate !== stage.scheduledDeparture.slice(0, 10)) {
+        fail(
+          stage.id,
+          `case ${item.id} travel date differs from stage departure`,
+        );
+      }
+      if (
+        stage.verificationStatus === 'VERIFIED' &&
+        item.verificationStatus !== 'VERIFIED'
+      ) {
+        fail(stage.id, 'verified stage includes illustrative content');
+      }
+    }
+  }
+  for (const pool of bundle.dailyPools) {
+    notice(pool, pool.id);
+    references(
+      pool.caseIds,
+      bundle.cases.map((item) => item.id),
+      pool.id,
+    );
+    if (
+      pool.verificationStatus === 'VERIFIED' &&
+      bundle.cases.some(
+        (item) =>
+          pool.caseIds.includes(item.id) &&
+          item.verificationStatus !== 'VERIFIED',
+      )
+    )
+      fail(pool.id, 'verified daily pool includes illustrative content');
+    for (const issue of dailyPoolIssues(pool, bundle.cases))
+      fail(pool.id, issue);
+  }
+  if (issues.length > 0) throw new ContentValidationError(issues);
+  return bundle;
+}

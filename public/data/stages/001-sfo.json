@@ -1,0 +1,21 @@
+{
+  "id": "001-sfo",
+  "title": "SFO illustrative training desk",
+  "departureAirport": "SFO",
+  "airline": "Air Beluga",
+  "flightLabel": "AB 101 \u00b7 SFO to LHR \u00b7 illustrative training",
+  "scheduledDeparture": "2026-10-24T18:00:00Z",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "caseIds": [
+    "fixture-01-ready",
+    "fixture-02-hidden-visa",
+    "fixture-03-expired",
+    "fixture-04-no-visa",
+    "fixture-05-resident",
+    "fixture-06-referral",
+    "fixture-07-onward",
+    "fixture-08-alternatives"
+  ],
+  "tutorial": "Apply only the invented training reference. Ask targeted questions before committing a disposition. Airline check-in is separate from border admission."
+}

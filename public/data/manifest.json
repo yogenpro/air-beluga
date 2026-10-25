@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "illustrative-v1",
+  "scoring": {
+    "correctDecision": 100,
+    "appropriateInquiry": 15,
+    "efficiency": 10,
+    "extraQuestionPenalty": 2
+  },
+  "ruleSnapshots": [
+    {
+      "id": "illustrative-rules-v1",
+      "path": "rules/illustrative-v1.json"
+    }
+  ],
+  "cases": [
+    {
+      "id": "fixture-01-ready",
+      "path": "scenarios/fixture-01-ready.json"
+    },
+    {
+      "id": "fixture-02-hidden-visa",
+      "path": "scenarios/fixture-02-hidden-visa.json"
+    },
+    {
+      "id": "fixture-03-expired",
+      "path": "scenarios/fixture-03-expired.json"
+    },
+    {
+      "id": "fixture-04-no-visa",
+      "path": "scenarios/fixture-04-no-visa.json"
+    },
+    {
+      "id": "fixture-05-resident",
+      "path": "scenarios/fixture-05-resident.json"
+    },
+    {
+      "id": "fixture-06-referral",
+      "path": "scenarios/fixture-06-referral.json"
+    },
+    {
+      "id": "fixture-07-onward",
+      "path": "scenarios/fixture-07-onward.json"
+    },
+    {
+      "id": "fixture-08-alternatives",
+      "path": "scenarios/fixture-08-alternatives.json"
+    }
+  ],
+  "stages": [
+    {
+      "id": "001-sfo",
+      "path": "stages/001-sfo.json"
+    }
+  ],
+  "dailyPools": [
+    {
+      "id": "fixture-pool-v1",
+      "path": "daily/fixture-pool-v1.json"
+    }
+  ]
+}

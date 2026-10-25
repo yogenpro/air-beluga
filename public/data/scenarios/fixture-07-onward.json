@@ -1,0 +1,91 @@
+{
+  "id": "fixture-07-onward",
+  "version": 1,
+  "title": "Illustrative: request onward travel evidence",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "illustrative-rules-v1",
+  "travelDate": "2026-10-24",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "LHR",
+      "destinationCountry": "GB",
+      "transit": "AIRSIDE",
+      "separateTicket": false
+    },
+    {
+      "from": "LHR",
+      "to": "DUB",
+      "destinationCountry": "IE",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Gia North",
+    "nationality": "XZ"
+  },
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "XZ",
+      "holder": "Gia North",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {}
+    },
+    {
+      "id": "visa",
+      "type": "VISA",
+      "issuingCountry": "GB",
+      "holder": "Gia North",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {
+        "category": "TRAINING-VISITOR",
+        "destinationCountry": "GB",
+        "entriesRemaining": 1
+      }
+    },
+    {
+      "id": "onward-ticket",
+      "type": "ONWARD_TICKET",
+      "issuingCountry": "GB",
+      "holder": "Gia North",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {
+        "bookingReference": "FIXTURE-ONWARD",
+        "destinationCountry": "IE"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "visa"],
+  "clues": [
+    "The booking connects at LHR to DUB. The invented connecting-journey rule asks for confirmation of that onward segment."
+  ],
+  "questions": [
+    {
+      "id": "ask-onward",
+      "label": "Ask for onward ticket",
+      "response": "Here is the confirmed LHR to DUB training booking.",
+      "revealsDocumentIds": ["onward-ticket"],
+      "justified": true
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "onward-evidence",
+        "requiredDocumentIds": ["passport", "visa", "onward-ticket"],
+        "requiredQuestionIds": ["ask-onward"]
+      }
+    ]
+  },
+  "rationale": "For this invented connection puzzle, the passport, visitor permission, and confirmed onward ticket must all be presented. The rule does not describe actual UK or Irish transit requirements.",
+  "ruleIds": ["training-passport", "training-visa", "training-onward"]
+}

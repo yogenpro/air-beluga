@@ -1,0 +1,59 @@
+{
+  "id": "fixture-04-no-visa",
+  "version": 1,
+  "title": "Illustrative: resolve missing permission before denial",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "difficulty": "EASY",
+  "ruleSnapshotId": "illustrative-rules-v1",
+  "travelDate": "2026-10-24",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "LHR",
+      "destinationCountry": "GB",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Dev Moss",
+    "nationality": "XZ"
+  },
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "XZ",
+      "holder": "Dev Moss",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {}
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": [
+    "No destination permission is presented. Ask whether the passenger has a visa or training residence permit."
+  ],
+  "questions": [
+    {
+      "id": "ask-permission",
+      "label": "Ask for a visa or residence permit",
+      "response": "I have neither a visa nor a residence permit, and no second passport.",
+      "revealsDocumentIds": [],
+      "justified": true
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "DENY",
+    "paths": [
+      {
+        "id": "confirmed-absence",
+        "requiredDocumentIds": ["passport"],
+        "requiredQuestionIds": ["ask-permission"]
+      }
+    ]
+  },
+  "rationale": "After asking, the passenger confirms that no qualifying permission is available. The training requirement is unmet. Denying before resolving that inquiry is premature.",
+  "ruleIds": ["training-visa", "training-permit"]
+}

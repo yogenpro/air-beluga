@@ -1,0 +1,64 @@
+{
+  "id": "fixture-03-expired",
+  "version": 1,
+  "title": "Illustrative: expired passport",
+  "verificationStatus": "ILLUSTRATIVE_ONLY",
+  "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+  "difficulty": "EASY",
+  "ruleSnapshotId": "illustrative-rules-v1",
+  "travelDate": "2026-10-24",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "LHR",
+      "destinationCountry": "GB",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Cleo Hart",
+    "nationality": "XZ"
+  },
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "XZ",
+      "holder": "Cleo Hart",
+      "validFrom": "2024-01-01",
+      "validUntil": "2026-10-23",
+      "attributes": {}
+    },
+    {
+      "id": "visa",
+      "type": "VISA",
+      "issuingCountry": "GB",
+      "holder": "Cleo Hart",
+      "validFrom": "2026-01-01",
+      "validUntil": "2027-12-31",
+      "attributes": {
+        "category": "TRAINING-VISITOR",
+        "destinationCountry": "GB",
+        "entriesRemaining": 1
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "visa"],
+  "clues": [
+    "The passenger confirms: This is my only passport; I have no replacement. Compare its expiry with the travel date."
+  ],
+  "questions": [],
+  "resolution": {
+    "expectedDecision": "DENY",
+    "paths": [
+      {
+        "id": "expired-passport",
+        "requiredDocumentIds": ["passport", "visa"],
+        "requiredQuestionIds": []
+      }
+    ]
+  },
+  "rationale": "The sole passport expired before travel. The invented passport rule requires current validity; no replacement document is obtainable in this case. Deny airline acceptance.",
+  "ruleIds": ["training-passport"]
+}
