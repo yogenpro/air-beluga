@@ -1,0 +1,136 @@
+name: Review Dependabot updates
+
+on:
+  pull_request_target:
+    types:
+      [
+        opened,
+        reopened,
+        synchronize,
+        ready_for_review,
+        edited,
+        converted_to_draft,
+      ]
+
+permissions: {}
+
+concurrency:
+  group: dependabot-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: >-
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      # This privileged workflow reads GitHub metadata only; never check out PR code.
+      - name: Reset any previous automated merge request
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              ...context.repo, pull_number: context.issue.number,
+            });
+            if (pr.auto_merge?.enabled_by?.login === 'github-actions[bot]') {
+              await github.graphql(
+                'mutation($id: ID!) { disablePullRequestAutoMerge(input: {pullRequestId: $id}) { pullRequest { number } } }',
+                { id: pr.node_id },
+              );
+            }
+
+      - name: Verify Dependabot commits and update metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+        with:
+          github-token: ${{ github.token }}
+
+      - name: Review dependency vulnerabilities
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: high
+          license-check: false
+          retry-on-snapshot-warnings: true
+
+      - name: Review update scope and approve eligible PRs
+        id: policy
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+          MAINTAINER_CHANGES: ${{ steps.metadata.outputs.maintainer-changes }}
+        with:
+          script: |
+            core.setOutput('eligible', 'false');
+            const { data: pr } = await github.rest.pulls.get({
+              ...context.repo, pull_number: context.issue.number,
+            });
+            if (
+              pr.state !== 'open' || pr.draft || pr.base.ref !== 'dev' ||
+              pr.user.login !== 'dependabot[bot]' ||
+              pr.head.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}` ||
+              pr.head.sha !== context.payload.pull_request.head.sha
+            ) {
+              core.info('This PR is outside the development dependency-update policy.');
+              return;
+            }
+            if (
+              !['version-update:semver-minor', 'version-update:semver-patch'].includes(process.env.UPDATE_TYPE) ||
+              process.env.MAINTAINER_CHANGES === 'true'
+            ) {
+              core.info('This update needs manual review.');
+              return;
+            }
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              ...context.repo, pull_number: pr.number, per_page: 100,
+            });
+            const manifestsOnly = files.every(file =>
+              ['package.json', 'package-lock.json'].includes(file.filename),
+            );
+            const actionsOnly = files.every(file =>
+              /^\.github\/workflows\/[^/]+\.ya?ml$/.test(file.filename),
+            );
+            if (!files.length || files.some(file => file.status !== 'modified') || (!manifestsOnly && !actionsOnly)) {
+              core.info('Changes outside dependency manifests or Actions workflows need manual review.');
+              return;
+            }
+            const rules = await github.paginate('GET /repos/{owner}/{repo}/rules/branches/{branch}', {
+              ...context.repo, branch: 'dev', per_page: 100,
+            });
+            const requiresCI = rules.some(rule =>
+              rule.type === 'required_status_checks' &&
+              rule.parameters?.strict_required_status_checks_policy === true &&
+              rule.parameters.required_status_checks.some(check =>
+                check.context === 'check' && check.integration_id === 15368,
+              ),
+            );
+            if (!requiresCI) {
+              throw new Error('Configure a dev ruleset requiring the up-to-date GitHub Actions check before enabling dependency auto-merge.');
+            }
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              ...context.repo, pull_number: pr.number, per_page: 100,
+            });
+            if (!reviews.some(review =>
+              review.user?.login === 'github-actions[bot]' &&
+              review.commit_id === pr.head.sha && review.state === 'APPROVED',
+            )) {
+              await github.rest.pulls.createReview({
+                ...context.repo, pull_number: pr.number, commit_id: pr.head.sha,
+                event: 'APPROVE',
+                body: 'Automated dependency review passed: verified Dependabot minor/patch update, expected file scope, and dependency vulnerability check. Auto-merge waits for the required up-to-date CI check, including unit tests, build, Wrangler dry runs, and browser acceptance.',
+              });
+            }
+            core.setOutput('head', pr.head.sha);
+            core.setOutput('eligible', 'true');
+
+      - name: Enable auto-merge after required checks
+        if: steps.policy.outputs.eligible == 'true'
+        run: gh pr merge "$PR_URL" --auto --squash --match-head-commit "$PR_HEAD"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_HEAD: ${{ steps.policy.outputs.head }}

@@ -1,5 +1,7 @@
 # Air Beluga
 
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/yogenpro/air-beluga)
+
 Milestones 1–3 of the [implementation handoff](air-beluga-implementation-handoff.md): a deterministic TypeScript puzzle engine, playable text-first desks, source-reviewed Canadian cases, and a versioned daily challenge with local result history. Inspect documents, search the reference, request evidence or run a simulated document check, then commit a decision. Progress resumes after reload.
 
 There are **12 source-reviewed SFO–Vancouver cases** plus the eight explicitly illustrative tutorial fixtures, for 20 cases total. The Canadian snapshot was checked against official IRCC publications on **2026-10-25 UTC**; its passengers and document numbers are fictional. This is a Codex source cross-check, not independent human or immigration-authority approval. The default desk uses eight Canadian cases. The separate illustrative SFO–LHR tutorial remains available and is excluded from daily play.
@@ -52,22 +54,32 @@ npm run test:browser
 
 The browser script briefly starts a production preview on `127.0.0.1:4173` and closes it on exit. It covers the original tutorial, the reviewed stage, and the complete daily flow at desktop and 390px mobile widths. Checks include matching daily IDs/order across clients, keyboard/mouse input, source links, inquiries, feedback, reload/resume, offline play/history, immutable first results, a simulated later content/scoring deployment, unavailable archives, UTC midnight, corrupt saves, blocked storage, and failed-load retry. Screenshots go to ignored `test-results/`. CI installs browser system dependencies with `npx playwright install --with-deps chromium`.
 
-## Deploy static assets to Cloudflare
+## Deploy to Cloudflare Workers
 
-The included `wrangler.jsonc` points Workers Static Assets at `dist/` and enables single-page application navigation. It contains no Worker script, bindings, database, or runtime API.
-
-After signing into your own Cloudflare account:
+Use the **Deploy to Cloudflare** button above for a guided deployment into your own account, or deploy this checkout with the pinned Wrangler CLI:
 
 ```sh
 npm ci
-npm run check
-npx wrangler@4 login
-npx wrangler@4 deploy
+npx wrangler login
+npm run build
+npm run deploy
 ```
 
-Choose a different `name` in `wrangler.jsonc` if `air-beluga` is already used in your account. Deployment uploads the static build and prints its URL. Publish the entire data tree, including old release bundles required by saved daily results. No Cloudflare account is needed to develop or play locally. See the official [static assets deployment guide](https://developers.cloudflare.com/workers/static-assets/get-started/) and [SPA configuration](https://developers.cloudflare.com/workers/static-assets/routing/single-page-application/).
+The included `wrangler.jsonc` serves all of `dist/` with SPA routing. It has no account ID, domain, credentials, Worker script, database, or runtime API. Optional `npm run deploy:dev` and `npm run deploy:prod` commands create separate `air-beluga-dev` and `air-beluga-prod` Workers. Build first; deployment commands upload the existing build.
 
-Cloudflare Pages is also supported: connect the repository, use `npm run build` as the build command, `dist` as the output directory, and Node 24 for the build environment. The app uses a single page and relative static data paths through Vite's base URL; no Functions directory or server configuration is needed.
+See the [Cloudflare deployment guide](docs/deployment.md) for connecting an existing repository directly, dev/prod branch settings, local Workers preview, credential-free deployment checks, and infrastructure ownership. CI validates all three deployment configurations. No Cloudflare account is needed for local development or these checks.
+
+## Dependency updates
+
+[Dependabot](.github/dependabot.yml) checks npm dependencies and GitHub Actions every weekday. Minor and patch updates are grouped per ecosystem; major upgrades get separate PRs. npm updates raise manifest requirements and update the lockfile, including packages pinned to exact versions.
+
+Version-update PRs target `dev` and run the existing application, deployment dry-run, and browser checks. The [automated review workflow](.github/workflows/dependabot-auto-merge.yml) verifies Dependabot commits, checks dependency advisories, and limits automatic approval to minor/patch updates confined to dependency manifests or Actions workflows. New high/critical vulnerabilities block approval. Major upgrades, maintainer changes, and other file changes need manual review.
+
+Eligible updates are squash-merged into `dev` after its required up-to-date `check` passes. Test the development deployment, then release through a PR into `main`. This is a dependency policy and CI review; it does not provide an AI review of application behavior.
+
+To activate auto-merge in another repository, enable **Allow auto-merge** and **Allow GitHub Actions to create and approve pull requests** in its settings. Import the [development ruleset](.github/rulesets/dev.json) to require the GitHub Actions `check` status and an up-to-date branch before merging. The workflow verifies that ruleset before enabling auto-merge. It reads GitHub metadata without checking out or executing PR code and uses the built-in `GITHUB_TOKEN`.
+
+GitHub reads this configuration from the default branch (`main`). Publish it there and keep `dev` current with the application changes to activate updates. See the [Dependabot configuration reference](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference).
 
 ## Modules and contracts
 
