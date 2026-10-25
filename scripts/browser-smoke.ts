@@ -2,6 +2,9 @@ import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
 import { chromium, type Page } from 'playwright';
 import { preview } from 'vite';
+import { loadContentFromDisk } from './lib/content';
+import { validateLibraryFromDisk } from './lib/releases';
+import { runMilestone3BrowserChecks } from './lib/browser-milestone3';
 
 // Test the production static build, not a backend or a browser simulation.
 const browser = await chromium.launch();
@@ -58,7 +61,7 @@ try {
     page.on('request', (request) =>
       requests.push({ url: request.url(), method: request.method() }),
     );
-    await page.goto(baseURL);
+    await page.goto(`${baseURL}/?mode=stage&stage=001-sfo`);
     await page
       .getByRole('button', { name: 'Start stage', exact: true })
       .focus();
@@ -237,7 +240,7 @@ try {
     });
   });
   const page = await blocked.newPage();
-  await page.goto(baseURL);
+  await page.goto(`${baseURL}/?mode=stage&stage=001-sfo`);
   await visible(
     page,
     'Saving is unavailable in this browser. You can still play while this page stays open.',
@@ -248,7 +251,7 @@ try {
 
   const premature = await browser.newContext();
   const prematurePage = await premature.newPage();
-  await prematurePage.goto(baseURL);
+  await prematurePage.goto(`${baseURL}/?mode=stage&stage=001-sfo`);
   await prematurePage
     .getByRole('button', { name: 'Start stage', exact: true })
     .click();
@@ -282,7 +285,7 @@ try {
     route.fulfill({ status: 503, body: 'Unavailable' }),
   );
   const failedPage = await failure.newPage();
-  await failedPage.goto(baseURL);
+  await failedPage.goto(`${baseURL}/?mode=stage&stage=001-sfo`);
   await failedPage
     .getByRole('heading', {
       name: 'Unable to load training content',
@@ -297,8 +300,14 @@ try {
     .getByRole('button', { name: 'Start stage', exact: true })
     .waitFor();
   await failure.close();
+  await runMilestone3BrowserChecks(
+    browser,
+    baseURL,
+    await loadContentFromDisk(),
+    await validateLibraryFromDisk(),
+  );
   console.log(
-    'Premature feedback, restart, blocked storage and failed-content retry passed. Milestone 2 browser acceptance passed.',
+    'Premature feedback, restart, blocked storage and failed-content retry passed. Milestones 2 and 3 browser acceptance passed.',
   );
 } finally {
   await browser.close();

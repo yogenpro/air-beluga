@@ -32,6 +32,17 @@ export function PassengerDesk({
       <dl>
         <dt>Nationality</dt>
         <dd>{view.passenger.nationality}</dd>
+        {view.passenger.residence && (
+          <>
+            <dt>Residence status</dt>
+            <dd>
+              {view.passenger.residence.country} ·{' '}
+              {view.passenger.residence.status === 'STUDENT'
+                ? 'Student'
+                : 'Permanent resident'}
+            </dd>
+          </>
+        )}
         <dt>Travel date</dt>
         <dd>{view.travelDate}</dd>
       </dl>
@@ -47,10 +58,18 @@ export function PassengerDesk({
         ))}
       </ol>
       <h3>At the counter</h3>
+      {view.assumptions.length > 0 && (
+        <details>
+          <summary>Established case facts</summary>
+          {view.assumptions.map((fact) => (
+            <p key={fact}>{fact}</p>
+          ))}
+        </details>
+      )}
       {view.clues.map((clue) => (
         <p key={clue}>{clue}</p>
       ))}
-      <h3>Presented documents</h3>
+      <h3>Presented documents and check records</h3>
       {view.documents.length === 0 && <p>No documents have been presented.</p>}
       {view.documents.map((document) => (
         <DocumentView
@@ -63,7 +82,7 @@ export function PassengerDesk({
           }}
         />
       ))}
-      <h3>Ask the passenger</h3>
+      <h3>Questions and document checks</h3>
       <div className="actions">
         {view.questions.map((question) => (
           <button
@@ -82,7 +101,7 @@ export function PassengerDesk({
       {view.questions.length === 0 && (
         <p>No additional questions are offered for this passenger.</p>
       )}
-      <div aria-live="polite" aria-label="Passenger responses">
+      <div aria-live="polite" aria-label="Responses and check results">
         {view.responses.map((response) => (
           <p key={response.questionId} className="response">
             {response.response}

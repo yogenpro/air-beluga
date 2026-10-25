@@ -69,7 +69,7 @@ export function Rulebook({
       <p>
         {snapshot.verificationStatus === 'ILLUSTRATIVE_ONLY'
           ? 'Illustrative rules'
-          : 'Verified rule snapshot'}{' '}
+          : 'Source-reviewed rule snapshot'}{' '}
         · As of {snapshot.asOfDate}
       </p>
       <label htmlFor="rule-search">Search rules</label>

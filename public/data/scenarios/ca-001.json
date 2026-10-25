@@ -1,0 +1,64 @@
+{
+  "id": "ca-001",
+  "version": 1,
+  "title": "SFO–YVR: Avery Moss",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-25",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored evidence path, exceptions and disposition against ca-us-citizen. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "EASY",
+  "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+  "travelDate": "2026-10-25",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Avery Moss",
+    "nationality": "US",
+    "additionalNationalities": []
+  },
+  "assumptions": [
+    "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+    "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+    "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "US",
+      "holder": "Avery Moss",
+      "validFrom": "2023-01-01",
+      "validUntil": "2033-01-01",
+      "attributes": {
+        "number": "US-SYNTHETIC-001",
+        "category": "Ordinary national passport"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": ["The passenger is a US citizen visiting Vancouver for four days."],
+  "questions": [],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["passport"],
+        "requiredQuestionIds": []
+      }
+    ]
+  },
+  "rationale": "The current US passport meets this case’s identification requirement. The authored US-citizen visitor does not need a Canadian visa or eTA. Accept for airline travel under the stated facts.",
+  "ruleIds": ["ca-us-citizen"]
+}

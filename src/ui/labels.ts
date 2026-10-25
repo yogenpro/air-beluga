@@ -11,4 +11,7 @@ export const DOCUMENT_LABELS: Record<TravelDocument['type'], string> = {
   VISA: 'visa',
   RESIDENCE_PERMIT: 'residence permit',
   ONWARD_TICKET: 'onward ticket',
+  ELECTRONIC_AUTHORIZATION: 'eTA status record',
+  STUDY_PERMIT: 'study permit',
+  PERMANENT_RESIDENT_TRAVEL_DOCUMENT: 'permanent resident travel document',
 };

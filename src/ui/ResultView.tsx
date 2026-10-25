@@ -9,12 +9,14 @@ export function ResultView({
   snapshot,
   isLast,
   onNext,
+  summaryLabel = 'View stage summary',
 }: {
   result: CaseResult;
   passengerCase: PassengerCase;
   snapshot: RuleSnapshot;
   isLast: boolean;
   onNext: () => void;
+  summaryLabel?: string;
 }) {
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -77,7 +79,7 @@ export function ResultView({
           ))}
       </ul>
       <button type="button" onClick={onNext}>
-        {isLast ? 'View stage summary' : 'Next passenger'}
+        {isLast ? summaryLabel : 'Next passenger'}
       </button>
     </section>
   );

@@ -1,0 +1,2464 @@
+{
+  "manifest": {
+    "schemaVersion": 1,
+    "contentVersion": "canada-2026-10-25-v1",
+    "scoring": {
+      "correctDecision": 100,
+      "appropriateInquiry": 15,
+      "efficiency": 10,
+      "extraQuestionPenalty": 2
+    },
+    "ruleSnapshots": [
+      {
+        "id": "illustrative-rules-v1",
+        "path": "rules/illustrative-v1.json"
+      },
+      {
+        "id": "canada-rules-2026-10-25-v1",
+        "path": "rules/canada-2026-10-25-v1.json"
+      }
+    ],
+    "cases": [
+      {
+        "id": "fixture-01-ready",
+        "path": "scenarios/fixture-01-ready.json"
+      },
+      {
+        "id": "fixture-02-hidden-visa",
+        "path": "scenarios/fixture-02-hidden-visa.json"
+      },
+      {
+        "id": "fixture-03-expired",
+        "path": "scenarios/fixture-03-expired.json"
+      },
+      {
+        "id": "fixture-04-no-visa",
+        "path": "scenarios/fixture-04-no-visa.json"
+      },
+      {
+        "id": "fixture-05-resident",
+        "path": "scenarios/fixture-05-resident.json"
+      },
+      {
+        "id": "fixture-06-referral",
+        "path": "scenarios/fixture-06-referral.json"
+      },
+      {
+        "id": "fixture-07-onward",
+        "path": "scenarios/fixture-07-onward.json"
+      },
+      {
+        "id": "fixture-08-alternatives",
+        "path": "scenarios/fixture-08-alternatives.json"
+      },
+      {
+        "id": "ca-001",
+        "path": "scenarios/ca-001.json"
+      },
+      {
+        "id": "ca-002",
+        "path": "scenarios/ca-002.json"
+      },
+      {
+        "id": "ca-003",
+        "path": "scenarios/ca-003.json"
+      },
+      {
+        "id": "ca-004",
+        "path": "scenarios/ca-004.json"
+      },
+      {
+        "id": "ca-005",
+        "path": "scenarios/ca-005.json"
+      },
+      {
+        "id": "ca-006",
+        "path": "scenarios/ca-006.json"
+      },
+      {
+        "id": "ca-007",
+        "path": "scenarios/ca-007.json"
+      },
+      {
+        "id": "ca-008",
+        "path": "scenarios/ca-008.json"
+      },
+      {
+        "id": "ca-009",
+        "path": "scenarios/ca-009.json"
+      },
+      {
+        "id": "ca-010",
+        "path": "scenarios/ca-010.json"
+      },
+      {
+        "id": "ca-011",
+        "path": "scenarios/ca-011.json"
+      },
+      {
+        "id": "ca-012",
+        "path": "scenarios/ca-012.json"
+      }
+    ],
+    "stages": [
+      {
+        "id": "001-sfo",
+        "path": "stages/001-sfo.json"
+      },
+      {
+        "id": "002-sfo-yvr",
+        "path": "stages/002-sfo-yvr.json"
+      }
+    ],
+    "dailyPools": [
+      {
+        "id": "fixture-pool-v1",
+        "path": "daily/fixture-pool-v1.json"
+      },
+      {
+        "id": "canada-pool-v1",
+        "path": "daily/canada-pool-v1.json"
+      }
+    ]
+  },
+  "ruleSnapshots": [
+    {
+      "id": "illustrative-rules-v1",
+      "asOfDate": "2026-10-24",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "rules": [
+        {
+          "id": "training-passport",
+          "title": "Training passport validity",
+          "body": "Invented exercise rule: present a passport valid on the travel date. An expired sole passport requires denial when no replacement can be obtained.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        },
+        {
+          "id": "training-visa",
+          "title": "Training visitor permission",
+          "body": "Invented exercise rule: fictional XZ visitors need a current TRAINING-VISITOR visa with at least one entry remaining, unless an explicitly stated training exception applies. Resolve an available permission inquiry before denial.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        },
+        {
+          "id": "training-permit",
+          "title": "Training resident exception",
+          "body": "Invented exercise rule: a current TRAINING-RESIDENT permit may replace a visitor visa. The permit must actually be presented.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        },
+        {
+          "id": "training-referral",
+          "title": "Training supervisor referral",
+          "body": "Invented exercise rule: a TRAINING-MANUAL-REVIEW permit whose status cannot be clarified after the offered inquiry requires supervisor escalation. Escalation is not a fallback for other cases.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        },
+        {
+          "id": "training-onward",
+          "title": "Training connecting journey",
+          "body": "Invented exercise rule: for the authored SFO–LHR–DUB connection, also request and receive the confirmed onward booking. This is not a statement of actual transit law.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        },
+        {
+          "id": "training-alternative",
+          "title": "Training alternative passports",
+          "body": "Invented exercise rule: the authored dual-document passenger may present either a current fictional XY passport or a current visitor visa in addition to the initial passport.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "canada-rules-2026-10-25-v1",
+      "asOfDate": "2026-10-25",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "rules": [
+        {
+          "id": "ca-us-citizen",
+          "title": "US citizens travelling by air",
+          "body": "For the US-citizen visitor cases here, a current US passport supplies travel identification; a Canadian visa and eTA are not required. Other routine acceptance checks are stipulated satisfied.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "CA"
+            ],
+            "transitCountries": []
+          },
+          "sources": [
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25",
+              "pageUpdatedDate": "2026-08-06"
+            }
+          ]
+        },
+        {
+          "id": "ca-eta-nationals",
+          "title": "British-citizen and French passports",
+          "body": "The ordinary British-citizen and French visitor cases in this desk require a current passport and matching valid eTA for air travel, unless the case states another applicable status.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "CA"
+            ],
+            "transitCountries": []
+          },
+          "sources": [
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25"
+            },
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25",
+              "pageUpdatedDate": "2026-08-06"
+            }
+          ]
+        },
+        {
+          "id": "ca-eta-link",
+          "title": "eTA and the passport used for travel",
+          "body": "An eTA is electronic, not a paper boarding document. The airline checks its status against the presented passport. Replacing the passport requires a new matching eTA; an approval tied to a different passport is insufficient.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "CA"
+            ],
+            "transitCountries": []
+          },
+          "sources": [
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/facts.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25",
+              "pageUpdatedDate": "2024-04-23"
+            }
+          ]
+        },
+        {
+          "id": "ca-visitor-visa",
+          "title": "Indian and Chinese visitor passports",
+          "body": "The ordinary Indian and mainland Chinese visitor cases here require a current passport and valid Canadian visitor visa unless a stated exemption applies. Resolve any offered inquiry about qualifying documents before denying. These nationalities are not in the selected-nationality eTA exception used by some other visa-required travellers.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "CA"
+            ],
+            "transitCountries": []
+          },
+          "sources": [
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25"
+            },
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/about-visitor-visa.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25"
+            }
+          ]
+        },
+        {
+          "id": "ca-us-pr",
+          "title": "US permanent residents",
+          "body": "A US lawful permanent resident travelling by air carries a current nationality passport and valid US permanent-resident proof. A current Form I-551 green card is one accepted proof. The visa/eTA visitor requirement does not apply to this status.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "CA"
+            ],
+            "transitCountries": []
+          },
+          "sources": [
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25",
+              "effectiveFrom": "2022-04-26",
+              "pageUpdatedDate": "2026-08-06"
+            },
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25"
+            }
+          ]
+        },
+        {
+          "id": "ca-canadian-pr",
+          "title": "Canadian permanent residents returning by air",
+          "body": "For these returning Canadian permanent residents, request a valid PR card with the passport, or a valid permanent resident travel document (PRTD). A visitor visa or eTA does not replace the PR travel evidence.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "CA"
+            ],
+            "transitCountries": []
+          },
+          "sources": [
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/permanent-residents/travel-outside-canada.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25",
+              "pageUpdatedDate": "2025-08-07"
+            },
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25",
+              "pageUpdatedDate": "2026-08-06"
+            }
+          ]
+        },
+        {
+          "id": "ca-prtd",
+          "title": "Returning without a PR card",
+          "body": "An issued, valid PRTD can supply the missing PR travel evidence for a commercial return to Canada. The authored PRTD has one unused entry. Applying for one is different from already possessing it.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "CA"
+            ],
+            "transitCountries": []
+          },
+          "sources": [
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/permanent-residents/travel-document.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25"
+            }
+          ]
+        },
+        {
+          "id": "ca-student",
+          "title": "Study permit and international travel",
+          "body": "A study permit governs study status; it is not generally a substitute for the required travel visa. For the Indian student who visited Japan as well as the US, an expired visa and current study permit do not establish the US-only return exemption.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "CA"
+            ],
+            "transitCountries": []
+          },
+          "sources": [
+            {
+              "url": "https://www.ircc.canada.ca/english/helpcentre/answer.asp?qnum=494&top=22",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25"
+            },
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/travel-outside-canada.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25",
+              "pageUpdatedDate": "2026-08-28"
+            }
+          ]
+        },
+        {
+          "id": "ca-us-only-return",
+          "title": "Returning after visiting only the US",
+          "body": "The authored returning student already held the current study permit before departure, visited only the US, and returns before the authorized stay ends. IRCC describes a return exception where the visa has expired in these circumstances. Confirm the trip history; the exception does not cover a trip that also included Japan. Border admission remains a separate decision.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "CA"
+            ],
+            "transitCountries": []
+          },
+          "sources": [
+            {
+              "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/travel-outside-canada.html",
+              "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+              "verifiedDate": "2026-10-25",
+              "pageUpdatedDate": "2026-08-28"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "fixture-01-ready",
+      "version": 1,
+      "title": "Illustrative: complete initial evidence",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "EASY",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Ari Vale",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Ari Vale",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "GB",
+          "holder": "Ari Vale",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "category": "TRAINING-VISITOR",
+            "destinationCountry": "GB",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "visa"
+      ],
+      "clues": [
+        "Both documents are offered at the counter. The invented visitor rule applies."
+      ],
+      "questions": [],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "presented",
+            "requiredDocumentIds": [
+              "passport",
+              "visa"
+            ],
+            "requiredQuestionIds": []
+          }
+        ]
+      },
+      "rationale": "Under the invented training rule, the presented passport and unused visitor visa are valid on the authored travel date. Accept for airline check-in; this does not guarantee border admission.",
+      "ruleIds": [
+        "training-passport",
+        "training-visa"
+      ]
+    },
+    {
+      "id": "fixture-02-hidden-visa",
+      "version": 1,
+      "title": "Illustrative: request a visa before acceptance",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Bo Reed",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Bo Reed",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "GB",
+          "holder": "Bo Reed",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "category": "TRAINING-VISITOR",
+            "destinationCountry": "GB",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The passenger says: I have my travel permission in another folder."
+      ],
+      "questions": [
+        {
+          "id": "ask-visa",
+          "label": "Ask for destination visa",
+          "response": "Here is my training visitor visa.",
+          "revealsDocumentIds": [
+            "visa"
+          ],
+          "justified": true
+        },
+        {
+          "id": "ask-onward",
+          "label": "Ask for onward booking",
+          "response": "There is no onward segment on this booking.",
+          "revealsDocumentIds": [],
+          "justified": false
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "request-visa",
+            "requiredDocumentIds": [
+              "passport",
+              "visa"
+            ],
+            "requiredQuestionIds": [
+              "ask-visa"
+            ]
+          }
+        ]
+      },
+      "rationale": "The training visitor rule requires the visa to be presented. Possessing it in a folder is insufficient until the agent asks for it. A premature check-in is incorrect.",
+      "ruleIds": [
+        "training-passport",
+        "training-visa"
+      ]
+    },
+    {
+      "id": "fixture-03-expired",
+      "version": 1,
+      "title": "Illustrative: expired passport",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "EASY",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Cleo Hart",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Cleo Hart",
+          "validFrom": "2024-01-01",
+          "validUntil": "2026-10-23",
+          "attributes": {}
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "GB",
+          "holder": "Cleo Hart",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "category": "TRAINING-VISITOR",
+            "destinationCountry": "GB",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "visa"
+      ],
+      "clues": [
+        "The passenger confirms: This is my only passport; I have no replacement. Compare its expiry with the travel date."
+      ],
+      "questions": [],
+      "resolution": {
+        "expectedDecision": "DENY",
+        "paths": [
+          {
+            "id": "expired-passport",
+            "requiredDocumentIds": [
+              "passport",
+              "visa"
+            ],
+            "requiredQuestionIds": []
+          }
+        ]
+      },
+      "rationale": "The sole passport expired before travel. The invented passport rule requires current validity; no replacement document is obtainable in this case. Deny airline acceptance.",
+      "ruleIds": [
+        "training-passport"
+      ]
+    },
+    {
+      "id": "fixture-04-no-visa",
+      "version": 1,
+      "title": "Illustrative: resolve missing permission before denial",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "EASY",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Dev Moss",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Dev Moss",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "No destination permission is presented. Ask whether the passenger has a visa or training residence permit."
+      ],
+      "questions": [
+        {
+          "id": "ask-permission",
+          "label": "Ask for a visa or residence permit",
+          "response": "I have neither a visa nor a residence permit, and no second passport.",
+          "revealsDocumentIds": [],
+          "justified": true
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "DENY",
+        "paths": [
+          {
+            "id": "confirmed-absence",
+            "requiredDocumentIds": [
+              "passport"
+            ],
+            "requiredQuestionIds": [
+              "ask-permission"
+            ]
+          }
+        ]
+      },
+      "rationale": "After asking, the passenger confirms that no qualifying permission is available. The training requirement is unmet. Denying before resolving that inquiry is premature.",
+      "ruleIds": [
+        "training-visa",
+        "training-permit"
+      ]
+    },
+    {
+      "id": "fixture-05-resident",
+      "version": 1,
+      "title": "Illustrative: residence permit alternative",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Emi Lake",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Emi Lake",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "residence-permit",
+          "type": "RESIDENCE_PERMIT",
+          "issuingCountry": "GB",
+          "holder": "Emi Lake",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "destinationCountry": "GB",
+            "status": "TRAINING-RESIDENT"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The passenger says: I live at the destination and brought my resident card."
+      ],
+      "questions": [
+        {
+          "id": "ask-permit",
+          "label": "Ask for residence permit",
+          "response": "Here is my current training residence permit.",
+          "revealsDocumentIds": [
+            "residence-permit"
+          ],
+          "justified": true
+        },
+        {
+          "id": "ask-onward",
+          "label": "Ask for onward ticket",
+          "response": "I am returning home; this training route has no onward-ticket condition.",
+          "revealsDocumentIds": [],
+          "justified": false
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "resident-evidence",
+            "requiredDocumentIds": [
+              "passport",
+              "residence-permit"
+            ],
+            "requiredQuestionIds": [
+              "ask-permit"
+            ]
+          }
+        ]
+      },
+      "rationale": "The invented resident exception accepts a current training residence permit in place of a visitor visa. Requesting that permit establishes the required evidence without extra questions.",
+      "ruleIds": [
+        "training-passport",
+        "training-permit"
+      ]
+    },
+    {
+      "id": "fixture-06-referral",
+      "version": 1,
+      "title": "Illustrative: authorized supervisor referral",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "HARD",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Finn Ash",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Finn Ash",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "residence-permit",
+          "type": "RESIDENCE_PERMIT",
+          "issuingCountry": "GB",
+          "holder": "Finn Ash",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "destinationCountry": "GB",
+            "status": "TRAINING-MANUAL-REVIEW"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "residence-permit"
+      ],
+      "clues": [
+        "The permit is marked TRAINING-MANUAL-REVIEW. The training reference explicitly requires supervisor review if the status cannot be clarified."
+      ],
+      "questions": [
+        {
+          "id": "ask-status",
+          "label": "Ask about the manual-review status",
+          "response": "I cannot provide a status confirmation. This case needs the supervisor review described in the training rule.",
+          "revealsDocumentIds": [],
+          "justified": true
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "ESCALATE",
+        "paths": [
+          {
+            "id": "confirmed-referral",
+            "requiredDocumentIds": [
+              "passport",
+              "residence-permit"
+            ],
+            "requiredQuestionIds": [
+              "ask-status"
+            ]
+          }
+        ]
+      },
+      "rationale": "The training referral rule requires an authorized supervisor handoff after the status inquiry remains unresolved. Neither acceptance nor denial is warranted from these facts. Escalation is correct only for this authored condition.",
+      "ruleIds": [
+        "training-referral"
+      ]
+    },
+    {
+      "id": "fixture-07-onward",
+      "version": 1,
+      "title": "Illustrative: request onward travel evidence",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "AIRSIDE",
+          "separateTicket": false
+        },
+        {
+          "from": "LHR",
+          "to": "DUB",
+          "destinationCountry": "IE",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Gia North",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Gia North",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "GB",
+          "holder": "Gia North",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "category": "TRAINING-VISITOR",
+            "destinationCountry": "GB",
+            "entriesRemaining": 1
+          }
+        },
+        {
+          "id": "onward-ticket",
+          "type": "ONWARD_TICKET",
+          "issuingCountry": "GB",
+          "holder": "Gia North",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "destinationCountry": "IE",
+            "bookingReference": "FIXTURE-ONWARD"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "visa"
+      ],
+      "clues": [
+        "The booking connects at LHR to DUB. The invented connecting-journey rule asks for confirmation of that onward segment."
+      ],
+      "questions": [
+        {
+          "id": "ask-onward",
+          "label": "Ask for onward ticket",
+          "response": "Here is the confirmed LHR to DUB training booking.",
+          "revealsDocumentIds": [
+            "onward-ticket"
+          ],
+          "justified": true
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "onward-evidence",
+            "requiredDocumentIds": [
+              "passport",
+              "visa",
+              "onward-ticket"
+            ],
+            "requiredQuestionIds": [
+              "ask-onward"
+            ]
+          }
+        ]
+      },
+      "rationale": "For this invented connection puzzle, the passport, visitor permission, and confirmed onward ticket must all be presented. The rule does not describe actual UK or Irish transit requirements.",
+      "ruleIds": [
+        "training-passport",
+        "training-visa",
+        "training-onward"
+      ]
+    },
+    {
+      "id": "fixture-08-alternatives",
+      "version": 1,
+      "title": "Illustrative: two discoverable acceptance paths",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "HARD",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Hal Pine",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Hal Pine",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "second-passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XY",
+          "holder": "Hal Pine",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "GB",
+          "holder": "Hal Pine",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "category": "TRAINING-VISITOR",
+            "destinationCountry": "GB",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The passenger says: I hold a second passport from fictional country XY, and I also have a visitor visa. Either may meet the invented training rule."
+      ],
+      "questions": [
+        {
+          "id": "ask-second-passport",
+          "label": "Ask for second passport",
+          "response": "Here is my fictional XY passport.",
+          "revealsDocumentIds": [
+            "second-passport"
+          ],
+          "justified": true
+        },
+        {
+          "id": "ask-visa",
+          "label": "Ask for destination visa",
+          "response": "Here is my training visitor visa.",
+          "revealsDocumentIds": [
+            "visa"
+          ],
+          "justified": true
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "second-passport-route",
+            "requiredDocumentIds": [
+              "passport",
+              "second-passport"
+            ],
+            "requiredQuestionIds": [
+              "ask-second-passport"
+            ]
+          },
+          {
+            "id": "visa-route",
+            "requiredDocumentIds": [
+              "passport",
+              "visa"
+            ],
+            "requiredQuestionIds": [
+              "ask-visa"
+            ]
+          }
+        ]
+      },
+      "rationale": "The invented alternative-evidence rule permits either the presented XY passport or the presented visitor visa. Each question is justified; neither hidden document can authorize premature check-in.",
+      "ruleIds": [
+        "training-passport",
+        "training-alternative"
+      ]
+    },
+    {
+      "id": "ca-001",
+      "version": 1,
+      "title": "SFO–YVR: Avery Moss",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-us-citizen. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "EASY",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Avery Moss",
+        "nationality": "US",
+        "additionalNationalities": []
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "US",
+          "holder": "Avery Moss",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary national passport",
+            "number": "US-SYNTHETIC-001"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The passenger is a US citizen visiting Vancouver for four days."
+      ],
+      "questions": [],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport"
+            ],
+            "requiredQuestionIds": []
+          }
+        ]
+      },
+      "rationale": "The current US passport meets this case’s identification requirement. The authored US-citizen visitor does not need a Canadian visa or eTA. Accept for airline travel under the stated facts.",
+      "ruleIds": [
+        "ca-us-citizen"
+      ]
+    },
+    {
+      "id": "ca-002",
+      "version": 1,
+      "title": "SFO–YVR: Blair Finch",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-eta-nationals, ca-eta-link. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "EASY",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Blair Finch",
+        "nationality": "GB",
+        "additionalNationalities": []
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "GB",
+          "holder": "Blair Finch",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary British-citizen passport",
+            "number": "GB-SYNTHETIC-002"
+          }
+        },
+        {
+          "id": "eta-record",
+          "type": "ELECTRONIC_AUTHORIZATION",
+          "issuingCountry": "CA",
+          "holder": "Blair Finch",
+          "validFrom": "2026-09-01",
+          "validUntil": "2031-09-01",
+          "attributes": {
+            "category": "Canadian eTA carrier status record",
+            "destinationCountry": "CA",
+            "status": "APPROVED",
+            "linkedPassportNumber": "GB-SYNTHETIC-002"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "eta-record"
+      ],
+      "clues": [
+        "The passport is an ordinary British-citizen passport. The simulated carrier record already confirms a current eTA against this same passport."
+      ],
+      "questions": [],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport",
+              "eta-record"
+            ],
+            "requiredQuestionIds": []
+          }
+        ]
+      },
+      "rationale": "The British-citizen passport and matching approved electronic record supply the required evidence. The eTA is confirmed through the carrier status record; no printed approval is required.",
+      "ruleIds": [
+        "ca-eta-nationals",
+        "ca-eta-link"
+      ]
+    },
+    {
+      "id": "ca-003",
+      "version": 1,
+      "title": "SFO–YVR: Camille Roux",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-eta-nationals, ca-eta-link. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Camille Roux",
+        "nationality": "FR",
+        "additionalNationalities": []
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "FR",
+          "holder": "Camille Roux",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary national passport",
+            "number": "FR-SYNTHETIC-003"
+          }
+        },
+        {
+          "id": "eta-record",
+          "type": "ELECTRONIC_AUTHORIZATION",
+          "issuingCountry": "CA",
+          "holder": "Camille Roux",
+          "validFrom": "2026-09-01",
+          "validUntil": "2031-09-01",
+          "attributes": {
+            "category": "Canadian eTA carrier status record",
+            "destinationCountry": "CA",
+            "status": "APPROVED",
+            "linkedPassportNumber": "FR-SYNTHETIC-003"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The traveller presents an ordinary French passport and says the eTA was approved for it. The simulated carrier status check has not yet been run."
+      ],
+      "questions": [
+        {
+          "id": "check-eta",
+          "label": "Check eTA status for this passport",
+          "response": "Simulated carrier check: approved eTA found, valid for the presented passport.",
+          "revealsDocumentIds": [
+            "eta-record"
+          ],
+          "justified": true,
+          "kind": "DOCUMENT_CHECK"
+        },
+        {
+          "id": "ask-residence",
+          "label": "Ask about residence status",
+          "response": "I am not a US or Canadian permanent resident.",
+          "revealsDocumentIds": [],
+          "justified": false,
+          "kind": "PASSENGER"
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport",
+              "eta-record"
+            ],
+            "requiredQuestionIds": [
+              "check-eta"
+            ]
+          }
+        ]
+      },
+      "rationale": "Run the offered electronic check before acceptance. Its result confirms the approved eTA matches the presented passport; merely possessing an undisplayed approval claim is insufficient evidence in this case.",
+      "ruleIds": [
+        "ca-eta-nationals",
+        "ca-eta-link"
+      ]
+    },
+    {
+      "id": "ca-004",
+      "version": 1,
+      "title": "SFO–YVR: Dylan Shaw",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-eta-nationals, ca-eta-link. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Dylan Shaw",
+        "nationality": "GB",
+        "additionalNationalities": []
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "GB",
+          "holder": "Dylan Shaw",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary British-citizen passport",
+            "number": "GB-SYNTHETIC-004"
+          }
+        },
+        {
+          "id": "eta-record",
+          "type": "ELECTRONIC_AUTHORIZATION",
+          "issuingCountry": "CA",
+          "holder": "Dylan Shaw",
+          "validFrom": "2026-09-01",
+          "validUntil": "2031-09-01",
+          "attributes": {
+            "category": "Canadian eTA carrier status record",
+            "destinationCountry": "CA",
+            "status": "APPROVED_FOR_DIFFERENT_PASSPORT",
+            "linkedPassportNumber": "GB-PREVIOUS-SYNTHETIC"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The British-citizen traveller recently replaced a passport and recalls an earlier eTA approval. No other travel permission or exempt status is declared."
+      ],
+      "questions": [
+        {
+          "id": "check-eta",
+          "label": "Check eTA status for this passport",
+          "response": "Simulated carrier check: no approved eTA matches this passport. The old approval is linked to a different passport; no valid Canadian visa or other qualifying evidence is available.",
+          "revealsDocumentIds": [
+            "eta-record"
+          ],
+          "justified": true,
+          "kind": "DOCUMENT_CHECK"
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "DENY",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport",
+              "eta-record"
+            ],
+            "requiredQuestionIds": [
+              "check-eta"
+            ]
+          }
+        ]
+      },
+      "rationale": "The offered check resolves the outstanding authorization question. The approval belongs to a different passport and cannot support this flight; the passenger has no alternative qualifying evidence. Deny this check-in.",
+      "ruleIds": [
+        "ca-eta-nationals",
+        "ca-eta-link"
+      ]
+    },
+    {
+      "id": "ca-005",
+      "version": 1,
+      "title": "SFO–YVR: Esha Rao",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-visitor-visa. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "EASY",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Esha Rao",
+        "nationality": "IN",
+        "additionalNationalities": []
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "IN",
+          "holder": "Esha Rao",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary national passport",
+            "number": "IN-SYNTHETIC-005"
+          }
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "CA",
+          "holder": "Esha Rao",
+          "validFrom": "2025-01-01",
+          "validUntil": "2028-12-31",
+          "attributes": {
+            "category": "Visitor visa / temporary resident visa",
+            "destinationCountry": "CA",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "visa"
+      ],
+      "clues": [
+        "The passenger is an Indian citizen taking a one-week visit and presents a current Canadian visitor visa with an unused entry."
+      ],
+      "questions": [],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport",
+              "visa"
+            ],
+            "requiredQuestionIds": []
+          }
+        ]
+      },
+      "rationale": "The ordinary Indian passport and valid Canadian visitor visa satisfy the authored document requirement. No extra eTA is required on top of the visa.",
+      "ruleIds": [
+        "ca-visitor-visa"
+      ]
+    },
+    {
+      "id": "ca-006",
+      "version": 1,
+      "title": "SFO–YVR: Fang Lin",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-visitor-visa. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Fang Lin",
+        "nationality": "CN",
+        "additionalNationalities": []
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "CN",
+          "holder": "Fang Lin",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary national passport",
+            "number": "CN-SYNTHETIC-006"
+          }
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "CA",
+          "holder": "Fang Lin",
+          "validFrom": "2025-01-01",
+          "validUntil": "2028-12-31",
+          "attributes": {
+            "category": "Visitor visa / temporary resident visa",
+            "destinationCountry": "CA",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The passenger holds an ordinary mainland Chinese passport and says the Canadian visa page is in the document folder."
+      ],
+      "questions": [
+        {
+          "id": "ask-visa",
+          "label": "Ask for Canadian visitor visa",
+          "response": "Here is my current Canadian visitor visa; it has an unused entry.",
+          "revealsDocumentIds": [
+            "visa"
+          ],
+          "justified": true,
+          "kind": "PASSENGER"
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport",
+              "visa"
+            ],
+            "requiredQuestionIds": [
+              "ask-visa"
+            ]
+          }
+        ]
+      },
+      "rationale": "Requesting the visa reveals the valid travel permission required for this ordinary mainland Chinese visitor. Acceptance before that inquiry lacks the necessary presented evidence.",
+      "ruleIds": [
+        "ca-visitor-visa"
+      ]
+    },
+    {
+      "id": "ca-007",
+      "version": 1,
+      "title": "SFO–YVR: Gauri Sen",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-visitor-visa. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Gauri Sen",
+        "nationality": "IN",
+        "additionalNationalities": []
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "IN",
+          "holder": "Gauri Sen",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary national passport",
+            "number": "IN-SYNTHETIC-007"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The Indian visitor presents only a passport. No second nationality or US/Canadian resident status is declared. Resolve whether any Canadian travel permission is available."
+      ],
+      "questions": [
+        {
+          "id": "ask-permission",
+          "label": "Ask for Canadian travel permission",
+          "response": "I have no Canadian visa and no other qualifying Canadian permission, passport or resident status.",
+          "revealsDocumentIds": [],
+          "justified": true,
+          "kind": "PASSENGER"
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "DENY",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport"
+            ],
+            "requiredQuestionIds": [
+              "ask-permission"
+            ]
+          }
+        ]
+      },
+      "rationale": "The inquiry confirms no qualifying permission remains obtainable. Under these stated visitor facts, the Indian passport alone is insufficient; the selected-nationality eTA route does not apply.",
+      "ruleIds": [
+        "ca-visitor-visa"
+      ]
+    },
+    {
+      "id": "ca-008",
+      "version": 1,
+      "title": "SFO–YVR: Harini Das",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-student, ca-us-only-return, ca-visitor-visa. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "HARD",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Harini Das",
+        "nationality": "IN",
+        "additionalNationalities": [],
+        "residence": {
+          "country": "CA",
+          "status": "STUDENT"
+        }
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout.",
+        "The study permit was issued before departure from Canada. The student remains enrolled at a designated learning institution and meets all other study and admissibility conditions."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "IN",
+          "holder": "Harini Das",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary national passport",
+            "number": "IN-SYNTHETIC-008"
+          }
+        },
+        {
+          "id": "study-permit",
+          "type": "STUDY_PERMIT",
+          "issuingCountry": "CA",
+          "holder": "Harini Das",
+          "validFrom": "2025-09-01",
+          "validUntil": "2027-08-31",
+          "attributes": {
+            "destinationCountry": "CA",
+            "status": "VALID; attending a designated learning institution"
+          }
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "CA",
+          "holder": "Harini Das",
+          "validFrom": "2025-01-01",
+          "validUntil": "2026-10-24",
+          "attributes": {
+            "category": "Visitor visa / temporary resident visa",
+            "destinationCountry": "CA",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "study-permit",
+        "visa"
+      ],
+      "clues": [
+        "The student has a current Canadian study permit, but the visa expired yesterday. The trip began in Canada and included a holiday before the final US segment. Clarify the travel history and any replacement visa."
+      ],
+      "questions": [
+        {
+          "id": "ask-return-facts",
+          "label": "Clarify trip and current travel permission",
+          "response": "Since leaving Canada, I visited Japan and then the United States. I have no new Canadian visa or other qualifying permission.",
+          "revealsDocumentIds": [],
+          "justified": true,
+          "kind": "PASSENGER"
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "DENY",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport",
+              "study-permit",
+              "visa"
+            ],
+            "requiredQuestionIds": [
+              "ask-return-facts"
+            ]
+          }
+        ]
+      },
+      "rationale": "The student visited Japan as well as the US, so the US-only return exception does not apply. The study permit does not replace the missing valid travel visa in this case. The inquiry confirms no replacement permission.",
+      "ruleIds": [
+        "ca-student",
+        "ca-us-only-return",
+        "ca-visitor-visa"
+      ]
+    },
+    {
+      "id": "ca-009",
+      "version": 1,
+      "title": "SFO–YVR: Ishan Cole",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-us-pr. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Ishan Cole",
+        "nationality": "IN",
+        "additionalNationalities": [],
+        "residence": {
+          "country": "US",
+          "status": "PERMANENT_RESIDENT"
+        }
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "IN",
+          "holder": "Ishan Cole",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary national passport",
+            "number": "IN-SYNTHETIC-009"
+          }
+        },
+        {
+          "id": "green-card",
+          "type": "RESIDENCE_PERMIT",
+          "issuingCountry": "US",
+          "holder": "Ishan Cole",
+          "validFrom": "2026-01-01",
+          "validUntil": "2028-12-31",
+          "attributes": {
+            "destinationCountry": "US",
+            "status": "Lawful permanent resident — Form I-551"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The Indian passport holder lives permanently in the United States and says a green card is in the wallet."
+      ],
+      "questions": [
+        {
+          "id": "ask-green-card",
+          "label": "Ask for US permanent resident card",
+          "response": "Here is my valid Form I-551 green card.",
+          "revealsDocumentIds": [
+            "green-card"
+          ],
+          "justified": true,
+          "kind": "PASSENGER"
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport",
+              "green-card"
+            ],
+            "requiredQuestionIds": [
+              "ask-green-card"
+            ]
+          }
+        ]
+      },
+      "rationale": "The current passport plus the presented valid US green card establish the US lawful-permanent-resident exception. This passenger does not additionally require a Canadian visitor visa or eTA.",
+      "ruleIds": [
+        "ca-us-pr"
+      ]
+    },
+    {
+      "id": "ca-010",
+      "version": 1,
+      "title": "SFO–YVR: Jia Park",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-canadian-pr. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Jia Park",
+        "nationality": "CN",
+        "additionalNationalities": [],
+        "residence": {
+          "country": "CA",
+          "status": "PERMANENT_RESIDENT"
+        }
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "CN",
+          "holder": "Jia Park",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary national passport",
+            "number": "CN-SYNTHETIC-010"
+          }
+        },
+        {
+          "id": "pr-card",
+          "type": "RESIDENCE_PERMIT",
+          "issuingCountry": "CA",
+          "holder": "Jia Park",
+          "validFrom": "2026-01-01",
+          "validUntil": "2028-12-31",
+          "attributes": {
+            "destinationCountry": "CA",
+            "status": "Canadian permanent resident — PR card"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The passenger is a Canadian permanent resident returning home and mentions a PR card kept separately from the passport."
+      ],
+      "questions": [
+        {
+          "id": "ask-pr-card",
+          "label": "Ask for Canadian PR card",
+          "response": "Here is my current Canadian PR card.",
+          "revealsDocumentIds": [
+            "pr-card"
+          ],
+          "justified": true,
+          "kind": "PASSENGER"
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport",
+              "pr-card"
+            ],
+            "requiredQuestionIds": [
+              "ask-pr-card"
+            ]
+          }
+        ]
+      },
+      "rationale": "The current passport and presented PR card establish the returning permanent resident’s travel evidence. Do not substitute a visitor visa or request an eTA for a Canadian permanent resident.",
+      "ruleIds": [
+        "ca-canadian-pr"
+      ]
+    },
+    {
+      "id": "ca-011",
+      "version": 1,
+      "title": "SFO–YVR: Kiran Bell",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-canadian-pr, ca-prtd. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "HARD",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Kiran Bell",
+        "nationality": "IN",
+        "additionalNationalities": [],
+        "residence": {
+          "country": "CA",
+          "status": "PERMANENT_RESIDENT"
+        }
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "IN",
+          "holder": "Kiran Bell",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary national passport",
+            "number": "IN-SYNTHETIC-011"
+          }
+        },
+        {
+          "id": "prtd",
+          "type": "PERMANENT_RESIDENT_TRAVEL_DOCUMENT",
+          "issuingCountry": "CA",
+          "holder": "Kiran Bell",
+          "validFrom": "2026-10-20",
+          "validUntil": "2027-01-20",
+          "attributes": {
+            "category": "Issued PRTD",
+            "destinationCountry": "CA",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The Canadian permanent resident lost the PR card abroad but says a replacement travel document has already been issued. Ask to see the actual document."
+      ],
+      "questions": [
+        {
+          "id": "ask-prtd",
+          "label": "Ask for issued permanent resident travel document",
+          "response": "Here is my issued, valid PRTD with its single entry unused.",
+          "revealsDocumentIds": [
+            "prtd"
+          ],
+          "justified": true,
+          "kind": "PASSENGER"
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport",
+              "prtd"
+            ],
+            "requiredQuestionIds": [
+              "ask-prtd"
+            ]
+          }
+        ]
+      },
+      "rationale": "The issued PRTD supplies the missing PR travel evidence for this commercial flight. Requesting and checking it is necessary; an application receipt alone would not be enough.",
+      "ruleIds": [
+        "ca-canadian-pr",
+        "ca-prtd"
+      ]
+    },
+    {
+      "id": "ca-012",
+      "version": 1,
+      "title": "SFO–YVR: Leela Brook",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "review": {
+        "reviewer": "Codex (official-source cross-check)",
+        "reviewedDate": "2026-10-25",
+        "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+        "notes": "Checked the authored evidence path, exceptions and disposition against ca-us-only-return, ca-student. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+      },
+      "difficulty": "HARD",
+      "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+      "travelDate": "2026-10-25",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "YVR",
+          "destinationCountry": "CA",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Leela Brook",
+        "nationality": "IN",
+        "additionalNationalities": [],
+        "residence": {
+          "country": "CA",
+          "status": "STUDENT"
+        }
+      },
+      "assumptions": [
+        "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+        "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+        "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout.",
+        "The study permit was issued before departure from Canada, remains valid, and the student remains enrolled at a designated learning institution. All other study and admissibility conditions are stipulated satisfied."
+      ],
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "IN",
+          "holder": "Leela Brook",
+          "validFrom": "2023-01-01",
+          "validUntil": "2033-01-01",
+          "attributes": {
+            "category": "Ordinary national passport",
+            "number": "IN-SYNTHETIC-012"
+          }
+        },
+        {
+          "id": "study-permit",
+          "type": "STUDY_PERMIT",
+          "issuingCountry": "CA",
+          "holder": "Leela Brook",
+          "validFrom": "2025-09-01",
+          "validUntil": "2027-08-31",
+          "attributes": {
+            "destinationCountry": "CA",
+            "status": "VALID; attending a designated learning institution"
+          }
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "CA",
+          "holder": "Leela Brook",
+          "validFrom": "2025-01-01",
+          "validUntil": "2026-10-24",
+          "attributes": {
+            "category": "Visitor visa / temporary resident visa",
+            "destinationCountry": "CA",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "study-permit",
+        "visa"
+      ],
+      "clues": [
+        "The returning student’s visa expired yesterday, but the Canadian study permit is current. The trip history has not been clarified."
+      ],
+      "questions": [
+        {
+          "id": "ask-trip",
+          "label": "Ask where you travelled after leaving Canada",
+          "response": "I visited only the United States and am returning before my authorized Canadian stay ends. My current study permit was issued before I left Canada.",
+          "revealsDocumentIds": [],
+          "justified": true,
+          "kind": "PASSENGER"
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "document-resolution",
+            "requiredDocumentIds": [
+              "passport",
+              "study-permit"
+            ],
+            "requiredQuestionIds": [
+              "ask-trip"
+            ]
+          }
+        ]
+      },
+      "rationale": "The inquiry establishes the narrow US-only return circumstances described by IRCC, with an already-issued valid study permit and return before the authorized stay ends. The expired visa does not require denial under these authored facts; border admission is still determined separately.",
+      "ruleIds": [
+        "ca-us-only-return",
+        "ca-student"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "001-sfo",
+      "title": "SFO illustrative training desk",
+      "departureAirport": "SFO",
+      "airline": "Air Beluga",
+      "flightLabel": "AB 101 · SFO to LHR · illustrative training",
+      "scheduledDeparture": "2026-10-24T18:00:00Z",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "caseIds": [
+        "fixture-01-ready",
+        "fixture-02-hidden-visa",
+        "fixture-03-expired",
+        "fixture-04-no-visa",
+        "fixture-05-resident",
+        "fixture-06-referral",
+        "fixture-07-onward",
+        "fixture-08-alternatives"
+      ],
+      "tutorial": "Apply only the invented training reference. Ask targeted questions before committing a disposition. Airline check-in is separate from border admission."
+    },
+    {
+      "id": "002-sfo-yvr",
+      "title": "SFO–Vancouver document desk",
+      "departureAirport": "SFO",
+      "airline": "Air Beluga",
+      "flightLabel": "Air Beluga AB 201 · SFO → YVR",
+      "scheduledDeparture": "2026-10-25T18:00:00Z",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "caseIds": [
+        "ca-001",
+        "ca-002",
+        "ca-003",
+        "ca-006",
+        "ca-007",
+        "ca-008",
+        "ca-009",
+        "ca-011"
+      ],
+      "tutorial": "Apply the source-reviewed Canadian rule snapshot for the authored travel date. Some electronic records must be checked; a paper eTA approval is not a boarding requirement."
+    }
+  ],
+  "dailyPools": [
+    {
+      "id": "fixture-pool-v1",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "dailyAlgorithmVersion": "fnv1a32-mulberry32-v1",
+      "caseIds": [
+        "fixture-01-ready",
+        "fixture-02-hidden-visa",
+        "fixture-03-expired",
+        "fixture-04-no-visa",
+        "fixture-05-resident",
+        "fixture-06-referral",
+        "fixture-07-onward",
+        "fixture-08-alternatives"
+      ],
+      "count": 5,
+      "difficulty": {
+        "EASY": {
+          "min": 1,
+          "max": 2
+        },
+        "MEDIUM": {
+          "min": 2,
+          "max": 3
+        },
+        "HARD": {
+          "min": 1,
+          "max": 2
+        }
+      }
+    },
+    {
+      "id": "canada-pool-v1",
+      "verificationStatus": "VERIFIED",
+      "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+      "dailyAlgorithmVersion": "fnv1a32-mulberry32-v1",
+      "caseIds": [
+        "ca-001",
+        "ca-002",
+        "ca-003",
+        "ca-004",
+        "ca-005",
+        "ca-006",
+        "ca-007",
+        "ca-008",
+        "ca-009",
+        "ca-010",
+        "ca-011",
+        "ca-012"
+      ],
+      "count": 6,
+      "difficulty": {
+        "EASY": {
+          "min": 1,
+          "max": 2
+        },
+        "MEDIUM": {
+          "min": 2,
+          "max": 4
+        },
+        "HARD": {
+          "min": 1,
+          "max": 2
+        }
+      }
+    }
+  ]
+}

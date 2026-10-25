@@ -1,0 +1,80 @@
+{
+  "id": "ca-002",
+  "version": 1,
+  "title": "SFO–YVR: Blair Finch",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-25",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored evidence path, exceptions and disposition against ca-eta-nationals, ca-eta-link. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "EASY",
+  "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+  "travelDate": "2026-10-25",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Blair Finch",
+    "nationality": "GB",
+    "additionalNationalities": []
+  },
+  "assumptions": [
+    "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+    "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+    "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "GB",
+      "holder": "Blair Finch",
+      "validFrom": "2023-01-01",
+      "validUntil": "2033-01-01",
+      "attributes": {
+        "number": "GB-SYNTHETIC-002",
+        "category": "Ordinary British-citizen passport"
+      }
+    },
+    {
+      "id": "eta-record",
+      "type": "ELECTRONIC_AUTHORIZATION",
+      "issuingCountry": "CA",
+      "holder": "Blair Finch",
+      "validFrom": "2026-09-01",
+      "validUntil": "2031-09-01",
+      "attributes": {
+        "category": "Canadian eTA carrier status record",
+        "destinationCountry": "CA",
+        "linkedPassportNumber": "GB-SYNTHETIC-002",
+        "status": "APPROVED"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "eta-record"],
+  "clues": [
+    "The passport is an ordinary British-citizen passport. The simulated carrier record already confirms a current eTA against this same passport."
+  ],
+  "questions": [],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["passport", "eta-record"],
+        "requiredQuestionIds": []
+      }
+    ]
+  },
+  "rationale": "The British-citizen passport and matching approved electronic record supply the required evidence. The eTA is confirmed through the carrier status record; no printed approval is required.",
+  "ruleIds": ["ca-eta-nationals", "ca-eta-link"]
+}

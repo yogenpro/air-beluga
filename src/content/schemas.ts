@@ -30,6 +30,7 @@ const SourceSchema = z
     verifiedDate: DateSchema,
     effectiveFrom: DateSchema.optional(),
     effectiveUntil: DateSchema.optional(),
+    pageUpdatedDate: DateSchema.optional(),
   })
   .strict();
 
@@ -64,7 +65,15 @@ export const RuleSnapshotSchema = z
 export const TravelDocumentSchema = z
   .object({
     id,
-    type: z.enum(['PASSPORT', 'VISA', 'RESIDENCE_PERMIT', 'ONWARD_TICKET']),
+    type: z.enum([
+      'PASSPORT',
+      'VISA',
+      'RESIDENCE_PERMIT',
+      'ONWARD_TICKET',
+      'ELECTRONIC_AUTHORIZATION',
+      'STUDY_PERMIT',
+      'PERMANENT_RESIDENT_TRAVEL_DOCUMENT',
+    ]),
     issuingCountry: country,
     holder: text,
     validFrom: DateSchema,
@@ -76,6 +85,8 @@ export const TravelDocumentSchema = z
         entriesRemaining: z.number().int().nonnegative().optional(),
         status: text.optional(),
         bookingReference: text.optional(),
+        number: text.optional(),
+        linkedPassportNumber: text.optional(),
       })
       .strict(),
   })
@@ -93,7 +104,12 @@ export const PassengerCaseSchema = z
     verificationStatus: VerificationSchema,
     notice: text,
     review: z
-      .object({ reviewer: text, reviewedDate: DateSchema })
+      .object({
+        reviewer: text,
+        reviewedDate: DateSchema,
+        method: text.optional(),
+        notes: text.optional(),
+      })
       .strict()
       .optional(),
     difficulty: DifficultySchema,
@@ -112,7 +128,21 @@ export const PassengerCaseSchema = z
           .strict(),
       )
       .min(1),
-    passenger: z.object({ displayName: text, nationality: country }).strict(),
+    passenger: z
+      .object({
+        displayName: text,
+        nationality: country,
+        additionalNationalities: z.array(country).optional(),
+        residence: z
+          .object({
+            country,
+            status: z.enum(['PERMANENT_RESIDENT', 'STUDENT']),
+          })
+          .strict()
+          .optional(),
+      })
+      .strict(),
+    assumptions: z.array(text).min(1).optional(),
     documents: z.array(TravelDocumentSchema).min(1),
     initiallyPresentedDocumentIds: ids,
     clues: z.array(text).min(1),
@@ -125,6 +155,7 @@ export const PassengerCaseSchema = z
             response: text,
             revealsDocumentIds: ids,
             justified: z.boolean(),
+            kind: z.enum(['PASSENGER', 'DOCUMENT_CHECK']).optional(),
           })
           .strict(),
       )

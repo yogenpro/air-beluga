@@ -125,12 +125,17 @@ export function getPassengerView(state: GameSession, content: ContentBundle) {
     itinerary: structuredClone(item.itinerary),
     travelDate: item.travelDate,
     clues: [...item.clues],
+    assumptions: [...(item.assumptions ?? [])],
     documents: structuredClone(
       item.documents.filter((doc) =>
         state.revealedDocumentIds.includes(doc.id),
       ),
     ),
-    questions: item.questions.map(({ id, label }) => ({ id, label })),
+    questions: item.questions.map(({ id, label, kind }) => ({
+      id,
+      label,
+      ...(kind ? { kind } : {}),
+    })),
     responses: item.questions
       .filter((question) => state.askedQuestionIds.includes(question.id))
       .map(({ id, response }) => ({ questionId: id, response })),

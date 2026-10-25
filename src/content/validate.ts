@@ -140,6 +140,16 @@ export function validateContent(input: unknown): ContentBundle {
     if (item.verificationStatus === 'VERIFIED') {
       if (!item.review)
         fail(context, 'verified cases require a recorded review');
+      if (
+        !item.assumptions?.length ||
+        !item.review?.method ||
+        !item.review?.notes
+      ) {
+        fail(
+          context,
+          'verified cases need explicit case assumptions and source-review method/notes',
+        );
+      }
       if (snapshot?.verificationStatus !== 'VERIFIED') {
         fail(context, 'verified case requires a verified rule snapshot');
       }
@@ -185,6 +195,48 @@ export function validateContent(input: unknown): ContentBundle {
         (!attributes.bookingReference || !attributes.destinationCountry)
       )
         fail(context, `ticket ${document.id} lacks booking or destination`);
+      if (
+        document.type === 'ELECTRONIC_AUTHORIZATION' &&
+        (!attributes.category ||
+          !attributes.destinationCountry ||
+          !attributes.status ||
+          !attributes.linkedPassportNumber)
+      ) {
+        fail(
+          context,
+          `electronic record ${document.id} lacks status, category, destination or passport link`,
+        );
+      }
+      if (
+        document.type === 'STUDY_PERMIT' &&
+        (!attributes.status || !attributes.destinationCountry)
+      ) {
+        fail(
+          context,
+          `study permit ${document.id} lacks status or destination`,
+        );
+      }
+      if (
+        document.type === 'PERMANENT_RESIDENT_TRAVEL_DOCUMENT' &&
+        (!attributes.category ||
+          !attributes.destinationCountry ||
+          attributes.entriesRemaining === undefined)
+      ) {
+        fail(
+          context,
+          `PRTD ${document.id} lacks category, destination or entries`,
+        );
+      }
+      if (
+        item.verificationStatus === 'VERIFIED' &&
+        document.type === 'PASSPORT' &&
+        !attributes.number
+      ) {
+        fail(
+          context,
+          `verified passport ${document.id} needs a synthetic document number`,
+        );
+      }
     }
     const reachable = new Set(item.initiallyPresentedDocumentIds);
     for (const question of item.questions) {
@@ -229,13 +281,34 @@ export function validateContent(input: unknown): ContentBundle {
             );
           }
           if (
-            document.type === 'VISA' &&
+            (document.type === 'VISA' ||
+              document.type === 'PERMANENT_RESIDENT_TRAVEL_DOCUMENT') &&
             document.attributes.entriesRemaining === 0
           ) {
             fail(
               pathContext,
               `check-in relies on exhausted visa ${documentId}`,
             );
+          }
+          if (document.type === 'ELECTRONIC_AUTHORIZATION') {
+            const passport = item.documents.find(
+              (entry) =>
+                entry.type === 'PASSPORT' &&
+                path.requiredDocumentIds.includes(entry.id) &&
+                entry.attributes.number ===
+                  document.attributes.linkedPassportNumber,
+            );
+            if (!passport || document.attributes.status !== 'APPROVED') {
+              fail(
+                pathContext,
+                'check-in needs an approved electronic authorization linked to a required passport',
+              );
+            }
+            if (passport && document.validUntil > passport.validUntil)
+              fail(
+                pathContext,
+                'electronic authorization outlives its linked passport',
+              );
           }
         }
       }

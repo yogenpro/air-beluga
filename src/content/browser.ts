@@ -1,8 +1,8 @@
-import { loadContent } from './loader';
+import { loadLibrary } from './library';
 
 /** Only static JSON is fetched, once when the desk loads. */
 export function loadBrowserContent() {
-  return loadContent(async (path) => {
+  return loadLibrary(async (path) => {
     const response = await fetch(`${import.meta.env.BASE_URL}data/${path}`, {
       cache: 'no-cache',
     });

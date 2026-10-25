@@ -1,0 +1,97 @@
+{
+  "id": "ca-003",
+  "version": 1,
+  "title": "SFO–YVR: Camille Roux",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-25",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored evidence path, exceptions and disposition against ca-eta-nationals, ca-eta-link. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+  "travelDate": "2026-10-25",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Camille Roux",
+    "nationality": "FR",
+    "additionalNationalities": []
+  },
+  "assumptions": [
+    "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+    "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+    "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "FR",
+      "holder": "Camille Roux",
+      "validFrom": "2023-01-01",
+      "validUntil": "2033-01-01",
+      "attributes": {
+        "number": "FR-SYNTHETIC-003",
+        "category": "Ordinary national passport"
+      }
+    },
+    {
+      "id": "eta-record",
+      "type": "ELECTRONIC_AUTHORIZATION",
+      "issuingCountry": "CA",
+      "holder": "Camille Roux",
+      "validFrom": "2026-09-01",
+      "validUntil": "2031-09-01",
+      "attributes": {
+        "category": "Canadian eTA carrier status record",
+        "destinationCountry": "CA",
+        "linkedPassportNumber": "FR-SYNTHETIC-003",
+        "status": "APPROVED"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": [
+    "The traveller presents an ordinary French passport and says the eTA was approved for it. The simulated carrier status check has not yet been run."
+  ],
+  "questions": [
+    {
+      "id": "check-eta",
+      "label": "Check eTA status for this passport",
+      "response": "Simulated carrier check: approved eTA found, valid for the presented passport.",
+      "revealsDocumentIds": ["eta-record"],
+      "justified": true,
+      "kind": "DOCUMENT_CHECK"
+    },
+    {
+      "id": "ask-residence",
+      "label": "Ask about residence status",
+      "response": "I am not a US or Canadian permanent resident.",
+      "revealsDocumentIds": [],
+      "justified": false,
+      "kind": "PASSENGER"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["passport", "eta-record"],
+        "requiredQuestionIds": ["check-eta"]
+      }
+    ]
+  },
+  "rationale": "Run the offered electronic check before acceptance. Its result confirms the approved eTA matches the presented passport; merely possessing an undisplayed approval claim is insufficient evidence in this case.",
+  "ruleIds": ["ca-eta-nationals", "ca-eta-link"]
+}

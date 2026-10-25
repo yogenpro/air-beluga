@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "currentContentVersion": "canada-2026-10-25-v1",
+  "releases": [
+    {
+      "contentVersion": "illustrative-v1",
+      "path": "releases/illustrative-v1/bundle.json",
+      "sha256": "452531c8cb3f23c1239c516d7849ca4d41d8ca811c48be374ada78282ea3ecc0"
+    },
+    {
+      "contentVersion": "canada-2026-10-25-v1",
+      "path": "releases/canada-2026-10-25-v1/bundle.json",
+      "sha256": "4fd7d0a040c1912f0feacd4a95815c745c6bd402ac3af1228bc1df192879e287"
+    }
+  ],
+  "dailySchedule": [
+    {
+      "from": "2026-10-25",
+      "contentVersion": "canada-2026-10-25-v1",
+      "poolId": "canada-pool-v1"
+    }
+  ]
+}

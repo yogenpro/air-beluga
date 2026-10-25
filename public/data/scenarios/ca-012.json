@@ -1,0 +1,105 @@
+{
+  "id": "ca-012",
+  "version": 1,
+  "title": "SFO–YVR: Leela Brook",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-25",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored evidence path, exceptions and disposition against ca-us-only-return, ca-student. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "HARD",
+  "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+  "travelDate": "2026-10-25",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Leela Brook",
+    "nationality": "IN",
+    "additionalNationalities": [],
+    "residence": {
+      "country": "CA",
+      "status": "STUDENT"
+    }
+  },
+  "assumptions": [
+    "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+    "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+    "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout.",
+    "The study permit was issued before departure from Canada, remains valid, and the student remains enrolled at a designated learning institution. All other study and admissibility conditions are stipulated satisfied."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "IN",
+      "holder": "Leela Brook",
+      "validFrom": "2023-01-01",
+      "validUntil": "2033-01-01",
+      "attributes": {
+        "number": "IN-SYNTHETIC-012",
+        "category": "Ordinary national passport"
+      }
+    },
+    {
+      "id": "study-permit",
+      "type": "STUDY_PERMIT",
+      "issuingCountry": "CA",
+      "holder": "Leela Brook",
+      "validFrom": "2025-09-01",
+      "validUntil": "2027-08-31",
+      "attributes": {
+        "status": "VALID; attending a designated learning institution",
+        "destinationCountry": "CA"
+      }
+    },
+    {
+      "id": "visa",
+      "type": "VISA",
+      "issuingCountry": "CA",
+      "holder": "Leela Brook",
+      "validFrom": "2025-01-01",
+      "validUntil": "2026-10-24",
+      "attributes": {
+        "category": "Visitor visa / temporary resident visa",
+        "destinationCountry": "CA",
+        "entriesRemaining": 1
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "study-permit", "visa"],
+  "clues": [
+    "The returning student’s visa expired yesterday, but the Canadian study permit is current. The trip history has not been clarified."
+  ],
+  "questions": [
+    {
+      "id": "ask-trip",
+      "label": "Ask where you travelled after leaving Canada",
+      "response": "I visited only the United States and am returning before my authorized Canadian stay ends. My current study permit was issued before I left Canada.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["passport", "study-permit"],
+        "requiredQuestionIds": ["ask-trip"]
+      }
+    ]
+  },
+  "rationale": "The inquiry establishes the narrow US-only return circumstances described by IRCC, with an already-issued valid study permit and return before the authorized stay ends. The expired visa does not require denial under these authored facts; border admission is still determined separately.",
+  "ruleIds": ["ca-us-only-return", "ca-student"]
+}

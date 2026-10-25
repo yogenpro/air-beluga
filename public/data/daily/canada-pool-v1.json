@@ -1,0 +1,35 @@
+{
+  "id": "canada-pool-v1",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+  "dailyAlgorithmVersion": "fnv1a32-mulberry32-v1",
+  "caseIds": [
+    "ca-001",
+    "ca-002",
+    "ca-003",
+    "ca-004",
+    "ca-005",
+    "ca-006",
+    "ca-007",
+    "ca-008",
+    "ca-009",
+    "ca-010",
+    "ca-011",
+    "ca-012"
+  ],
+  "count": 6,
+  "difficulty": {
+    "EASY": {
+      "min": 1,
+      "max": 2
+    },
+    "MEDIUM": {
+      "min": 2,
+      "max": 4
+    },
+    "HARD": {
+      "min": 1,
+      "max": 2
+    }
+  }
+}

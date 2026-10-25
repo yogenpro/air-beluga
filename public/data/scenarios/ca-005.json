@@ -1,0 +1,79 @@
+{
+  "id": "ca-005",
+  "version": 1,
+  "title": "SFO–YVR: Esha Rao",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-25",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored evidence path, exceptions and disposition against ca-visitor-visa. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "EASY",
+  "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+  "travelDate": "2026-10-25",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Esha Rao",
+    "nationality": "IN",
+    "additionalNationalities": []
+  },
+  "assumptions": [
+    "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+    "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+    "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "IN",
+      "holder": "Esha Rao",
+      "validFrom": "2023-01-01",
+      "validUntil": "2033-01-01",
+      "attributes": {
+        "number": "IN-SYNTHETIC-005",
+        "category": "Ordinary national passport"
+      }
+    },
+    {
+      "id": "visa",
+      "type": "VISA",
+      "issuingCountry": "CA",
+      "holder": "Esha Rao",
+      "validFrom": "2025-01-01",
+      "validUntil": "2028-12-31",
+      "attributes": {
+        "category": "Visitor visa / temporary resident visa",
+        "destinationCountry": "CA",
+        "entriesRemaining": 1
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "visa"],
+  "clues": [
+    "The passenger is an Indian citizen taking a one-week visit and presents a current Canadian visitor visa with an unused entry."
+  ],
+  "questions": [],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["passport", "visa"],
+        "requiredQuestionIds": []
+      }
+    ]
+  },
+  "rationale": "The ordinary Indian passport and valid Canadian visitor visa satisfy the authored document requirement. No extra eTA is required on top of the visa.",
+  "ruleIds": ["ca-visitor-visa"]
+}

@@ -19,6 +19,12 @@ export function progressKey(stageId: string) {
   return `air-beluga:progress:${stageId}`;
 }
 
+export function sessionProgressKey(session: GameSession) {
+  return session.challenge.kind === 'STAGE'
+    ? progressKey(session.challenge.id)
+    : `air-beluga:daily-progress:${session.challenge.id}`;
+}
+
 export type RestoreResult =
   | { status: 'RESTORED'; session: GameSession }
   | {
@@ -35,15 +41,17 @@ export function browserStorage(): ProgressStorage | null {
 }
 
 /** Replay authored actions instead of trusting saved scores or evidence IDs. */
-function replayStage(
+export function replaySession(
   saved: GameSession,
   content: ContentBundle,
-  stageId: string,
+  initialSession: GameSession,
 ) {
-  let replayed = createStageSession(content, stageId);
+  saved = GameSessionSchema.parse(saved);
+  let replayed = initialSession;
   if (
-    saved.challenge.kind !== 'STAGE' ||
-    saved.challenge.id !== stageId ||
+    saved.contentVersion !== content.manifest.contentVersion ||
+    JSON.stringify(saved.challenge) !==
+      JSON.stringify(initialSession.challenge) ||
     JSON.stringify(saved.caseIds) !== JSON.stringify(replayed.caseIds)
   )
     throw new Error('Saved stage does not match content');
@@ -107,10 +115,22 @@ export function restoreProgress(
   content: ContentBundle,
   stageId: string,
 ): RestoreResult {
+  return restoreSessionProgress(
+    storage,
+    content,
+    createStageSession(content, stageId),
+  );
+}
+
+export function restoreSessionProgress(
+  storage: ProgressStorage | null,
+  content: ContentBundle,
+  initialSession: GameSession,
+): RestoreResult {
   if (!storage) return { status: 'UNAVAILABLE', session: null };
   let raw: string | null;
   try {
-    raw = storage.getItem(progressKey(stageId));
+    raw = storage.getItem(sessionProgressKey(initialSession));
   } catch {
     return { status: 'UNAVAILABLE', session: null };
   }
@@ -141,7 +161,7 @@ export function restoreProgress(
     const record = RecordSchema.parse(envelope);
     return {
       status: 'RESTORED',
-      session: replayStage(record.session, content, stageId),
+      session: replaySession(record.session, content, initialSession),
     };
   } catch {
     return { status: 'INVALID', session: null };
@@ -152,10 +172,10 @@ export function saveProgress(
   storage: ProgressStorage | null,
   session: GameSession,
 ): boolean {
-  if (!storage || session.challenge.kind !== 'STAGE') return false;
+  if (!storage) return false;
   try {
     storage.setItem(
-      progressKey(session.challenge.id),
+      sessionProgressKey(session),
       JSON.stringify({ storageVersion: 1, session }),
     );
     return true;

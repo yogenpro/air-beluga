@@ -1,0 +1,933 @@
+{
+  "manifest": {
+    "schemaVersion": 1,
+    "contentVersion": "illustrative-v1",
+    "scoring": {
+      "correctDecision": 100,
+      "appropriateInquiry": 15,
+      "efficiency": 10,
+      "extraQuestionPenalty": 2
+    },
+    "ruleSnapshots": [
+      {
+        "id": "illustrative-rules-v1",
+        "path": "rules/illustrative-v1.json"
+      }
+    ],
+    "cases": [
+      {
+        "id": "fixture-01-ready",
+        "path": "scenarios/fixture-01-ready.json"
+      },
+      {
+        "id": "fixture-02-hidden-visa",
+        "path": "scenarios/fixture-02-hidden-visa.json"
+      },
+      {
+        "id": "fixture-03-expired",
+        "path": "scenarios/fixture-03-expired.json"
+      },
+      {
+        "id": "fixture-04-no-visa",
+        "path": "scenarios/fixture-04-no-visa.json"
+      },
+      {
+        "id": "fixture-05-resident",
+        "path": "scenarios/fixture-05-resident.json"
+      },
+      {
+        "id": "fixture-06-referral",
+        "path": "scenarios/fixture-06-referral.json"
+      },
+      {
+        "id": "fixture-07-onward",
+        "path": "scenarios/fixture-07-onward.json"
+      },
+      {
+        "id": "fixture-08-alternatives",
+        "path": "scenarios/fixture-08-alternatives.json"
+      }
+    ],
+    "stages": [
+      {
+        "id": "001-sfo",
+        "path": "stages/001-sfo.json"
+      }
+    ],
+    "dailyPools": [
+      {
+        "id": "fixture-pool-v1",
+        "path": "daily/fixture-pool-v1.json"
+      }
+    ]
+  },
+  "ruleSnapshots": [
+    {
+      "id": "illustrative-rules-v1",
+      "asOfDate": "2026-10-24",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "rules": [
+        {
+          "id": "training-passport",
+          "title": "Training passport validity",
+          "body": "Invented exercise rule: present a passport valid on the travel date. An expired sole passport requires denial when no replacement can be obtained.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        },
+        {
+          "id": "training-visa",
+          "title": "Training visitor permission",
+          "body": "Invented exercise rule: fictional XZ visitors need a current TRAINING-VISITOR visa with at least one entry remaining, unless an explicitly stated training exception applies. Resolve an available permission inquiry before denial.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        },
+        {
+          "id": "training-permit",
+          "title": "Training resident exception",
+          "body": "Invented exercise rule: a current TRAINING-RESIDENT permit may replace a visitor visa. The permit must actually be presented.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        },
+        {
+          "id": "training-referral",
+          "title": "Training supervisor referral",
+          "body": "Invented exercise rule: a TRAINING-MANUAL-REVIEW permit whose status cannot be clarified after the offered inquiry requires supervisor escalation. Escalation is not a fallback for other cases.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        },
+        {
+          "id": "training-onward",
+          "title": "Training connecting journey",
+          "body": "Invented exercise rule: for the authored SFO–LHR–DUB connection, also request and receive the confirmed onward booking. This is not a statement of actual transit law.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        },
+        {
+          "id": "training-alternative",
+          "title": "Training alternative passports",
+          "body": "Invented exercise rule: the authored dual-document passenger may present either a current fictional XY passport or a current visitor visa in addition to the initial passport.",
+          "scope": {
+            "departureAirports": [
+              "SFO"
+            ],
+            "destinationCountries": [
+              "GB",
+              "IE"
+            ],
+            "transitCountries": [
+              "GB"
+            ]
+          },
+          "sources": []
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "fixture-01-ready",
+      "version": 1,
+      "title": "Illustrative: complete initial evidence",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "EASY",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Ari Vale",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Ari Vale",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "GB",
+          "holder": "Ari Vale",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "category": "TRAINING-VISITOR",
+            "destinationCountry": "GB",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "visa"
+      ],
+      "clues": [
+        "Both documents are offered at the counter. The invented visitor rule applies."
+      ],
+      "questions": [],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "presented",
+            "requiredDocumentIds": [
+              "passport",
+              "visa"
+            ],
+            "requiredQuestionIds": []
+          }
+        ]
+      },
+      "rationale": "Under the invented training rule, the presented passport and unused visitor visa are valid on the authored travel date. Accept for airline check-in; this does not guarantee border admission.",
+      "ruleIds": [
+        "training-passport",
+        "training-visa"
+      ]
+    },
+    {
+      "id": "fixture-02-hidden-visa",
+      "version": 1,
+      "title": "Illustrative: request a visa before acceptance",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Bo Reed",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Bo Reed",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "GB",
+          "holder": "Bo Reed",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "category": "TRAINING-VISITOR",
+            "destinationCountry": "GB",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The passenger says: I have my travel permission in another folder."
+      ],
+      "questions": [
+        {
+          "id": "ask-visa",
+          "label": "Ask for destination visa",
+          "response": "Here is my training visitor visa.",
+          "revealsDocumentIds": [
+            "visa"
+          ],
+          "justified": true
+        },
+        {
+          "id": "ask-onward",
+          "label": "Ask for onward booking",
+          "response": "There is no onward segment on this booking.",
+          "revealsDocumentIds": [],
+          "justified": false
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "request-visa",
+            "requiredDocumentIds": [
+              "passport",
+              "visa"
+            ],
+            "requiredQuestionIds": [
+              "ask-visa"
+            ]
+          }
+        ]
+      },
+      "rationale": "The training visitor rule requires the visa to be presented. Possessing it in a folder is insufficient until the agent asks for it. A premature check-in is incorrect.",
+      "ruleIds": [
+        "training-passport",
+        "training-visa"
+      ]
+    },
+    {
+      "id": "fixture-03-expired",
+      "version": 1,
+      "title": "Illustrative: expired passport",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "EASY",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Cleo Hart",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Cleo Hart",
+          "validFrom": "2024-01-01",
+          "validUntil": "2026-10-23",
+          "attributes": {}
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "GB",
+          "holder": "Cleo Hart",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "category": "TRAINING-VISITOR",
+            "destinationCountry": "GB",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "visa"
+      ],
+      "clues": [
+        "The passenger confirms: This is my only passport; I have no replacement. Compare its expiry with the travel date."
+      ],
+      "questions": [],
+      "resolution": {
+        "expectedDecision": "DENY",
+        "paths": [
+          {
+            "id": "expired-passport",
+            "requiredDocumentIds": [
+              "passport",
+              "visa"
+            ],
+            "requiredQuestionIds": []
+          }
+        ]
+      },
+      "rationale": "The sole passport expired before travel. The invented passport rule requires current validity; no replacement document is obtainable in this case. Deny airline acceptance.",
+      "ruleIds": [
+        "training-passport"
+      ]
+    },
+    {
+      "id": "fixture-04-no-visa",
+      "version": 1,
+      "title": "Illustrative: resolve missing permission before denial",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "EASY",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Dev Moss",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Dev Moss",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "No destination permission is presented. Ask whether the passenger has a visa or training residence permit."
+      ],
+      "questions": [
+        {
+          "id": "ask-permission",
+          "label": "Ask for a visa or residence permit",
+          "response": "I have neither a visa nor a residence permit, and no second passport.",
+          "revealsDocumentIds": [],
+          "justified": true
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "DENY",
+        "paths": [
+          {
+            "id": "confirmed-absence",
+            "requiredDocumentIds": [
+              "passport"
+            ],
+            "requiredQuestionIds": [
+              "ask-permission"
+            ]
+          }
+        ]
+      },
+      "rationale": "After asking, the passenger confirms that no qualifying permission is available. The training requirement is unmet. Denying before resolving that inquiry is premature.",
+      "ruleIds": [
+        "training-visa",
+        "training-permit"
+      ]
+    },
+    {
+      "id": "fixture-05-resident",
+      "version": 1,
+      "title": "Illustrative: residence permit alternative",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Emi Lake",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Emi Lake",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "residence-permit",
+          "type": "RESIDENCE_PERMIT",
+          "issuingCountry": "GB",
+          "holder": "Emi Lake",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "destinationCountry": "GB",
+            "status": "TRAINING-RESIDENT"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The passenger says: I live at the destination and brought my resident card."
+      ],
+      "questions": [
+        {
+          "id": "ask-permit",
+          "label": "Ask for residence permit",
+          "response": "Here is my current training residence permit.",
+          "revealsDocumentIds": [
+            "residence-permit"
+          ],
+          "justified": true
+        },
+        {
+          "id": "ask-onward",
+          "label": "Ask for onward ticket",
+          "response": "I am returning home; this training route has no onward-ticket condition.",
+          "revealsDocumentIds": [],
+          "justified": false
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "resident-evidence",
+            "requiredDocumentIds": [
+              "passport",
+              "residence-permit"
+            ],
+            "requiredQuestionIds": [
+              "ask-permit"
+            ]
+          }
+        ]
+      },
+      "rationale": "The invented resident exception accepts a current training residence permit in place of a visitor visa. Requesting that permit establishes the required evidence without extra questions.",
+      "ruleIds": [
+        "training-passport",
+        "training-permit"
+      ]
+    },
+    {
+      "id": "fixture-06-referral",
+      "version": 1,
+      "title": "Illustrative: authorized supervisor referral",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "HARD",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Finn Ash",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Finn Ash",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "residence-permit",
+          "type": "RESIDENCE_PERMIT",
+          "issuingCountry": "GB",
+          "holder": "Finn Ash",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "destinationCountry": "GB",
+            "status": "TRAINING-MANUAL-REVIEW"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "residence-permit"
+      ],
+      "clues": [
+        "The permit is marked TRAINING-MANUAL-REVIEW. The training reference explicitly requires supervisor review if the status cannot be clarified."
+      ],
+      "questions": [
+        {
+          "id": "ask-status",
+          "label": "Ask about the manual-review status",
+          "response": "I cannot provide a status confirmation. This case needs the supervisor review described in the training rule.",
+          "revealsDocumentIds": [],
+          "justified": true
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "ESCALATE",
+        "paths": [
+          {
+            "id": "confirmed-referral",
+            "requiredDocumentIds": [
+              "passport",
+              "residence-permit"
+            ],
+            "requiredQuestionIds": [
+              "ask-status"
+            ]
+          }
+        ]
+      },
+      "rationale": "The training referral rule requires an authorized supervisor handoff after the status inquiry remains unresolved. Neither acceptance nor denial is warranted from these facts. Escalation is correct only for this authored condition.",
+      "ruleIds": [
+        "training-referral"
+      ]
+    },
+    {
+      "id": "fixture-07-onward",
+      "version": 1,
+      "title": "Illustrative: request onward travel evidence",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "MEDIUM",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "AIRSIDE",
+          "separateTicket": false
+        },
+        {
+          "from": "LHR",
+          "to": "DUB",
+          "destinationCountry": "IE",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Gia North",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Gia North",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "GB",
+          "holder": "Gia North",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "category": "TRAINING-VISITOR",
+            "destinationCountry": "GB",
+            "entriesRemaining": 1
+          }
+        },
+        {
+          "id": "onward-ticket",
+          "type": "ONWARD_TICKET",
+          "issuingCountry": "GB",
+          "holder": "Gia North",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "destinationCountry": "IE",
+            "bookingReference": "FIXTURE-ONWARD"
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport",
+        "visa"
+      ],
+      "clues": [
+        "The booking connects at LHR to DUB. The invented connecting-journey rule asks for confirmation of that onward segment."
+      ],
+      "questions": [
+        {
+          "id": "ask-onward",
+          "label": "Ask for onward ticket",
+          "response": "Here is the confirmed LHR to DUB training booking.",
+          "revealsDocumentIds": [
+            "onward-ticket"
+          ],
+          "justified": true
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "onward-evidence",
+            "requiredDocumentIds": [
+              "passport",
+              "visa",
+              "onward-ticket"
+            ],
+            "requiredQuestionIds": [
+              "ask-onward"
+            ]
+          }
+        ]
+      },
+      "rationale": "For this invented connection puzzle, the passport, visitor permission, and confirmed onward ticket must all be presented. The rule does not describe actual UK or Irish transit requirements.",
+      "ruleIds": [
+        "training-passport",
+        "training-visa",
+        "training-onward"
+      ]
+    },
+    {
+      "id": "fixture-08-alternatives",
+      "version": 1,
+      "title": "Illustrative: two discoverable acceptance paths",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "difficulty": "HARD",
+      "ruleSnapshotId": "illustrative-rules-v1",
+      "travelDate": "2026-10-24",
+      "itinerary": [
+        {
+          "from": "SFO",
+          "to": "LHR",
+          "destinationCountry": "GB",
+          "transit": "NONE",
+          "separateTicket": false
+        }
+      ],
+      "passenger": {
+        "displayName": "Hal Pine",
+        "nationality": "XZ"
+      },
+      "documents": [
+        {
+          "id": "passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XZ",
+          "holder": "Hal Pine",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "second-passport",
+          "type": "PASSPORT",
+          "issuingCountry": "XY",
+          "holder": "Hal Pine",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {}
+        },
+        {
+          "id": "visa",
+          "type": "VISA",
+          "issuingCountry": "GB",
+          "holder": "Hal Pine",
+          "validFrom": "2026-01-01",
+          "validUntil": "2027-12-31",
+          "attributes": {
+            "category": "TRAINING-VISITOR",
+            "destinationCountry": "GB",
+            "entriesRemaining": 1
+          }
+        }
+      ],
+      "initiallyPresentedDocumentIds": [
+        "passport"
+      ],
+      "clues": [
+        "The passenger says: I hold a second passport from fictional country XY, and I also have a visitor visa. Either may meet the invented training rule."
+      ],
+      "questions": [
+        {
+          "id": "ask-second-passport",
+          "label": "Ask for second passport",
+          "response": "Here is my fictional XY passport.",
+          "revealsDocumentIds": [
+            "second-passport"
+          ],
+          "justified": true
+        },
+        {
+          "id": "ask-visa",
+          "label": "Ask for destination visa",
+          "response": "Here is my training visitor visa.",
+          "revealsDocumentIds": [
+            "visa"
+          ],
+          "justified": true
+        }
+      ],
+      "resolution": {
+        "expectedDecision": "CHECK_IN",
+        "paths": [
+          {
+            "id": "second-passport-route",
+            "requiredDocumentIds": [
+              "passport",
+              "second-passport"
+            ],
+            "requiredQuestionIds": [
+              "ask-second-passport"
+            ]
+          },
+          {
+            "id": "visa-route",
+            "requiredDocumentIds": [
+              "passport",
+              "visa"
+            ],
+            "requiredQuestionIds": [
+              "ask-visa"
+            ]
+          }
+        ]
+      },
+      "rationale": "The invented alternative-evidence rule permits either the presented XY passport or the presented visitor visa. Each question is justified; neither hidden document can authorize premature check-in.",
+      "ruleIds": [
+        "training-passport",
+        "training-alternative"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "001-sfo",
+      "title": "SFO illustrative training desk",
+      "departureAirport": "SFO",
+      "airline": "Air Beluga",
+      "flightLabel": "AB 101 · SFO to LHR · illustrative training",
+      "scheduledDeparture": "2026-10-24T18:00:00Z",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "caseIds": [
+        "fixture-01-ready",
+        "fixture-02-hidden-visa",
+        "fixture-03-expired",
+        "fixture-04-no-visa",
+        "fixture-05-resident",
+        "fixture-06-referral",
+        "fixture-07-onward",
+        "fixture-08-alternatives"
+      ],
+      "tutorial": "Apply only the invented training reference. Ask targeted questions before committing a disposition. Airline check-in is separate from border admission."
+    }
+  ],
+  "dailyPools": [
+    {
+      "id": "fixture-pool-v1",
+      "verificationStatus": "ILLUSTRATIVE_ONLY",
+      "notice": "Illustrative training fixture only. These invented requirements are not verified travel rules.",
+      "dailyAlgorithmVersion": "fnv1a32-mulberry32-v1",
+      "caseIds": [
+        "fixture-01-ready",
+        "fixture-02-hidden-visa",
+        "fixture-03-expired",
+        "fixture-04-no-visa",
+        "fixture-05-resident",
+        "fixture-06-referral",
+        "fixture-07-onward",
+        "fixture-08-alternatives"
+      ],
+      "count": 5,
+      "difficulty": {
+        "EASY": {
+          "min": 1,
+          "max": 2
+        },
+        "MEDIUM": {
+          "min": 2,
+          "max": 3
+        },
+        "HARD": {
+          "min": 1,
+          "max": 2
+        }
+      }
+    }
+  ]
+}

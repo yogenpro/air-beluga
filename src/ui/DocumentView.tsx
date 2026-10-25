@@ -31,6 +31,12 @@ export function DocumentView({
         <dl id={`document-${document.id}`}>
           <dt>Holder</dt>
           <dd>{document.holder}</dd>
+          {attributes.number && (
+            <>
+              <dt>Document number</dt>
+              <dd>{attributes.number}</dd>
+            </>
+          )}
           <dt>Issued by</dt>
           <dd>{document.issuingCountry}</dd>
           <dt>Valid from</dt>
@@ -65,6 +71,12 @@ export function DocumentView({
             <>
               <dt>Booking reference</dt>
               <dd>{attributes.bookingReference}</dd>
+            </>
+          )}
+          {attributes.linkedPassportNumber && (
+            <>
+              <dt>Linked passport number</dt>
+              <dd>{attributes.linkedPassportNumber}</dd>
             </>
           )}
         </dl>

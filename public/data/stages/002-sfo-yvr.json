@@ -1,0 +1,21 @@
+{
+  "id": "002-sfo-yvr",
+  "title": "SFO–Vancouver document desk",
+  "departureAirport": "SFO",
+  "airline": "Air Beluga",
+  "flightLabel": "Air Beluga AB 201 · SFO → YVR",
+  "scheduledDeparture": "2026-10-25T18:00:00Z",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+  "caseIds": [
+    "ca-001",
+    "ca-002",
+    "ca-003",
+    "ca-006",
+    "ca-007",
+    "ca-008",
+    "ca-009",
+    "ca-011"
+  ],
+  "tutorial": "Apply the source-reviewed Canadian rule snapshot for the authored travel date. Some electronic records must be checked; a paper eTA approval is not a boarding requirement."
+}

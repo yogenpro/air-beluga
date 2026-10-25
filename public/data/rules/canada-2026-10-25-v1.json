@@ -1,0 +1,195 @@
+{
+  "id": "canada-rules-2026-10-25-v1",
+  "asOfDate": "2026-10-25",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+  "rules": [
+    {
+      "id": "ca-us-citizen",
+      "title": "US citizens travelling by air",
+      "body": "For the US-citizen visitor cases here, a current US passport supplies travel identification; a Canadian visa and eTA are not required. Other routine acceptance checks are stipulated satisfied.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25",
+          "pageUpdatedDate": "2026-08-06"
+        }
+      ]
+    },
+    {
+      "id": "ca-eta-nationals",
+      "title": "British-citizen and French passports",
+      "body": "The ordinary British-citizen and French visitor cases in this desk require a current passport and matching valid eTA for air travel, unless the case states another applicable status.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25",
+          "pageUpdatedDate": "2026-08-06"
+        }
+      ]
+    },
+    {
+      "id": "ca-eta-link",
+      "title": "eTA and the passport used for travel",
+      "body": "An eTA is electronic, not a paper boarding document. The airline checks its status against the presented passport. Replacing the passport requires a new matching eTA; an approval tied to a different passport is insufficient.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/facts.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25",
+          "pageUpdatedDate": "2024-04-23"
+        }
+      ]
+    },
+    {
+      "id": "ca-visitor-visa",
+      "title": "Indian and Chinese visitor passports",
+      "body": "The ordinary Indian and mainland Chinese visitor cases here require a current passport and valid Canadian visitor visa unless a stated exemption applies. Resolve any offered inquiry about qualifying documents before denying. These nationalities are not in the selected-nationality eTA exception used by some other visa-required travellers.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/about-visitor-visa.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "ca-us-pr",
+      "title": "US permanent residents",
+      "body": "A US lawful permanent resident travelling by air carries a current nationality passport and valid US permanent-resident proof. A current Form I-551 green card is one accepted proof. The visa/eTA visitor requirement does not apply to this status.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25",
+          "pageUpdatedDate": "2026-08-06",
+          "effectiveFrom": "2022-04-26"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "ca-canadian-pr",
+      "title": "Canadian permanent residents returning by air",
+      "body": "For these returning Canadian permanent residents, request a valid PR card with the passport, or a valid permanent resident travel document (PRTD). A visitor visa or eTA does not replace the PR travel evidence.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/permanent-residents/travel-outside-canada.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25",
+          "pageUpdatedDate": "2025-08-07"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25",
+          "pageUpdatedDate": "2026-08-06"
+        }
+      ]
+    },
+    {
+      "id": "ca-prtd",
+      "title": "Returning without a PR card",
+      "body": "An issued, valid PRTD can supply the missing PR travel evidence for a commercial return to Canada. The authored PRTD has one unused entry. Applying for one is different from already possessing it.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/permanent-residents/travel-document.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "ca-student",
+      "title": "Study permit and international travel",
+      "body": "A study permit governs study status; it is not generally a substitute for the required travel visa. For the Indian student who visited Japan as well as the US, an expired visa and current study permit do not establish the US-only return exemption.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.ircc.canada.ca/english/helpcentre/answer.asp?qnum=494&top=22",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/travel-outside-canada.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25",
+          "pageUpdatedDate": "2026-08-28"
+        }
+      ]
+    },
+    {
+      "id": "ca-us-only-return",
+      "title": "Returning after visiting only the US",
+      "body": "The authored returning student already held the current study permit before departure, visited only the US, and returns before the authorized stay ends. IRCC describes a return exception where the visa has expired in these circumstances. Confirm the trip history; the exception does not cover a trip that also included Japan. Border admission remains a separate decision.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/travel-outside-canada.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-25",
+          "pageUpdatedDate": "2026-08-28"
+        }
+      ]
+    }
+  ]
+}

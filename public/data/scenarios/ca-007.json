@@ -1,0 +1,75 @@
+{
+  "id": "ca-007",
+  "version": 1,
+  "title": "SFO–YVR: Gauri Sen",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-25. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-25",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored evidence path, exceptions and disposition against ca-visitor-visa. See docs/content-review-2026-10-25.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "canada-rules-2026-10-25-v1",
+  "travelDate": "2026-10-25",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Gauri Sen",
+    "nationality": "IN",
+    "additionalNationalities": []
+  },
+  "assumptions": [
+    "Adult passenger on the direct commercial SFO–YVR flight; ordinary genuine documents, matching identity, and all non-document airline checks are stipulated satisfied. No decision here guarantees admission at the Canadian border.",
+    "Only the declared citizenship and residence status apply. No unmentioned second passport, US/Canadian permanent-resident status, diplomatic exception, or other travel-permission exception is available.",
+    "Passenger names and document numbers are synthetic. Electronic authorization results are simulated carrier checks, never live calls and never a requirement to carry an eTA printout."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "IN",
+      "holder": "Gauri Sen",
+      "validFrom": "2023-01-01",
+      "validUntil": "2033-01-01",
+      "attributes": {
+        "number": "IN-SYNTHETIC-007",
+        "category": "Ordinary national passport"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": [
+    "The Indian visitor presents only a passport. No second nationality or US/Canadian resident status is declared. Resolve whether any Canadian travel permission is available."
+  ],
+  "questions": [
+    {
+      "id": "ask-permission",
+      "label": "Ask for Canadian travel permission",
+      "response": "I have no Canadian visa and no other qualifying Canadian permission, passport or resident status.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "DENY",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["passport"],
+        "requiredQuestionIds": ["ask-permission"]
+      }
+    ]
+  },
+  "rationale": "The inquiry confirms no qualifying permission remains obtainable. Under these stated visitor facts, the Indian passport alone is insufficient; the selected-nationality eTA route does not apply.",
+  "ruleIds": ["ca-visitor-visa"]
+}
