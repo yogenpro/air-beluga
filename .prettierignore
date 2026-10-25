@@ -1,5 +1,7 @@
 node_modules
 dist
 coverage
+test-results
+.wrangler
 package-lock.json
 air-beluga-implementation-handoff.md

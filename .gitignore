@@ -9,3 +9,5 @@ coverage/
 .aws/
 .agents/
 .codex/
+test-results/
+.wrangler/
