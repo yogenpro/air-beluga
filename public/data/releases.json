@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "currentContentVersion": "canada-documents-2026-10-26-v2",
+  "currentContentVersion": "historical-covid-2026-10-26-v3",
   "releases": [
     {
       "contentVersion": "illustrative-v1",
@@ -16,6 +16,11 @@
       "contentVersion": "canada-documents-2026-10-26-v2",
       "path": "releases/canada-documents-2026-10-26-v2/bundle.json",
       "sha256": "3496c1da87e82ce082709d4a7c186824c808394a93a90f2f65ec44163ffa5ef1"
+    },
+    {
+      "contentVersion": "historical-covid-2026-10-26-v3",
+      "path": "releases/historical-covid-2026-10-26-v3/bundle.json",
+      "sha256": "45b55c224ae2924429e08036674c258314a8aa8f277f2417074d15e0187aa385"
     }
   ],
   "dailySchedule": [

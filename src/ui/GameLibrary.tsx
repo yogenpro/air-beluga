@@ -330,19 +330,25 @@ export function GameLibrary({ library }: { library: ContentLibrary }) {
               <>
                 <div className="page-heading">
                   <p className="eyebrow">
-                    {stage.verificationStatus === 'ILLUSTRATIVE_ONLY'
-                      ? 'WELCOME ABOARD'
-                      : 'A LITTLE PRACTICE GOES A LONG WAY'}
+                    {stage.historical
+                      ? 'A DAY IN THE PAST'
+                      : stage.verificationStatus === 'ILLUSTRATIVE_ONLY'
+                        ? 'WELCOME ABOARD'
+                        : 'A LITTLE PRACTICE GOES A LONG WAY'}
                   </p>
                   <h1>
-                    {stage.verificationStatus === 'ILLUSTRATIVE_ONLY'
-                      ? 'First day at the desk'
-                      : 'Practice shift'}
+                    {stage.historical
+                      ? 'Historical shift'
+                      : stage.verificationStatus === 'ILLUSTRATIVE_ONLY'
+                        ? 'First day at the desk'
+                        : 'Practice shift'}
                   </h1>
                   <p>
-                    {stage.verificationStatus === 'ILLUSTRATIVE_ONLY'
-                      ? 'Learn the ropes, one passenger at a time.'
-                      : 'Settle in and work through a handpicked queue.'}
+                    {stage.historical
+                      ? 'Turn back the clock. The rules at this desk belong to its travel date.'
+                      : stage.verificationStatus === 'ILLUSTRATIVE_ONLY'
+                        ? 'Learn the ropes, one passenger at a time.'
+                        : 'Settle in and work through a handpicked queue.'}
                   </p>
                 </div>
                 <GameDesk
@@ -361,6 +367,7 @@ export function GameLibrary({ library }: { library: ContentLibrary }) {
                         ? 'TRAINING'
                         : 'PRACTICE',
                     airport: stage.departureAirport,
+                    historical: stage.historical,
                   }}
                 />
               </>
@@ -401,11 +408,16 @@ export function GameLibrary({ library }: { library: ContentLibrary }) {
                           </span>
                         </span>
                         <span className="eyebrow">
-                          SOURCE-REVIEWED · {item.caseIds.length} PASSENGERS
+                          {item.historical
+                            ? `HISTORICAL · ${item.scheduledDeparture.slice(0, 10)}`
+                            : 'SOURCE-REVIEWED'}{' '}
+                          · {item.caseIds.length} PASSENGERS
                         </span>
                         <span className="card-title">{item.title}</span>
                         <span className="card-description">
-                          Passports, permits, and asking the right questions.
+                          {item.historical
+                            ? 'COVID-era reports, laboratory checks, and a clock that matters.'
+                            : 'Passports, permits, and asking the right questions.'}
                         </span>
                         <span className="card-cta">
                           Open shift briefing

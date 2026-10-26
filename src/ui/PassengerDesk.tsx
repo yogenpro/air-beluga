@@ -5,6 +5,7 @@ import type { ContentBundle, GameSession } from '../core/types';
 import { DocumentView } from './DocumentView';
 import { DECISION_LABELS } from './labels';
 import { Icon, PassengerPortrait } from './Icons';
+import { displayInstant } from './time';
 export function PassengerDesk({
   session,
   content,
@@ -73,6 +74,11 @@ export function PassengerDesk({
                   ` · ${leg.transit === 'AIRSIDE' ? 'Airside' : 'Landside'} connection`}
                 {leg.separateTicket && ' · Separate ticket'}
               </span>
+              {leg.scheduledDeparture && (
+                <span className="leg-description">
+                  Scheduled departure: {displayInstant(leg.scheduledDeparture)}
+                </span>
+              )}
             </li>
           ))}
         </ol>
@@ -85,6 +91,12 @@ export function PassengerDesk({
             <dt>Travel date</dt>
             <dd>{view.travelDate}</dd>
           </div>
+          {view.historical && (
+            <div>
+              <dt>Historical rules date</dt>
+              <dd>{view.rulesDate}</dd>
+            </div>
+          )}
           {view.passenger.residence && (
             <div>
               <dt>Residence status</dt>

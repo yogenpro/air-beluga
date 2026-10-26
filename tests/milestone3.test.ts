@@ -178,7 +178,7 @@ describe('source-reviewed Canadian content', () => {
     for (const id of ['ca-008', 'ca-012']) {
       const item = current.cases.find((entry) => entry.id === id)!;
       expect(
-        item.documents.find((document) => document.id === 'visa')!.validUntil <
+        item.documents.find((document) => document.id === 'visa')!.validUntil! <
           item.travelDate,
       ).toBe(true);
     }

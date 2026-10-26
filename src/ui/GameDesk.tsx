@@ -23,6 +23,7 @@ export interface DeskMetadata {
   tutorial?: string;
   kind: 'DAILY' | 'PRACTICE' | 'TRAINING';
   airport: string;
+  historical?: boolean;
 }
 
 interface DeskState {
@@ -151,11 +152,13 @@ export function GameDesk({
         </div>
         <div className="shift-identity">
           <p className="eyebrow">
-            {metadata.kind === 'DAILY'
-              ? 'DAILY SHIFT'
-              : metadata.kind === 'TRAINING'
-                ? 'TRAINING DESK'
-                : 'PRACTICE SHIFT'}
+            {metadata.historical
+              ? 'HISTORICAL SHIFT'
+              : metadata.kind === 'DAILY'
+                ? 'DAILY SHIFT'
+                : metadata.kind === 'TRAINING'
+                  ? 'TRAINING DESK'
+                  : 'PRACTICE SHIFT'}
           </p>
           <h2>{metadata.title}</h2>
           <p>{metadata.departureLabel}</p>

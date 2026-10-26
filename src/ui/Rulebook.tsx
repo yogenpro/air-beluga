@@ -76,11 +76,19 @@ export function Rulebook({
         </a>
       </p>
       <p>
-        {snapshot.verificationStatus === 'ILLUSTRATIVE_ONLY'
-          ? 'Illustrative rules'
-          : 'Source-reviewed rule snapshot'}{' '}
+        {snapshot.historical
+          ? 'Historical rules'
+          : snapshot.verificationStatus === 'ILLUSTRATIVE_ONLY'
+            ? 'Illustrative rules'
+            : 'Source-reviewed rule snapshot'}{' '}
         · As of {snapshot.asOfDate}
       </p>
+      {snapshot.historical && (
+        <p className="notice historical-notice">
+          Apply the rules for this shift’s date, not today’s requirements.{' '}
+          Sources reviewed {snapshot.reviewedDate}.
+        </p>
+      )}
       <label htmlFor="rule-search">Search rules</label>
       <input
         placeholder="Find a requirement…"

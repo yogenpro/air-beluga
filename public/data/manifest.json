@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "contentVersion": "canada-documents-2026-10-26-v2",
+  "contentVersion": "historical-covid-2026-10-26-v3",
   "scoring": {
     "correctDecision": 100,
     "appropriateInquiry": 15,
@@ -19,6 +19,10 @@
     {
       "id": "canada-documents-rules-2026-10-26-v2",
       "path": "rules/canada-documents-2026-10-26-v2.json"
+    },
+    {
+      "id": "canada-covid-rules-2021-10-15-v1",
+      "path": "rules/canada-covid-rules-2021-10-15-v1.json"
     }
   ],
   "cases": [
@@ -149,6 +153,54 @@
     {
       "id": "ca-024",
       "path": "scenarios/ca-024.json"
+    },
+    {
+      "id": "hist-001",
+      "path": "scenarios/hist-001.json"
+    },
+    {
+      "id": "hist-002",
+      "path": "scenarios/hist-002.json"
+    },
+    {
+      "id": "hist-003",
+      "path": "scenarios/hist-003.json"
+    },
+    {
+      "id": "hist-004",
+      "path": "scenarios/hist-004.json"
+    },
+    {
+      "id": "hist-005",
+      "path": "scenarios/hist-005.json"
+    },
+    {
+      "id": "hist-006",
+      "path": "scenarios/hist-006.json"
+    },
+    {
+      "id": "hist-007",
+      "path": "scenarios/hist-007.json"
+    },
+    {
+      "id": "hist-008",
+      "path": "scenarios/hist-008.json"
+    },
+    {
+      "id": "hist-009",
+      "path": "scenarios/hist-009.json"
+    },
+    {
+      "id": "hist-010",
+      "path": "scenarios/hist-010.json"
+    },
+    {
+      "id": "hist-011",
+      "path": "scenarios/hist-011.json"
+    },
+    {
+      "id": "hist-012",
+      "path": "scenarios/hist-012.json"
     }
   ],
   "stages": [
@@ -163,6 +215,10 @@
     {
       "id": "003-sfo-yvr-documents",
       "path": "stages/003-sfo-yvr-documents.json"
+    },
+    {
+      "id": "004-del-yvr-2021",
+      "path": "stages/004-del-yvr-2021.json"
     }
   ],
   "dailyPools": [

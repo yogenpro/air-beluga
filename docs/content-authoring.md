@@ -59,3 +59,15 @@ The browser selects the last editorial boundary on or before a chosen UTC date, 
 Daily progress uses a key containing the entire versioned challenge ID. Completed results are kept separately at `air-beluga:daily-results:v1`, including completion time and the complete session: content version, UTC day, pool, algorithm version, case versions, rule snapshot IDs, dispositions, explanations, and score breakdowns.
 
 The first completion of an ID is retained; replaying does not overwrite it. History resolves the matching archived content and replays the recorded actions before showing the frozen result. It never grades an old result using the current rules or score configuration. Missing archives, unreadable/future records, or blocked storage produce a visible recovery message and preserve the original record. Results are local to this browser and can be inspected/edited; this is not a competitive leaderboard.
+
+## Historical shifts and time-sensitive documents
+
+Historical themes use a separate, conspicuously labeled stage and a snapshot pinned to the actual travel date. A historical shift is not obtained by relabeling today's rules or changing an old daily result. Follow the same coverage-matrix and deny/escalate balance guidance, including methodology, designated provider, collection time, issue time, time zone and obtainable replacements.
+
+Set `snapshot.historical` and `stage.historical` to true, `snapshot.asOfDate` to the historical travel date, and `snapshot.reviewedDate` to the actual source-review date. A historical case must use that exact rules date. Sources retain their real verification date and supported effective bounds; use contemporaneous publications or clearly identified retrospective government evidence. Record later removal/change evidence separately. Do not turn a source's publication or review date into a legal effective date.
+
+`COVID_TEST` is a report with `attributes.covidTest`, not an ordinary document with a fictional `validUntil`. Provide a synthetic certificate number, collection and report timestamps with explicit offsets, methodology, result, laboratory and collection site. If an offset is genuinely unresolved, preserve the printed text in `sampleTimeLabel` and require a verification question; do not assign a guessed UTC timestamp. `itinerary[].scheduledDeparture` supplies the flight clock. Report issue time does not restart the sampling window.
+
+A snapshot may define a narrow `testingRequirement` linked to a sourced rule. Validation requires each check-in path to include sufficient identity and test evidence under that snapshot, using elapsed hours and established laboratory identity. This supports authored finite cases; it is not a general medical or immigration eligibility engine. Keep report confirmation/alternative paths explicit, and distinguish known failures from unresolved material facts.
+
+The initial theme is documented in the [15 October 2021 historical review ledger](content-review-historical-2021-10-15.md). Historical practice additions can update the current content release without changing the daily schedule. Always preserve published bundles and UTC boundaries.

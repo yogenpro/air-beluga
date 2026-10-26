@@ -1,5 +1,6 @@
 import { ContentBundleSchema, ILLUSTRATIVE_NOTICE } from './schemas';
 import type { ContentBundle, DailyPool, Difficulty } from '../core/types';
+import { testEvidenceIssues } from './health';
 
 export class ContentValidationError extends Error {
   constructor(public readonly issues: string[]) {
@@ -100,6 +101,17 @@ export function validateContent(input: unknown): ContentBundle {
 
   for (const snapshot of bundle.ruleSnapshots) {
     notice(snapshot, snapshot.id);
+    if (snapshot.reviewedDate && snapshot.reviewedDate < snapshot.asOfDate)
+      fail(snapshot.id, 'review date predates the rules date');
+    if (snapshot.historical && !snapshot.reviewedDate)
+      fail(snapshot.id, 'historical snapshots need a separate review date');
+    if (
+      snapshot.testingRequirement &&
+      !snapshot.rules.some(
+        (rule) => rule.id === snapshot.testingRequirement!.ruleId,
+      )
+    )
+      fail(snapshot.id, 'testing requirement needs a referenced rule');
     unique(
       snapshot.rules.map((rule) => rule.id),
       `${snapshot.id}.rules`,
@@ -112,7 +124,9 @@ export function validateContent(input: unknown): ContentBundle {
         fail(rule.id, 'verified rules require source URLs');
       }
       for (const source of rule.sources) {
-        if (source.verifiedDate > snapshot.asOfDate) {
+        if (
+          source.verifiedDate > (snapshot.reviewedDate ?? snapshot.asOfDate)
+        ) {
           fail(rule.id, 'source verification is later than the snapshot');
         }
         if (
@@ -137,6 +151,8 @@ export function validateContent(input: unknown): ContentBundle {
     if (snapshot && item.travelDate < snapshot.asOfDate) {
       fail(context, 'travel date predates rule snapshot');
     }
+    if (snapshot?.historical && item.travelDate !== snapshot.asOfDate)
+      fail(context, 'historical case must use its pinned rules date');
     if (item.verificationStatus === 'VERIFIED') {
       if (!item.review)
         fail(context, 'verified cases require a recorded review');
@@ -178,6 +194,10 @@ export function validateContent(input: unknown): ContentBundle {
         );
       }
       const attributes = document.attributes;
+      if (document.type !== 'COVID_TEST' && attributes.covidTest)
+        fail(context, 'health evidence must be a COVID_TEST document');
+      if (document.type === 'COVID_TEST' && !attributes.number)
+        fail(context, 'test reports need a synthetic certificate number');
       if (document.type === 'TRAVEL_DOCUMENT' && !attributes.category) {
         fail(
           context,
@@ -272,6 +292,30 @@ export function validateContent(input: unknown): ContentBundle {
       }
       if (
         item.resolution.expectedDecision === 'CHECK_IN' &&
+        snapshot?.testingRequirement
+      ) {
+        const tests = item.documents.filter(
+          (document) =>
+            document.type === 'COVID_TEST' &&
+            path.requiredDocumentIds.includes(document.id),
+        );
+        const requirement = snapshot.testingRequirement;
+        const departure = item.itinerary.at(-1)?.scheduledDeparture;
+        if (!item.ruleIds.includes(requirement.ruleId))
+          fail(pathContext, 'check-in must cite the applicable testing rule');
+        if (
+          !tests.some(
+            (document) =>
+              testEvidenceIssues(document, departure, requirement).length === 0,
+          )
+        )
+          fail(
+            pathContext,
+            'check-in needs a sufficient test under its dated requirement',
+          );
+      }
+      if (
+        item.resolution.expectedDecision === 'CHECK_IN' &&
         !item.documents.some(
           (document) =>
             path.requiredDocumentIds.includes(document.id) &&
@@ -299,7 +343,11 @@ export function validateContent(input: unknown): ContentBundle {
         const document = item.documents.find(
           (entry) => entry.id === documentId,
         );
-        if (document && item.resolution.expectedDecision === 'CHECK_IN') {
+        if (
+          document &&
+          document.type !== 'COVID_TEST' &&
+          item.resolution.expectedDecision === 'CHECK_IN'
+        ) {
           if (
             document.validFrom > item.travelDate ||
             document.validUntil < item.travelDate
@@ -333,7 +381,10 @@ export function validateContent(input: unknown): ContentBundle {
                 'check-in needs an approved electronic authorization linked to a required passport',
               );
             }
-            if (passport && document.validUntil > passport.validUntil)
+            if (
+              passport?.type === 'PASSPORT' &&
+              document.validUntil > passport.validUntil
+            )
               fail(
                 pathContext,
                 'electronic authorization outlives its linked passport',
@@ -420,6 +471,23 @@ export function validateContent(input: unknown): ContentBundle {
           `case ${item.id} travel date differs from stage departure`,
         );
       }
+      const snapshot = bundle.ruleSnapshots.find(
+        (snapshot) => snapshot.id === item.ruleSnapshotId,
+      );
+      if (Boolean(stage.historical) !== Boolean(snapshot?.historical))
+        fail(
+          stage.id,
+          'historical cases require a clearly marked historical stage',
+        );
+      const departure = item.itinerary[0]?.scheduledDeparture;
+      if (
+        departure &&
+        Date.parse(departure) !== Date.parse(stage.scheduledDeparture)
+      )
+        fail(
+          stage.id,
+          `case ${item.id} flight clock differs from stage departure`,
+        );
       if (
         stage.verificationStatus === 'VERIFIED' &&
         item.verificationStatus !== 'VERIFIED'
