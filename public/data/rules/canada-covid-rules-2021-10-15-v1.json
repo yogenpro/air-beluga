@@ -1,0 +1,179 @@
+{
+  "id": "canada-covid-rules-2021-10-15-v1",
+  "asOfDate": "2021-10-15",
+  "reviewedDate": "2026-10-26",
+  "historical": true,
+  "verificationStatus": "VERIFIED",
+  "notice": "Historical shift: 15 October 2021. Apply the rules for this travel date, not current requirements. Fictional passengers and reports; historical official sources reviewed on 2026-10-26 by Codex, without independent human approval.",
+  "testingRequirement": {
+    "ruleId": "hist-del-testing",
+    "maxAgeHours": 18,
+    "acceptedTestTypes": ["MOLECULAR"],
+    "requiredLaboratory": "Genestrings Laboratory",
+    "requiredLaboratoryLocation": "Delhi airport"
+  },
+  "rules": [
+    {
+      "id": "hist-del-testing",
+      "title": "15 October 2021: Delhi’s special testing requirement",
+      "body": "For this direct Delhi–Canada shift, require a negative molecular result from Genestrings Laboratory at Delhi airport, sampled no more than 18 hours before scheduled departure. A fresh antigen result or a different credible clinic does not satisfy this route-specific requirement. Do not substitute the general 72-hour rule.",
+      "scope": {
+        "departureAirports": ["DEL"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/transport-canada/news/2021/09/canada-announces-extension-of-flight-ban-from-india-as-it-prepares-for-the-return-of-direct-flights.html",
+          "publisher": "Transport Canada",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27",
+          "pageUpdatedDate": "2021-09-21"
+        },
+        {
+          "url": "https://search.open.canada.ca/qpnotes/record/ps-sp%2CTo%20be%20added",
+          "publisher": "Public Safety Canada / CBSA historical timeline",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27"
+        }
+      ]
+    },
+    {
+      "id": "hist-clock",
+      "title": "Read the collection time and its UTC offset",
+      "body": "Count elapsed hours from specimen collection to the scheduled flight departure, including the stated time-zone offsets. The report’s issue time does not restart the window. Exactly 18 hours is within the limit. An unreadable or missing offset must be clarified when it could change the answer.",
+      "scope": {
+        "departureAirports": ["DEL"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/transport-canada/news/2021/09/canada-announces-extension-of-flight-ban-from-india-as-it-prepares-for-the-return-of-direct-flights.html",
+          "publisher": "Transport Canada",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27",
+          "pageUpdatedDate": "2021-09-21"
+        },
+        {
+          "url": "https://search.open.canada.ca/qpnotes/record/ps-sp%2CTo%20be%20added",
+          "publisher": "Public Safety Canada / CBSA historical timeline",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27"
+        }
+      ]
+    },
+    {
+      "id": "hist-method",
+      "title": "Rapid PCR and rapid antigen are different",
+      "body": "Molecular testing includes the RT-PCR and rapid PCR methods used in these cases. “Rapid” alone does not identify the test type. Antigen and antibody results are not substitutes for this molecular requirement; an unresolved methodology conflict needs verification.",
+      "scope": {
+        "departureAirports": ["DEL"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/transport-canada/news/2021/09/canada-announces-extension-of-flight-ban-from-india-as-it-prepares-for-the-return-of-direct-flights.html",
+          "publisher": "Transport Canada",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27",
+          "pageUpdatedDate": "2021-09-21"
+        },
+        {
+          "url": "https://search.open.canada.ca/qpnotes/record/ps-sp%2CTo%20be%20added",
+          "publisher": "Public Safety Canada / CBSA historical timeline",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27"
+        }
+      ]
+    },
+    {
+      "id": "hist-provider",
+      "title": "Check the designated laboratory and collection site",
+      "body": "The approved laboratory for the authored direct route is Genestrings at Delhi airport. A genuine, accredited result from another clinic does not establish compliance. Distinguish a confirmed different provider from an unresolved conflict about which site issued the report.",
+      "scope": {
+        "departureAirports": ["DEL"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/transport-canada/news/2021/09/canada-announces-extension-of-flight-ban-from-india-as-it-prepares-for-the-return-of-direct-flights.html",
+          "publisher": "Transport Canada",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27",
+          "pageUpdatedDate": "2021-09-21"
+        },
+        {
+          "url": "https://search.open.canada.ca/qpnotes/record/ps-sp%2CTo%20be%20added",
+          "publisher": "Public Safety Canada / CBSA historical timeline",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27"
+        }
+      ]
+    },
+    {
+      "id": "hist-vaccinated",
+      "title": "Vaccination does not supply the required test",
+      "body": "For these non-exempt adults, the historical direct-flight test requirement still applies when fully vaccinated. Canadian citizenship and a completed ArriveCAN submission do not replace the test. Prior-positive and other exemptions are explicitly excluded from this authored cohort.",
+      "scope": {
+        "departureAirports": ["DEL"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/transport-canada/news/2021/09/canada-announces-extension-of-flight-ban-from-india-as-it-prepares-for-the-return-of-direct-flights.html",
+          "publisher": "Transport Canada",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27",
+          "pageUpdatedDate": "2021-09-21"
+        },
+        {
+          "url": "https://search.open.canada.ca/qpnotes/record/ps-sp%2CTo%20be%20added",
+          "publisher": "Public Safety Canada / CBSA historical timeline",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27"
+        }
+      ]
+    },
+    {
+      "id": "hist-desk",
+      "title": "Finish the available checks before the final call",
+      "body": "Air Beluga fictional training procedure: request an available replacement report before refusing for an unusable one. Deny a confirmed unmet requirement after the offered alternatives are exhausted. Escalate a material time, method or issuer conflict that remains unresolved after the available verification. This desk procedure is a game rule, not a government escalation mandate.",
+      "scope": {
+        "departureAirports": ["DEL"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/transport-canada/news/2021/09/canada-announces-extension-of-flight-ban-from-india-as-it-prepares-for-the-return-of-direct-flights.html",
+          "publisher": "Transport Canada",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27",
+          "pageUpdatedDate": "2021-09-21"
+        },
+        {
+          "url": "https://search.open.canada.ca/qpnotes/record/ps-sp%2CTo%20be%20added",
+          "publisher": "Public Safety Canada / CBSA historical timeline",
+          "verifiedDate": "2026-10-26",
+          "effectiveFrom": "2021-09-27",
+          "effectiveUntil": "2022-01-27"
+        }
+      ]
+    }
+  ]
+}

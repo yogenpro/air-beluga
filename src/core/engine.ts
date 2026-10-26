@@ -117,6 +117,9 @@ function missingEvidence(state: GameSession, path: ResolutionPath) {
 /** Player-facing projection deliberately omits hidden documents and the answer. */
 export function getPassengerView(state: GameSession, content: ContentBundle) {
   const item = currentCase(state, content);
+  const snapshot = content.ruleSnapshots.find(
+    (snapshot) => snapshot.id === item.ruleSnapshotId,
+  )!;
   return {
     id: item.id,
     verificationStatus: item.verificationStatus,
@@ -124,6 +127,8 @@ export function getPassengerView(state: GameSession, content: ContentBundle) {
     passenger: structuredClone(item.passenger),
     itinerary: structuredClone(item.itinerary),
     travelDate: item.travelDate,
+    historical: snapshot.historical ?? false,
+    rulesDate: snapshot.asOfDate,
     clues: [...item.clues],
     assumptions: [...(item.assumptions ?? [])],
     documents: structuredClone(

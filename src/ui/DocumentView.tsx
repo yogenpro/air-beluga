@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { TravelDocument } from '../core/types';
 import { DOCUMENT_LABELS } from './labels';
 import { Icon } from './Icons';
+import { displayInstant } from './time';
 
 export function DocumentView({
   document,
@@ -15,6 +16,8 @@ export function DocumentView({
   const [expanded, setExpanded] = useState(inspected);
   const label = `${DOCUMENT_LABELS[document.type]} (${document.id})`;
   const attributes = document.attributes;
+  const test =
+    document.type === 'COVID_TEST' ? attributes.covidTest : undefined;
   return (
     <article
       className={`document document-${document.type.toLowerCase()} ${expanded ? 'is-open' : ''}`}
@@ -62,10 +65,40 @@ export function DocumentView({
           )}
           <dt>Issued by</dt>
           <dd>{document.issuingCountry}</dd>
-          <dt>Valid from</dt>
-          <dd>{document.validFrom}</dd>
-          <dt>Valid until</dt>
-          <dd>{document.validUntil}</dd>
+          {document.type !== 'COVID_TEST' && (
+            <>
+              <dt>Valid from</dt>
+              <dd>{document.validFrom}</dd>
+              <dt>Valid until</dt>
+              <dd>{document.validUntil}</dd>
+            </>
+          )}
+          {test && (
+            <>
+              <dt>Sample collected</dt>
+              <dd>
+                {test.sampleCollectedAt
+                  ? displayInstant(test.sampleCollectedAt)
+                  : test.sampleTimeLabel}
+              </dd>
+              <dt>Report issued</dt>
+              <dd>{displayInstant(test.reportedAt)}</dd>
+              <dt>Test method</dt>
+              <dd>{test.method}</dd>
+              <dt>Result</dt>
+              <dd>{test.result.toLowerCase()}</dd>
+              <dt>Laboratory</dt>
+              <dd>{test.laboratory}</dd>
+              <dt>Collection site</dt>
+              <dd>{test.laboratoryLocation}</dd>
+              <dt>Laboratory identity</dt>
+              <dd>
+                {test.laboratoryIdentity === 'CONFIRMED'
+                  ? 'Confirmed in this fictional report'
+                  : 'Unresolved — verify the report'}
+              </dd>
+            </>
+          )}
           {attributes.category && (
             <>
               <dt>Category</dt>
