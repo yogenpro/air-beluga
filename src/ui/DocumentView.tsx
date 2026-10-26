@@ -72,6 +72,28 @@ export function DocumentView({
               <dd>{attributes.category}</dd>
             </>
           )}
+          {attributes.passportKind && (
+            <>
+              <dt>Passport type</dt>
+              <dd>{attributes.passportKind.toLowerCase()}</dd>
+            </>
+          )}
+          {attributes.biometric !== undefined && (
+            <>
+              <dt>Electronic passport</dt>
+              <dd>
+                {attributes.biometric
+                  ? 'Yes · electronic chip'
+                  : 'No · non-electronic'}
+              </dd>
+            </>
+          )}
+          {attributes.documentCode && (
+            <>
+              <dt>Document form</dt>
+              <dd>{attributes.documentCode}</dd>
+            </>
+          )}
           {attributes.destinationCountry && (
             <>
               <dt>Destination country</dt>

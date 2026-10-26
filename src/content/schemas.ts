@@ -67,6 +67,7 @@ export const TravelDocumentSchema = z
     id,
     type: z.enum([
       'PASSPORT',
+      'TRAVEL_DOCUMENT',
       'VISA',
       'RESIDENCE_PERMIT',
       'ONWARD_TICKET',
@@ -81,6 +82,18 @@ export const TravelDocumentSchema = z
     attributes: z
       .object({
         category: text.optional(),
+        passportKind: z
+          .enum([
+            'ORDINARY',
+            'DIPLOMATIC',
+            'OFFICIAL',
+            'SERVICE',
+            'TEMPORARY',
+            'EMERGENCY',
+          ])
+          .optional(),
+        biometric: z.boolean().optional(),
+        documentCode: text.optional(),
         destinationCountry: country.optional(),
         entriesRemaining: z.number().int().nonnegative().optional(),
         status: text.optional(),

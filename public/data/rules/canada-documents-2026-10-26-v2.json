@@ -1,0 +1,213 @@
+{
+  "id": "canada-documents-rules-2026-10-26-v2",
+  "asOfDate": "2026-10-26",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-26. Passenger and document data are fictional; no independent human review is claimed.",
+  "rules": [
+    {
+      "id": "ca2-identity",
+      "title": "A travel document is not always a national passport",
+      "body": "A boarding identity document must be genuine, current and accepted by Canada. IRCC accepts U.S. refugee travel documents (I-571) and re-entry permits (I-327). Issuance by the United States does not make the holder a U.S. citizen. Inspect the document category as well as the issuing country. Air Beluga fictional training procedure: resolve material identity or permission conflicts using the offered checks, then refer unresolved conflicts to a supervisor. This escalation procedure is a game rule, not an IRCC requirement.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/passport-travel-document.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2025-01-14"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/apply-visitor-visa.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "id": "ca2-visitor",
+      "title": "Canadian visitor permission is separate from a U.S. visa",
+      "body": "For these Indian and mainland Chinese visitors, a U.S. visitor or work visa does not replace Canadian visitor permission. Check for a Canadian visa or a separately applicable exemption, such as proven U.S. lawful permanent residence.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-07-31"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-08-06"
+        }
+      ]
+    },
+    {
+      "id": "ca2-us-lpr",
+      "title": "U.S. permanent residents: identity plus status proof",
+      "body": "A U.S. lawful permanent resident travelling by air needs a valid national passport or accepted equivalent and current accepted proof of U.S. permanent-resident status. A valid Green Card is one such proof. These travellers do not need a Canadian visitor visa or eTA, including holders of Indian or Chinese passports.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-08-06"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-07-31"
+        }
+      ]
+    },
+    {
+      "id": "ca2-status-proof",
+      "title": "An expired card calls for supporting status evidence",
+      "body": "An expired Green Card by itself is not the current status proof listed by IRCC. Check for an accepted extension notice or another listed status document. Card expiry alone is not a determination that permanent-resident status has ended; the puzzle concerns whether sufficient boarding evidence has been presented.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-08-06"
+        },
+        {
+          "url": "https://www.ircc.canada.ca/english/helpcentre/answer.asp?qnum=1117&top=23",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-09-28"
+        }
+      ]
+    },
+    {
+      "id": "ca2-refugee",
+      "title": "U.S. refugee document: visa or a proven exemption",
+      "body": "A U.S. I-571 refugee travel document is not proof of U.S. citizenship or lawful permanent residence. The non-Canadian refugee-document holders in these cases need a Canadian visitor visa unless a separate exemption applies. An eTA is not the substitute for that visa.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://ircc.canada.ca/english/helpcentre/answer.asp?qnum=1180&top=16",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-08-06"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/apply-visitor-visa.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "id": "ca2-lpr-equivalent",
+      "title": "I-571 and I-327 have different evidence roles",
+      "body": "For the authored U.S. permanent residents unable to use a national passport, I-571 and I-327 are accepted identity substitutes. I-571 still needs separate permanent-resident proof. IRCC also lists a valid I-327 as accepted status proof, so the same valid I-327 can establish both roles in the authored case.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.ircc.canada.ca/english/helpcentre/answer.asp?qnum=1117&top=23",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-09-28"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-08-06"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/apply-visitor-visa.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "id": "ca2-temporary",
+      "title": "Romania: check whether the passport is electronic",
+      "body": "Romania’s ordinary visa-exempt air-travel route is limited to electronic passport holders. A non-electronic temporary passport requires a Canadian visitor visa unless another applicable exemption is established. A past eTA email is not Canadian visa evidence.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-07-31"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/eligibility.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-08-06"
+        }
+      ]
+    },
+    {
+      "id": "ca2-official",
+      "title": "Diplomatic and official do not automatically mean visa-free",
+      "body": "In these Indian and Chinese visitor cases, diplomatic or official passport classification alone does not remove the Canadian visa requirement. A Canadian diplomatic accreditation or another applicable status exemption must be established separately. A fee exemption for official business is not a travel-permission exemption.",
+      "scope": {
+        "departureAirports": ["SFO"],
+        "destinationCountries": ["CA"],
+        "transitCountries": []
+      },
+      "sources": [
+        {
+          "url": "https://ircc.canada.ca/english/helpcentre/answer.asp?qnum=1019&top=16",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-09-28"
+        },
+        {
+          "url": "https://www.ircc.canada.ca/english/helpcentre/answer.asp?qnum=1119&top=16",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26"
+        },
+        {
+          "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+          "publisher": "Immigration, Refugees and Citizenship Canada (IRCC)",
+          "verifiedDate": "2026-10-26",
+          "pageUpdatedDate": "2026-07-31"
+        }
+      ]
+    }
+  ]
+}

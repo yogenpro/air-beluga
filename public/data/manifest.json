@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "contentVersion": "canada-2026-10-25-v1",
+  "contentVersion": "canada-documents-2026-10-26-v2",
   "scoring": {
     "correctDecision": 100,
     "appropriateInquiry": 15,
@@ -15,6 +15,10 @@
     {
       "id": "canada-rules-2026-10-25-v1",
       "path": "rules/canada-2026-10-25-v1.json"
+    },
+    {
+      "id": "canada-documents-rules-2026-10-26-v2",
+      "path": "rules/canada-documents-2026-10-26-v2.json"
     }
   ],
   "cases": [
@@ -97,6 +101,54 @@
     {
       "id": "ca-012",
       "path": "scenarios/ca-012.json"
+    },
+    {
+      "id": "ca-013",
+      "path": "scenarios/ca-013.json"
+    },
+    {
+      "id": "ca-014",
+      "path": "scenarios/ca-014.json"
+    },
+    {
+      "id": "ca-015",
+      "path": "scenarios/ca-015.json"
+    },
+    {
+      "id": "ca-016",
+      "path": "scenarios/ca-016.json"
+    },
+    {
+      "id": "ca-017",
+      "path": "scenarios/ca-017.json"
+    },
+    {
+      "id": "ca-018",
+      "path": "scenarios/ca-018.json"
+    },
+    {
+      "id": "ca-019",
+      "path": "scenarios/ca-019.json"
+    },
+    {
+      "id": "ca-020",
+      "path": "scenarios/ca-020.json"
+    },
+    {
+      "id": "ca-021",
+      "path": "scenarios/ca-021.json"
+    },
+    {
+      "id": "ca-022",
+      "path": "scenarios/ca-022.json"
+    },
+    {
+      "id": "ca-023",
+      "path": "scenarios/ca-023.json"
+    },
+    {
+      "id": "ca-024",
+      "path": "scenarios/ca-024.json"
     }
   ],
   "stages": [
@@ -107,6 +159,10 @@
     {
       "id": "002-sfo-yvr",
       "path": "stages/002-sfo-yvr.json"
+    },
+    {
+      "id": "003-sfo-yvr-documents",
+      "path": "stages/003-sfo-yvr-documents.json"
     }
   ],
   "dailyPools": [
@@ -117,6 +173,10 @@
     {
       "id": "canada-pool-v1",
       "path": "daily/canada-pool-v1.json"
+    },
+    {
+      "id": "canada-documents-pool-v2",
+      "path": "daily/canada-documents-pool-v2.json"
     }
   ]
 }

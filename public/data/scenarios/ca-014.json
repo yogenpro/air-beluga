@@ -1,0 +1,100 @@
+{
+  "id": "ca-014",
+  "version": 1,
+  "title": "SFO–YVR: Lin Zhou",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-26. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-26",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored document roles, permission exceptions and positive/negative resolution against the cited IRCC sources. See docs/content-review-2026-10-26.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "canada-documents-rules-2026-10-26-v2",
+  "travelDate": "2026-10-26",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Lin Zhou",
+    "nationality": "CN"
+  },
+  "assumptions": [
+    "Adult on a direct commercial SFO–YVR flight for a short visit. Identity, genuine documents, booking, U.S. departure and unrelated airline checks are stipulated satisfied. Inspect the document types, dates and Canadian travel permission yourself.",
+    "Only documents initially shown or obtainable through the offered questions are available. There is no unmentioned additional citizenship, Canadian permanent residence, or other Canadian travel exemption. U.S. status and any claimed diplomatic accreditation can be clarified through the offered questions.",
+    "Names and document numbers are synthetic. Carrier lookups are simulated. Airline acceptance does not guarantee admission at the Canadian border.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. If a material identity, status or permission conflict still cannot be resolved at this desk, escalate to a supervisor rather than assume approval or a definitive refusal. Unfamiliar document types alone are not a reason to escalate."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "CN",
+      "holder": "Lin Zhou",
+      "validFrom": "2025-01-01",
+      "validUntil": "2033-01-01",
+      "attributes": {
+        "category": "Ordinary national passport",
+        "number": "CN-SYNTHETIC-014",
+        "passportKind": "ORDINARY",
+        "biometric": true
+      }
+    },
+    {
+      "id": "green-card",
+      "type": "RESIDENCE_PERMIT",
+      "issuingCountry": "US",
+      "holder": "Lin Zhou",
+      "validFrom": "2023-01-01",
+      "validUntil": "2033-01-01",
+      "attributes": {
+        "category": "U.S. Permanent Resident Card (Green Card)",
+        "number": "US-I551-SYNTHETIC-014",
+        "documentCode": "I-551",
+        "status": "PERMANENT_RESIDENT",
+        "destinationCountry": "US"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "green-card"],
+  "clues": [
+    "These are the documents I normally use for trips from my home in California."
+  ],
+  "questions": [
+    {
+      "id": "ask-visa",
+      "label": "Ask for Canadian visitor visa",
+      "response": "I do not have a Canadian visa.",
+      "revealsDocumentIds": [],
+      "justified": false,
+      "kind": "PASSENGER"
+    },
+    {
+      "id": "check-eta",
+      "label": "Check Canadian eTA status",
+      "response": "No Canadian eTA is linked to this document.",
+      "revealsDocumentIds": [],
+      "justified": false,
+      "kind": "DOCUMENT_CHECK"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["passport", "green-card"],
+        "requiredQuestionIds": []
+      }
+    ]
+  },
+  "rationale": "Both required evidence roles are already satisfied: a current Chinese passport and valid U.S. Green Card. A Canadian visa and eTA are not required for this U.S. permanent resident, so asking for either adds no necessary evidence.",
+  "ruleIds": ["ca2-us-lpr"]
+}

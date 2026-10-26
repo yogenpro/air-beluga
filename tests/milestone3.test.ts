@@ -2,7 +2,7 @@ import { mkdtemp, readFile, rm, writeFile, cp } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { loadContentFromDisk, DEFAULT_DATA_ROOT } from '../scripts/lib/content';
+import { DEFAULT_DATA_ROOT } from '../scripts/lib/content';
 import {
   freezeRelease,
   validateLibraryFromDisk,
@@ -29,7 +29,15 @@ import {
 } from '../src/storage/daily-results';
 import { restoreSessionProgress, saveProgress } from '../src/storage/progress';
 
-const current = await loadContentFromDisk();
+// Keep Milestone 3 contracts pinned to their published case/rule snapshot.
+const current = validateContent(
+  JSON.parse(
+    await readFile(
+      join(DEFAULT_DATA_ROOT, 'releases/canada-2026-10-25-v1/bundle.json'),
+      'utf8',
+    ),
+  ),
+);
 const library = await validateLibraryFromDisk();
 const date = '2026-10-25';
 const poolId = 'canada-pool-v1';
@@ -286,6 +294,9 @@ describe('daily release boundaries and immutable history', () => {
       path: 'releases/canada-v2-test/bundle.json',
       sha256: 'a'.repeat(64),
     });
+    next.index.dailySchedule = next.index.dailySchedule.filter(
+      (entry) => entry.from < '2026-10-26',
+    );
     next.index.dailySchedule.push({
       from: '2026-10-26',
       contentVersion: newer.manifest.contentVersion,
@@ -376,7 +387,7 @@ describe('frozen release integrity', () => {
       ) as unknown;
     });
     expect(loaded.current.manifest.contentVersion).toBe(
-      current.manifest.contentVersion,
+      library.current.manifest.contentVersion,
     );
     expect(loaded.unavailableVersions).toEqual(['illustrative-v1']);
   });
