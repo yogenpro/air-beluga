@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import type { CaseResult, PassengerCase, RuleSnapshot } from '../core/types';
 import { DECISION_LABELS, DOCUMENT_LABELS } from './labels';
 import { RuleSources } from './Rulebook';
+import { Icon } from './Icons';
 
 export function ResultView({
   result,
@@ -9,7 +10,7 @@ export function ResultView({
   snapshot,
   isLast,
   onNext,
-  summaryLabel = 'View stage summary',
+  summaryLabel = 'View shift report',
 }: {
   result: CaseResult;
   passengerCase: PassengerCase;
@@ -23,7 +24,14 @@ export function ResultView({
     heading.current?.focus();
   }, []);
   return (
-    <section aria-labelledby="result-heading" className="panel feedback">
+    <section
+      aria-labelledby="result-heading"
+      className={`panel feedback ${result.correct ? 'feedback-correct' : 'feedback-incorrect'}`}
+    >
+      <p className="eyebrow">
+        <Icon name={result.correct ? 'check' : 'book'} />{' '}
+        {result.correct ? 'NICELY HANDLED' : 'A MOMENT TO LEARN'}
+      </p>
       <h2 id="result-heading" tabIndex={-1} ref={heading}>
         Decision feedback
       </h2>
@@ -65,21 +73,24 @@ export function ResultView({
         {result.score.decision} · Inquiry {result.score.inquiry} · Efficiency{' '}
         {result.score.efficiency}
       </p>
-      <h3>Rule citations</h3>
-      <ul>
-        {snapshot.rules
-          .filter((rule) => result.ruleIds.includes(rule.id))
-          .map((rule) => (
-            <li key={rule.id}>
-              <strong>{rule.title}</strong>{' '}
-              <span className="muted">({rule.id})</span>
-              <p>{rule.body}</p>
-              <RuleSources rule={rule} />
-            </li>
-          ))}
-      </ul>
-      <button type="button" onClick={onNext}>
+      <details className="feedback-sources">
+        <summary>Rules and sources behind this decision</summary>
+        <ul>
+          {snapshot.rules
+            .filter((rule) => result.ruleIds.includes(rule.id))
+            .map((rule) => (
+              <li key={rule.id}>
+                <strong>{rule.title}</strong>{' '}
+                <span className="muted">({rule.id})</span>
+                <p>{rule.body}</p>
+                <RuleSources rule={rule} />
+              </li>
+            ))}
+        </ul>
+      </details>
+      <button type="button" className="button-primary" onClick={onNext}>
         {isLast ? summaryLabel : 'Next passenger'}
+        <Icon name="arrow" />
       </button>
     </section>
   );

@@ -2,9 +2,9 @@
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/yogenpro/air-beluga)
 
-Milestones 1–3 of the [implementation handoff](air-beluga-implementation-handoff.md): a deterministic TypeScript puzzle engine, playable text-first desks, source-reviewed Canadian cases, and a versioned daily challenge with local result history. Inspect documents, search the reference, request evidence or run a simulated document check, then commit a decision. Progress resumes after reload.
+Milestones 1–3 of the [implementation handoff](air-beluga-implementation-handoff.md): a deterministic TypeScript puzzle engine, source-reviewed Canadian cases, and a versioned daily challenge with local result history. The browser UI presents a cozy airport terminal, a readable document desk, and an end-of-shift report. Inspect documents, search the reference, request evidence or run a simulated document check, then commit a decision. Progress resumes after reload.
 
-There are **12 source-reviewed SFO–Vancouver cases** plus the eight explicitly illustrative tutorial fixtures, for 20 cases total. The Canadian snapshot was checked against official IRCC publications on **2026-10-25 UTC**; its passengers and document numbers are fictional. This is a Codex source cross-check, not independent human or immigration-authority approval. The default desk uses eight Canadian cases. The separate illustrative SFO–LHR tutorial remains available and is excluded from daily play.
+There are **12 source-reviewed SFO–Vancouver cases** plus the eight explicitly illustrative tutorial fixtures, for 20 cases total. The Canadian snapshot was checked against official IRCC publications on **2026-10-25 UTC**; its passengers and document numbers are fictional. This is a Codex source cross-check, not independent human or immigration-authority approval. The practice desk uses eight Canadian cases; the daily shift selects six. The separate illustrative SFO–LHR tutorial remains available and is excluded from daily play.
 
 See the [review ledger and official source links](docs/content-review-2026-10-25.md) and [case-authoring / verification / release workflow](docs/content-authoring.md).
 
@@ -38,9 +38,9 @@ npm run preview                # preview the production build
 
 The terminal desk supports `inspect <document-id>`, `ask <question-id>`, `rule [id or search text]`, `check-in`, `deny`, `escalate`, `next`, `help`, and `quit`. Decisions commit immediately; use `next` to continue after feedback. `--stage <stage-id>` chooses a stage. Content validation accepts an optional data directory: `npm run validate:content -- /path/to/data`.
 
-Open the local URL printed by Vite. **Stages** offers the source-reviewed SFO–YVR desk and the illustrative tutorial. **Daily challenge** selects six unique reviewed cases using the chosen UTC day and its scheduled content release; **Daily results** reviews locally saved first completions. The daily boundary is 00:00 UTC. Crossing midnight does not replace a queue already in progress; choose today's challenge explicitly to switch.
+Open the local URL printed by Vite. The terminal makes **Today’s shift** the main action, offering its briefing, continuing saved progress, or reopening the completed report. **Practice shifts** offers the source-reviewed SFO–YVR desk; **Training** opens the explicitly illustrative tutorial. **Shift history** reviews locally saved first daily completions. Each daily shift selects six unique reviewed cases using the chosen UTC day and its scheduled content release. The daily boundary is 00:00 UTC. Crossing midnight does not replace a queue already in progress; choose today's challenge explicitly to switch. Browser Back/Forward and existing `?mode=stage&stage=...`, `?mode=daily&date=...`, and `?mode=results` links work.
 
-Inspection and rule lookup use ordinary buttons and expandable text; all actions work by keyboard. Decisions commit immediately. **Restart** asks before clearing an unfinished run; **Play again** opens a fresh desk after completion. Daily replays preserve the original completed result. The case travel date and rule snapshot remain fixed even when the daily selection date is later.
+The desktop desk places passenger documents beside the searchable travel reference; mobile offers Passenger and Travel reference controls. Inspection and rule lookup use ordinary buttons and expandable text; all actions work by keyboard. Decisions commit immediately. **Restart** asks before clearing an unfinished run; **Play again** opens a fresh desk after completion. Daily replays preserve the original completed result. The case travel date and rule snapshot remain fixed even when the daily selection date is later.
 
 The static build goes to `dist/`. The browser fetches validated static JSON at startup; subsequent gameplay makes no network requests. CI runs the full check, and `npm run build` validates content before compiling. Unit tests use Node without requiring a browser or network API.
 
@@ -52,7 +52,7 @@ npm run build
 npm run test:browser
 ```
 
-The browser script briefly starts a production preview on `127.0.0.1:4173` and closes it on exit. It covers the original tutorial, the reviewed stage, and the complete daily flow at desktop and 390px mobile widths. Checks include matching daily IDs/order across clients, keyboard/mouse input, source links, inquiries, feedback, reload/resume, offline play/history, immutable first results, a simulated later content/scoring deployment, unavailable archives, UTC midnight, corrupt saves, blocked storage, and failed-load retry. Screenshots go to ignored `test-results/`. CI installs browser system dependencies with `npx playwright install --with-deps chromium`.
+The browser script briefly starts a production preview on `127.0.0.1:4173` and closes it on exit. It also covers the terminal, briefing, completed report, browser Back/Forward, saved-state menu actions, mobile reference switching, self-hosted assets, and a 320px terminal layout. It covers the original tutorial, the reviewed stage, and the complete daily flow at desktop and 390px mobile widths. Checks include matching daily IDs/order across clients, keyboard/mouse input, source links, inquiries, feedback, reload/resume, offline play/history, immutable first results, a simulated later content/scoring deployment, unavailable archives, UTC midnight, corrupt saves, blocked storage, and failed-load retry. Screenshots go to ignored `test-results/`. CI installs browser system dependencies with `npx playwright install --with-deps chromium`.
 
 ## Deploy to Cloudflare Workers
 
@@ -92,7 +92,8 @@ GitHub reads this configuration from the default branch (`main`). Publish it the
 - `src/core/daily.ts`: versioned deterministic selection and explicit fixture opt-in.
 - `src/storage/progress.ts`: versioned localStorage adapter and recovery through deterministic engine replay.
 - `src/storage/daily-results.ts`: first-completion history, matching-release review, and retention when archives are unavailable.
-- `src/ui/`: browser desk, readable document views, scoped/searchable reference, feedback, and stage summary.
+- `src/ui/`: terminal navigation, shift briefings, readable document cards, mobile desk panels, scoped/searchable reference, feedback, and shift reports.
+- `public/art/`: original generated terminal backdrop and its [generation prompt/provenance](public/art/terminal-sunset.provenance.json). `public/fonts/` contains locally served DM Sans and Silkscreen plus their OFL licenses; play needs no third-party asset requests.
 - `public/data/`: independently editable JSON fixtures. `scripts/` contains validation and terminal adapters; `tests/` contains acceptance and regression coverage.
 
 Each passenger has possessed documents, initially presented IDs, offered deterministic questions, and one or more evidence-backed resolution paths. A correct disposition requires the expected decision **and** a fulfilled path. Required questions can record facts even when they reveal no document. Inspection and reference lookup are recorded but do not impose extra grading requirements.
