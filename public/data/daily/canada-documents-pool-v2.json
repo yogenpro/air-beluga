@@ -1,0 +1,33 @@
+{
+  "id": "canada-documents-pool-v2",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-26. Passenger and document data are fictional; no independent human review is claimed.",
+  "dailyAlgorithmVersion": "fnv1a32-mulberry32-v1",
+  "caseIds": [
+    "ca-013",
+    "ca-014",
+    "ca-015",
+    "ca-016",
+    "ca-017",
+    "ca-018",
+    "ca-019",
+    "ca-022",
+    "ca-023",
+    "ca-024"
+  ],
+  "count": 6,
+  "difficulty": {
+    "EASY": {
+      "min": 0,
+      "max": 0
+    },
+    "MEDIUM": {
+      "min": 2,
+      "max": 3
+    },
+    "HARD": {
+      "min": 3,
+      "max": 4
+    }
+  }
+}

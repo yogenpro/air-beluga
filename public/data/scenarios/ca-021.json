@@ -1,0 +1,92 @@
+{
+  "id": "ca-021",
+  "version": 1,
+  "title": "SFO–YVR: Mara Ionescu",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-26. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-26",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored document roles, permission exceptions and positive/negative resolution against the cited IRCC sources. See docs/content-review-2026-10-26.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "canada-documents-rules-2026-10-26-v2",
+  "travelDate": "2026-10-26",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Mara Ionescu",
+    "nationality": "RO"
+  },
+  "assumptions": [
+    "Adult on a direct commercial SFO–YVR flight for a short visit. Identity, genuine documents, booking, U.S. departure and unrelated airline checks are stipulated satisfied. Inspect the document types, dates and Canadian travel permission yourself.",
+    "Only documents initially shown or obtainable through the offered questions are available. There is no unmentioned additional citizenship, Canadian permanent residence, or other Canadian travel exemption. U.S. status and any claimed diplomatic accreditation can be clarified through the offered questions.",
+    "Names and document numbers are synthetic. Carrier lookups are simulated. Airline acceptance does not guarantee admission at the Canadian border.",
+    "This genuine Romanian temporary passport is accepted by Canada and contains the shown valid Canadian visa. No separate residence-status exemption is claimed.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. If a material identity, status or permission conflict still cannot be resolved at this desk, escalate to a supervisor rather than assume approval or a definitive refusal. Unfamiliar document types alone are not a reason to escalate."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "RO",
+      "holder": "Mara Ionescu",
+      "validFrom": "2026-09-01",
+      "validUntil": "2027-08-31",
+      "attributes": {
+        "category": "Temporary non-electronic national passport",
+        "number": "RO-SYNTHETIC-021",
+        "passportKind": "TEMPORARY",
+        "biometric": false
+      }
+    },
+    {
+      "id": "visa",
+      "type": "VISA",
+      "issuingCountry": "CA",
+      "holder": "Mara Ionescu",
+      "validFrom": "2026-09-15",
+      "validUntil": "2027-03-01",
+      "attributes": {
+        "category": "Canadian visitor visa / temporary resident visa",
+        "number": "CA-VISA-SYNTHETIC-021",
+        "destinationCountry": "CA",
+        "entriesRemaining": 1
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "visa"],
+  "clues": [
+    "My usual passport was replaced with this temporary booklet. The Canadian visa is in it."
+  ],
+  "questions": [
+    {
+      "id": "check-eta",
+      "label": "Check Canadian eTA status",
+      "response": "No Canadian eTA is linked to this document.",
+      "revealsDocumentIds": [],
+      "justified": false,
+      "kind": "DOCUMENT_CHECK"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["passport", "visa"],
+        "requiredQuestionIds": []
+      }
+    ]
+  },
+  "rationale": "The temporary Romanian passport is non-electronic, so the ordinary electronic-passport eTA route is unavailable. The current Canadian visitor visa in that same valid passport supplies the required permission. Non-ordinary does not automatically mean unacceptable.",
+  "ruleIds": ["ca2-temporary", "ca2-identity"]
+}

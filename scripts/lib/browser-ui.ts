@@ -181,10 +181,12 @@ export async function runUiBrowserChecks(
       .click();
     assert.equal(
       await page.locator('.catalog-card').count(),
-      1,
-      'The practice catalog must contain only the source-reviewed shift',
+      library.current.stages.filter(
+        (stage) => stage.verificationStatus === 'VERIFIED',
+      ).length,
+      'The practice catalog must contain only source-reviewed shifts',
     );
-    await page.locator('.catalog-card').click();
+    await page.locator('.catalog-card').first().click();
     await page
       .getByRole('button', { name: 'Start shift', exact: true })
       .waitFor();

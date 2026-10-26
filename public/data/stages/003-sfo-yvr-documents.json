@@ -1,0 +1,25 @@
+{
+  "id": "003-sfo-yvr-documents",
+  "title": "SFO–Vancouver: document curveballs",
+  "departureAirport": "SFO",
+  "airline": "Air Beluga",
+  "flightLabel": "Air Beluga AB 203 · SFO → YVR",
+  "scheduledDeparture": "2026-10-26T18:00:00Z",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-26. Passenger and document data are fictional; no independent human review is claimed.",
+  "caseIds": [
+    "ca-013",
+    "ca-014",
+    "ca-015",
+    "ca-016",
+    "ca-017",
+    "ca-018",
+    "ca-019",
+    "ca-020",
+    "ca-021",
+    "ca-022",
+    "ca-023",
+    "ca-024"
+  ],
+  "tutorial": "A more demanding desk: distinguish identity, status and Canadian permission. Check document categories, dates, holder names and exceptions. Complete the available checks, then escalate material conflicts that remain unresolved under Air Beluga’s training procedure. Passenger frequency is curated for challenge rather than airport realism."
+}

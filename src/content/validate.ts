@@ -168,13 +168,28 @@ export function validateContent(input: unknown): ContentBundle {
       `${context}.initial`,
     );
     for (const document of item.documents) {
-      if (document.holder !== item.passenger.displayName) {
+      if (
+        document.holder !== item.passenger.displayName &&
+        item.resolution.expectedDecision !== 'ESCALATE'
+      ) {
         fail(
           context,
           `document ${document.id} holder does not match passenger`,
         );
       }
       const attributes = document.attributes;
+      if (document.type === 'TRAVEL_DOCUMENT' && !attributes.category) {
+        fail(
+          context,
+          `travel document ${document.id} lacks its document category`,
+        );
+      }
+      if (attributes.passportKind && document.type !== 'PASSPORT') {
+        fail(
+          context,
+          `document ${document.id} has a passport kind but is not a passport`,
+        );
+      }
       if (
         document.type === 'VISA' &&
         (!attributes.category ||
@@ -229,12 +244,12 @@ export function validateContent(input: unknown): ContentBundle {
       }
       if (
         item.verificationStatus === 'VERIFIED' &&
-        document.type === 'PASSPORT' &&
+        (document.type === 'PASSPORT' || document.type === 'TRAVEL_DOCUMENT') &&
         !attributes.number
       ) {
         fail(
           context,
-          `verified passport ${document.id} needs a synthetic document number`,
+          `verified passport/travel document ${document.id} needs a synthetic document number`,
         );
       }
     }
@@ -254,6 +269,20 @@ export function validateContent(input: unknown): ContentBundle {
       references(path.requiredQuestionIds, questionIds, pathContext);
       if (path.requiredDocumentIds.length === 0) {
         fail(pathContext, 'a resolution needs document evidence');
+      }
+      if (
+        item.resolution.expectedDecision === 'CHECK_IN' &&
+        !item.documents.some(
+          (document) =>
+            path.requiredDocumentIds.includes(document.id) &&
+            (document.type === 'PASSPORT' ||
+              document.type === 'TRAVEL_DOCUMENT'),
+        )
+      ) {
+        fail(
+          pathContext,
+          'check-in needs a required passport or travel document, not residence or visa evidence alone',
+        );
       }
       // Asking the path's required questions must itself produce its evidence.
       // A path may not silently rely on an optional, unspecified inquiry.

@@ -6,16 +6,19 @@ import { loadContentFromDisk } from './lib/content';
 import { validateLibraryFromDisk } from './lib/releases';
 import { runMilestone3BrowserChecks } from './lib/browser-milestone3';
 import { runUiBrowserChecks } from './lib/browser-ui';
+import { runDocumentBrowserChecks } from './lib/browser-documents';
 
 // Test the production static build, not a backend or a browser simulation.
 const browser = await chromium.launch();
 const server = await preview({
-  preview: { host: '127.0.0.1', port: 4173, strictPort: true },
+  preview: { host: '127.0.0.1', port: 0, strictPort: true },
 }).catch(async (error: unknown) => {
   await browser.close();
   throw error;
 });
-const baseURL = 'http://127.0.0.1:4173';
+const address = server.httpServer.address();
+assert(address && typeof address !== 'string');
+const baseURL = `http://127.0.0.1:${address.port}`;
 const key = 'air-beluga:progress:001-sfo';
 
 async function visible(page: Page, text: string) {
@@ -313,6 +316,11 @@ try {
     await validateLibraryFromDisk(),
   );
   await runUiBrowserChecks(browser, baseURL, await validateLibraryFromDisk());
+  await runDocumentBrowserChecks(
+    browser,
+    baseURL,
+    await validateLibraryFromDisk(),
+  );
   console.log(
     'Premature feedback, restart, blocked storage and failed-content retry passed. Milestones 2 and 3 browser acceptance passed.',
   );

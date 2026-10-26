@@ -1,0 +1,116 @@
+{
+  "id": "ca-017",
+  "version": 1,
+  "title": "SFO–YVR: Samir Vale",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-26. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-26",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored document roles, permission exceptions and positive/negative resolution against the cited IRCC sources. See docs/content-review-2026-10-26.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "HARD",
+  "ruleSnapshotId": "canada-documents-rules-2026-10-26-v2",
+  "travelDate": "2026-10-26",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Samir Vale",
+    "nationality": "SY"
+  },
+  "assumptions": [
+    "Adult on a direct commercial SFO–YVR flight for a short visit. The documents are genuine, and booking, U.S. departure and unrelated airline checks are satisfied. The link between the differing holder names is deliberately not stipulated; investigate it through the offered checks.",
+    "Only documents initially shown or obtainable through the offered questions are available. There is no unmentioned additional citizenship, Canadian permanent residence, or other Canadian travel exemption. U.S. status and any claimed diplomatic accreditation can be clarified through the offered questions.",
+    "Names and document numbers are synthetic. Carrier lookups are simulated. Airline acceptance does not guarantee admission at the Canadian border.",
+    "For this authored traveller a national passport cannot be obtained. The valid I-571 is the accepted substitute covered by the cited IRCC guidance; no general claim about Syrian passport issuance is made.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. If a material identity, status or permission conflict still cannot be resolved at this desk, escalate to a supervisor rather than assume approval or a definitive refusal. Unfamiliar document types alone are not a reason to escalate."
+  ],
+  "documents": [
+    {
+      "id": "travel-document",
+      "type": "TRAVEL_DOCUMENT",
+      "issuingCountry": "US",
+      "holder": "Samir Vale",
+      "validFrom": "2026-05-01",
+      "validUntil": "2027-04-30",
+      "attributes": {
+        "category": "U.S. Refugee Travel Document",
+        "number": "US-I-571-SYNTHETIC-017",
+        "documentCode": "I-571"
+      }
+    },
+    {
+      "id": "green-card",
+      "type": "RESIDENCE_PERMIT",
+      "issuingCountry": "US",
+      "holder": "Samir Vail",
+      "validFrom": "2023-01-01",
+      "validUntil": "2033-01-01",
+      "attributes": {
+        "category": "U.S. Permanent Resident Card (Green Card)",
+        "number": "US-I551-SYNTHETIC-017",
+        "documentCode": "I-551",
+        "status": "PERMANENT_RESIDENT",
+        "destinationCountry": "US"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["travel-document"],
+  "clues": [
+    "This is my U.S.-issued travel booklet. I keep my immigration papers separately."
+  ],
+  "questions": [
+    {
+      "id": "ask-status",
+      "label": "Ask about U.S. permanent-resident status",
+      "response": "I am a U.S. permanent resident. Here is the card; the surname is spelled differently from my travel booklet.",
+      "revealsDocumentIds": ["green-card"],
+      "justified": true,
+      "kind": "PASSENGER"
+    },
+    {
+      "id": "check-name-link",
+      "label": "Check the link between the document holder names",
+      "response": "The passenger says the records describe the same person. No supporting name-change or correction record is available, and the simulated identity check cannot establish the link. Supervisor review is needed.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "DOCUMENT_CHECK"
+    },
+    {
+      "id": "ask-visa",
+      "label": "Ask for Canadian visitor visa",
+      "response": "I do not have a Canadian visitor visa.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    },
+    {
+      "id": "check-eta",
+      "label": "Check Canadian eTA status",
+      "response": "No Canadian eTA is linked to this document.",
+      "revealsDocumentIds": [],
+      "justified": false,
+      "kind": "DOCUMENT_CHECK"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "ESCALATE",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["travel-document", "green-card"],
+        "requiredQuestionIds": ["ask-status", "check-name-link"]
+      }
+    ]
+  },
+  "rationale": "The I-571 is an accepted identity substitute and a current Green Card can prove the separate LPR status role. Here the holder names differ, and the offered check cannot link them. The fictional Air Beluga procedure requires supervisor review of this unresolved identity conflict. Do not infer fraud or a visa requirement merely from the document category.",
+  "ruleIds": ["ca2-lpr-equivalent", "ca2-us-lpr", "ca2-identity"]
+}

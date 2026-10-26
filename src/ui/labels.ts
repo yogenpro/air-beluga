@@ -8,6 +8,7 @@ export const DECISION_LABELS: Record<Decision, string> = {
 
 export const DOCUMENT_LABELS: Record<TravelDocument['type'], string> = {
   PASSPORT: 'passport',
+  TRAVEL_DOCUMENT: 'travel document',
   VISA: 'visa',
   RESIDENCE_PERMIT: 'residence permit',
   ONWARD_TICKET: 'onward ticket',

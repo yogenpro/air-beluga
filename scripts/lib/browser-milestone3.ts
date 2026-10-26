@@ -4,6 +4,7 @@ import type { Browser, Page } from 'playwright';
 import { dailyForDate, type ContentLibrary } from '../../src/content/library';
 import type { ContentBundle, GameSession } from '../../src/core/types';
 import { DAILY_RESULTS_KEY } from '../../src/storage/daily-results';
+import { DOCUMENT_LABELS } from '../../src/ui/labels';
 
 async function expectText(page: Page, text: string) {
   await page.getByText(text, { exact: true }).waitFor({ state: 'visible' });
@@ -25,6 +26,7 @@ export async function playQueue(
     reload?: boolean;
     firstWrong?: boolean;
     offline?: () => Promise<void>;
+    afterInspect?: (caseId: string) => Promise<void>;
   },
 ) {
   for (const [index, id] of caseIds.entries()) {
@@ -35,9 +37,18 @@ export async function playQueue(
         exact: true,
       })
       .waitFor();
+    const document = item.documents.find(
+      (document) =>
+        item.initiallyPresentedDocumentIds.includes(document.id) &&
+        (document.type === 'PASSPORT' || document.type === 'TRAVEL_DOCUMENT'),
+    )!;
     await page
-      .getByRole('button', { name: 'Inspect passport (passport)', exact: true })
+      .getByRole('button', {
+        name: `Inspect ${DOCUMENT_LABELS[document.type]} (${document.id})`,
+        exact: true,
+      })
       .click();
+    await options.afterInspect?.(id);
     for (const questionId of item.resolution.paths[0]!.requiredQuestionIds) {
       const question = item.questions.find((entry) => entry.id === questionId)!;
       await page
@@ -236,6 +247,9 @@ export async function runMilestone3BrowserChecks(
         path: 'releases/browser-test-v2/bundle.json',
         sha256: createHash('sha256').update(bytes).digest('hex'),
       });
+      index.dailySchedule = index.dailySchedule.filter(
+        (entry) => entry.from < '2026-10-26',
+      );
       index.dailySchedule.push({
         from: '2026-10-26',
         contentVersion: newer.manifest.contentVersion,
@@ -268,7 +282,7 @@ export async function runMilestone3BrowserChecks(
         originalHistory,
       );
       await context.route(
-        `**/data/releases/${content.manifest.contentVersion}/bundle.json`,
+        `**/data/releases/${expected.selection.contentVersion}/bundle.json`,
         (route) => route.abort(),
       );
       await page.reload();
