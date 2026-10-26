@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { TravelDocument } from '../core/types';
 import { DOCUMENT_LABELS } from './labels';
+import { Icon } from './Icons';
 
 export function DocumentView({
   document,
@@ -15,9 +16,13 @@ export function DocumentView({
   const label = `${DOCUMENT_LABELS[document.type]} (${document.id})`;
   const attributes = document.attributes;
   return (
-    <article className="document">
+    <article
+      className={`document document-${document.type.toLowerCase()} ${expanded ? 'is-open' : ''}`}
+    >
       <button
         type="button"
+        className="document-cover"
+        aria-label={`${expanded ? 'Close' : 'Inspect'} ${label}`}
         aria-expanded={expanded}
         aria-controls={`document-${document.id}`}
         onClick={() => {
@@ -25,7 +30,25 @@ export function DocumentView({
           if (!expanded) onInspect();
         }}
       >
-        {expanded ? 'Close' : 'Inspect'} {label}
+        <Icon
+          name={
+            document.type === 'PASSPORT'
+              ? 'globe'
+              : document.type === 'ONWARD_TICKET'
+                ? 'ticket'
+                : 'book'
+          }
+        />
+        <span>
+          <strong>{DOCUMENT_LABELS[document.type]}</strong>
+          <small>
+            {document.issuingCountry} ·{' '}
+            {expanded ? 'Close document' : 'Inspect document'}
+          </small>
+        </span>
+        <span className="document-toggle" aria-hidden="true">
+          {expanded ? '−' : '+'}
+        </span>
       </button>
       {expanded && (
         <dl id={`document-${document.id}`}>
@@ -47,6 +70,28 @@ export function DocumentView({
             <>
               <dt>Category</dt>
               <dd>{attributes.category}</dd>
+            </>
+          )}
+          {attributes.passportKind && (
+            <>
+              <dt>Passport type</dt>
+              <dd>{attributes.passportKind.toLowerCase()}</dd>
+            </>
+          )}
+          {attributes.biometric !== undefined && (
+            <>
+              <dt>Electronic passport</dt>
+              <dd>
+                {attributes.biometric
+                  ? 'Yes · electronic chip'
+                  : 'No · non-electronic'}
+              </dd>
+            </>
+          )}
+          {attributes.documentCode && (
+            <>
+              <dt>Document form</dt>
+              <dd>{attributes.documentCode}</dd>
             </>
           )}
           {attributes.destinationCountry && (

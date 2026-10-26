@@ -5,16 +5,20 @@ import { preview } from 'vite';
 import { loadContentFromDisk } from './lib/content';
 import { validateLibraryFromDisk } from './lib/releases';
 import { runMilestone3BrowserChecks } from './lib/browser-milestone3';
+import { runUiBrowserChecks } from './lib/browser-ui';
+import { runDocumentBrowserChecks } from './lib/browser-documents';
 
 // Test the production static build, not a backend or a browser simulation.
 const browser = await chromium.launch();
 const server = await preview({
-  preview: { host: '127.0.0.1', port: 4173, strictPort: true },
+  preview: { host: '127.0.0.1', port: 0, strictPort: true },
 }).catch(async (error: unknown) => {
   await browser.close();
   throw error;
 });
-const baseURL = 'http://127.0.0.1:4173';
+const address = server.httpServer.address();
+assert(address && typeof address !== 'string');
+const baseURL = `http://127.0.0.1:${address.port}`;
 const key = 'air-beluga:progress:001-sfo';
 
 async function visible(page: Page, text: string) {
@@ -32,7 +36,7 @@ async function decision(page: Page, label: string, last = false) {
   );
   await page
     .getByRole('button', {
-      name: last ? 'View stage summary' : 'Next passenger',
+      name: last ? 'View shift report' : 'Next passenger',
       exact: true,
     })
     .click();
@@ -63,7 +67,7 @@ try {
     );
     await page.goto(`${baseURL}/?mode=stage&stage=001-sfo`);
     await page
-      .getByRole('button', { name: 'Start stage', exact: true })
+      .getByRole('button', { name: 'Start shift', exact: true })
       .focus();
     await page.keyboard.press('Enter');
     await page
@@ -88,7 +92,11 @@ try {
       .getByText(/Invented exercise rule: fictional XZ visitors/)
       .waitFor({ state: 'visible' });
     await page.getByLabel('Jurisdiction', { exact: true }).selectOption('GB');
+    await page
+      .getByRole('link', { name: 'Back to passenger', exact: true })
+      .click();
     await noOverflow(page);
+    await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({
       path: `test-results/${name}-desk.png`,
       fullPage: true,
@@ -166,7 +174,7 @@ try {
       .click();
     await decision(page, 'Check in', true);
     await page
-      .getByRole('heading', { name: 'Stage complete', exact: true })
+      .getByRole('heading', { name: 'Shift complete', exact: true })
       .waitFor();
     await visible(page, '8 of 8 correct · 1000 of 1000 points.');
     await noOverflow(page);
@@ -185,6 +193,7 @@ try {
       ),
       'Only local static assets may load',
     );
+    await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({
       path: `test-results/${name}-summary.png`,
       fullPage: true,
@@ -192,7 +201,7 @@ try {
     await context.setOffline(false);
     await page.reload();
     await page
-      .getByRole('heading', { name: 'Stage complete', exact: true })
+      .getByRole('heading', { name: 'Shift complete', exact: true })
       .waitFor();
     await visible(page, '8 of 8 correct · 1000 of 1000 points.');
     await page.getByRole('button', { name: 'Play again', exact: true }).click();
@@ -211,10 +220,10 @@ try {
     await page.reload();
     await visible(
       page,
-      'Your saved progress uses an incompatible version. You can start a new stage.',
+      'Your saved progress uses an incompatible version. You can start a new shift.',
     );
     await page
-      .getByRole('button', { name: 'Start stage', exact: true })
+      .getByRole('button', { name: 'Start shift', exact: true })
       .waitFor();
     await page.evaluate(
       (storageKey) => localStorage.setItem(storageKey, '{bad-json'),
@@ -223,7 +232,7 @@ try {
     await page.reload();
     await visible(
       page,
-      'Your saved progress could not be read. You can start a new stage.',
+      'Your saved progress could not be read. You can start a new shift.',
     );
     await context.close();
     console.log(
@@ -245,7 +254,7 @@ try {
     page,
     'Saving is unavailable in this browser. You can still play while this page stays open.',
   );
-  await page.getByRole('button', { name: 'Start stage', exact: true }).click();
+  await page.getByRole('button', { name: 'Start shift', exact: true }).click();
   await decision(page, 'Check in');
   await blocked.close();
 
@@ -253,7 +262,7 @@ try {
   const prematurePage = await premature.newPage();
   await prematurePage.goto(`${baseURL}/?mode=stage&stage=001-sfo`);
   await prematurePage
-    .getByRole('button', { name: 'Start stage', exact: true })
+    .getByRole('button', { name: 'Start shift', exact: true })
     .click();
   await decision(prematurePage, 'Check in');
   await prematurePage
@@ -272,7 +281,7 @@ try {
     .getByRole('button', { name: 'Restart', exact: true })
     .click();
   await prematurePage
-    .getByRole('button', { name: 'Restart stage', exact: true })
+    .getByRole('button', { name: 'Restart shift', exact: true })
     .click();
   await prematurePage
     .getByRole('heading', { name: 'Passenger 1 of 8: Ari Vale', exact: true })
@@ -297,13 +306,19 @@ try {
     .getByRole('button', { name: 'Retry loading', exact: true })
     .click();
   await failedPage
-    .getByRole('button', { name: 'Start stage', exact: true })
+    .getByRole('button', { name: 'Start shift', exact: true })
     .waitFor();
   await failure.close();
   await runMilestone3BrowserChecks(
     browser,
     baseURL,
     await loadContentFromDisk(),
+    await validateLibraryFromDisk(),
+  );
+  await runUiBrowserChecks(browser, baseURL, await validateLibraryFromDisk());
+  await runDocumentBrowserChecks(
+    browser,
+    baseURL,
     await validateLibraryFromDisk(),
   );
   console.log(

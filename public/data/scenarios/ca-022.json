@@ -1,0 +1,93 @@
+{
+  "id": "ca-022",
+  "version": 1,
+  "title": "SFO–YVR: Radu Vale",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-26. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-26",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored document roles, permission exceptions and positive/negative resolution against the cited IRCC sources. See docs/content-review-2026-10-26.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "HARD",
+  "ruleSnapshotId": "canada-documents-rules-2026-10-26-v2",
+  "travelDate": "2026-10-26",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Radu Vale",
+    "nationality": "RO"
+  },
+  "assumptions": [
+    "Adult on a direct commercial SFO–YVR flight for a short visit. Identity, genuine documents, booking, U.S. departure and unrelated airline checks are stipulated satisfied. Inspect the document types, dates and Canadian travel permission yourself.",
+    "Only documents initially shown or obtainable through the offered questions are available. There is no unmentioned additional citizenship, Canadian permanent residence, or other Canadian travel exemption. U.S. status and any claimed diplomatic accreditation can be clarified through the offered questions.",
+    "Names and document numbers are synthetic. Carrier lookups are simulated. Airline acceptance does not guarantee admission at the Canadian border.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. If a material identity, status or permission conflict still cannot be resolved at this desk, escalate to a supervisor rather than assume approval or a definitive refusal. Unfamiliar document types alone are not a reason to escalate."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "RO",
+      "holder": "Radu Vale",
+      "validFrom": "2026-09-01",
+      "validUntil": "2027-08-31",
+      "attributes": {
+        "category": "Temporary non-electronic national passport",
+        "number": "RO-SYNTHETIC-022",
+        "passportKind": "TEMPORARY",
+        "biometric": false
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": [
+    "This temporary booklet replaced my lost passport. I still have an eTA email from an earlier trip."
+  ],
+  "questions": [
+    {
+      "id": "ask-visa",
+      "label": "Ask for Canadian visitor visa",
+      "response": "I do not have a Canadian visitor visa.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    },
+    {
+      "id": "ask-alternative",
+      "label": "Ask for another passport or exempt residence-status evidence",
+      "response": "Only this non-electronic temporary passport is available. I have no accepted alternative passport, U.S. LPR proof or other exemption.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    },
+    {
+      "id": "check-eta",
+      "label": "Check Canadian eTA status",
+      "response": "No Canadian eTA is linked to this document.",
+      "revealsDocumentIds": [],
+      "justified": false,
+      "kind": "DOCUMENT_CHECK"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "DENY",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["passport"],
+        "requiredQuestionIds": ["ask-visa", "ask-alternative"]
+      }
+    ]
+  },
+  "rationale": "Romania’s electronic-passport eTA route does not cover this non-electronic temporary passport. The inquiries establish no Canadian visa or alternative exemption evidence. An email from an earlier trip is not the required Canadian visitor visa.",
+  "ruleIds": ["ca2-temporary"]
+}

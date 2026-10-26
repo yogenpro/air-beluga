@@ -1,0 +1,115 @@
+{
+  "id": "ca-018",
+  "version": 1,
+  "title": "SFO–YVR: Rana Noor",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed against Canadian government publications on 2026-10-26. Passenger and document data are fictional; no independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-10-26",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Checked the authored document roles, permission exceptions and positive/negative resolution against the cited IRCC sources. See docs/content-review-2026-10-26.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "canada-documents-rules-2026-10-26-v2",
+  "travelDate": "2026-10-26",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Rana Noor",
+    "nationality": "SY"
+  },
+  "assumptions": [
+    "Adult on a direct commercial SFO–YVR flight for a short visit. Identity, genuine documents, booking, U.S. departure and unrelated airline checks are stipulated satisfied. Inspect the document types, dates and Canadian travel permission yourself.",
+    "Only documents initially shown or obtainable through the offered questions are available. There is no unmentioned additional citizenship, Canadian permanent residence, or other Canadian travel exemption. U.S. status and any claimed diplomatic accreditation can be clarified through the offered questions.",
+    "Names and document numbers are synthetic. Carrier lookups are simulated. Airline acceptance does not guarantee admission at the Canadian border.",
+    "The Canadian visa is issued in this same I-571. The passenger has no U.S. lawful permanent-resident status or Canadian-issued refugee travel document.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. If a material identity, status or permission conflict still cannot be resolved at this desk, escalate to a supervisor rather than assume approval or a definitive refusal. Unfamiliar document types alone are not a reason to escalate."
+  ],
+  "documents": [
+    {
+      "id": "travel-document",
+      "type": "TRAVEL_DOCUMENT",
+      "issuingCountry": "US",
+      "holder": "Rana Noor",
+      "validFrom": "2026-05-01",
+      "validUntil": "2027-04-30",
+      "attributes": {
+        "category": "U.S. Refugee Travel Document",
+        "number": "US-I-571-SYNTHETIC-018",
+        "documentCode": "I-571"
+      }
+    },
+    {
+      "id": "visa",
+      "type": "VISA",
+      "issuingCountry": "CA",
+      "holder": "Rana Noor",
+      "validFrom": "2026-06-01",
+      "validUntil": "2026-10-25",
+      "attributes": {
+        "category": "Canadian visitor visa / temporary resident visa",
+        "number": "CA-VISA-SYNTHETIC-018",
+        "destinationCountry": "CA",
+        "entriesRemaining": 1
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["travel-document"],
+  "clues": [
+    "I have asylum status in the United States. My Canadian paperwork is inside this booklet."
+  ],
+  "questions": [
+    {
+      "id": "ask-visa",
+      "label": "Ask for Canadian visitor visa",
+      "response": "Here is the Canadian visa in my travel booklet.",
+      "revealsDocumentIds": ["visa"],
+      "justified": true,
+      "kind": "PASSENGER"
+    },
+    {
+      "id": "ask-replacement",
+      "label": "Ask for replacement Canadian permission",
+      "response": "I have no replacement Canadian visa or other current Canadian travel-permission exemption.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    },
+    {
+      "id": "ask-status",
+      "label": "Ask about U.S. permanent-resident status",
+      "response": "I am not a U.S. lawful permanent resident and have no document proving that status.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    },
+    {
+      "id": "check-eta",
+      "label": "Check Canadian eTA status",
+      "response": "No Canadian eTA is linked to this document.",
+      "revealsDocumentIds": [],
+      "justified": false,
+      "kind": "DOCUMENT_CHECK"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "DENY",
+    "paths": [
+      {
+        "id": "document-resolution",
+        "requiredDocumentIds": ["travel-document", "visa"],
+        "requiredQuestionIds": ["ask-visa", "ask-replacement", "ask-status"]
+      }
+    ]
+  },
+  "rationale": "The I-571 is accepted travel identity, but its Canadian visa expired before the travel date. The inquiries rule out replacement permission and the U.S. LPR exemption. Deny for missing current permission; neither U.S. issuance nor an eTA supplies the missing visa.",
+  "ruleIds": ["ca2-refugee", "ca2-identity"]
+}

@@ -1,0 +1,19 @@
+{
+  "asset": "terminal-sunset.png",
+  "created": "2026-10-26",
+  "generator": "Built-in image_gen tool",
+  "purpose": "Original pixel-art terminal backdrop for Air Beluga's daily-shift UI",
+  "prompt": "Use case: stylized-concept. Asset type: wide landscape background illustration for Air Beluga, a cozy browser game about working an airport check-in shift. Create original polished 16-bit pixel art, widescreen approximately 16:9, viewed from inside a quiet airport terminal through broad tall windows at golden hour. Scene: warm ivory and dark blue-green terminal window frames, a few terminal seats and potted plants at the far bottom edges, wide apron outside with a beautiful white passenger jet with a dark teal tail parked at a gate on the right, a small distant control tower on the left, low hills and a sunset horizon, small luggage cart near the aircraft. Make the airport geography generic. Lighting/mood: gentle golden sunlight, nostalgic, peaceful, inviting, slight blue haze, subtle pixel dithering and beautifully controlled clustered pixels, game environment art rather than a painting. Palette: apricot sky, buttery cream highlights, dusty blue and muted teal, deep navy shadows. Composition: horizon in the middle, large airy quiet sky and window area across the central and upper left area suitable for overlaying HTML title and game menu, visual details concentrated along the far sides and lower half. The plane must be elegant with plausible wings and landing gear, not a cartoon face. Constraints: NO text, NO letters, NO numbers, NO logos, NO watermark, NO interface, NO UI panels or buttons, NO people or characters, NO gradient blur, NO photographic textures. Render only the original scenic background image.",
+  "fonts": [
+    {
+      "family": "Silkscreen",
+      "source": "https://github.com/google/fonts/tree/main/ofl/silkscreen",
+      "license": "../fonts/Silkscreen-OFL.txt"
+    },
+    {
+      "family": "DM Sans",
+      "source": "https://github.com/google/fonts/tree/main/ofl/dmsans",
+      "license": "../fonts/DMSans-OFL.txt"
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import type { Browser, Page } from 'playwright';
 import { dailyForDate, type ContentLibrary } from '../../src/content/library';
 import type { ContentBundle, GameSession } from '../../src/core/types';
 import { DAILY_RESULTS_KEY } from '../../src/storage/daily-results';
+import { DOCUMENT_LABELS } from '../../src/ui/labels';
 
 async function expectText(page: Page, text: string) {
   await page.getByText(text, { exact: true }).waitFor({ state: 'visible' });
@@ -17,15 +18,15 @@ async function savedDaily(page: Page): Promise<GameSession> {
     return JSON.parse(localStorage.getItem(key)!).session as GameSession;
   });
 }
-async function playQueue(
+export async function playQueue(
   page: Page,
   content: ContentBundle,
   caseIds: string[],
   options: {
-    daily: boolean;
     reload?: boolean;
     firstWrong?: boolean;
     offline?: () => Promise<void>;
+    afterInspect?: (caseId: string) => Promise<void>;
   },
 ) {
   for (const [index, id] of caseIds.entries()) {
@@ -36,9 +37,18 @@ async function playQueue(
         exact: true,
       })
       .waitFor();
+    const document = item.documents.find(
+      (document) =>
+        item.initiallyPresentedDocumentIds.includes(document.id) &&
+        (document.type === 'PASSPORT' || document.type === 'TRAVEL_DOCUMENT'),
+    )!;
     await page
-      .getByRole('button', { name: 'Inspect passport (passport)', exact: true })
+      .getByRole('button', {
+        name: `Inspect ${DOCUMENT_LABELS[document.type]} (${document.id})`,
+        exact: true,
+      })
       .click();
+    await options.afterInspect?.(id);
     for (const questionId of item.resolution.paths[0]!.requiredQuestionIds) {
       const question = item.questions.find((entry) => entry.id === questionId)!;
       await page
@@ -67,6 +77,9 @@ async function playQueue(
         ];
     await page.getByRole('button', { name: disposition, exact: true }).click();
     await expectText(page, wrong ? 'Incorrect' : 'Correct');
+    await page
+      .getByText('Rules and sources behind this decision', { exact: true })
+      .click();
     assert(
       (await page
         .getByRole('link', {
@@ -84,11 +97,7 @@ async function playQueue(
     const last = index === caseIds.length - 1;
     await page
       .getByRole('button', {
-        name: last
-          ? options.daily
-            ? 'View daily summary'
-            : 'View stage summary'
-          : 'Next passenger',
+        name: last ? 'View shift report' : 'Next passenger',
         exact: true,
       })
       .click();
@@ -104,11 +113,11 @@ export async function runMilestone3BrowserChecks(
   const authored = content.stages.find((stage) => stage.id === '002-sfo-yvr')!;
   const stageContext = await browser.newContext();
   const stagePage = await stageContext.newPage();
-  await stagePage.goto(baseURL);
+  await stagePage.goto(`${baseURL}/?mode=stage&stage=002-sfo-yvr`);
   await stagePage
-    .getByRole('button', { name: 'Start stage', exact: true })
+    .getByRole('button', { name: 'Start shift', exact: true })
     .click();
-  await playQueue(stagePage, content, authored.caseIds, { daily: false });
+  await playQueue(stagePage, content, authored.caseIds, {});
   await expectText(stagePage, '8 of 8 correct · 1000 of 1000 points.');
   await stageContext.close();
 
@@ -121,13 +130,14 @@ export async function runMilestone3BrowserChecks(
   ] as const) {
     const context = await browser.newContext({ viewport });
     const page = await context.newPage();
+    await page.clock.install({ time: new Date(`${date}T12:00:00Z`) });
     const errors: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
     let requests = 0;
     page.on('request', () => requests++);
     await page.goto(`${baseURL}/?mode=daily&date=${date}`);
     await page
-      .getByRole('button', { name: 'Start daily challenge', exact: true })
+      .getByRole('button', { name: 'Start daily shift', exact: true })
       .focus();
     await page.keyboard.press('Enter');
     const initial = await savedDaily(page);
@@ -141,7 +151,6 @@ export async function runMilestone3BrowserChecks(
     else firstClientIds = initial.caseIds;
     let offlineRequestCount = 0;
     await playQueue(page, expected.content, initial.caseIds, {
-      daily: true,
       reload: true,
       offline: async () => {
         offlineRequestCount = requests;
@@ -161,21 +170,22 @@ export async function runMilestone3BrowserChecks(
       ),
       true,
     );
+    await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({
       path: `test-results/${name}-daily.png`,
       fullPage: true,
     });
     await page
-      .getByRole('button', { name: 'Daily results', exact: true })
+      .getByRole('button', { name: 'Shift history', exact: true })
       .click();
     await page
       .getByRole('button', {
-        name: `View frozen result for ${date}`,
+        name: `View shift report for ${date}`,
         exact: true,
       })
       .click();
     await page
-      .getByRole('heading', { name: 'Daily challenge complete', exact: true })
+      .getByRole('heading', { name: 'Daily shift complete', exact: true })
       .waitFor();
     await expectText(page, '6 of 6 correct · 750 of 750 points.');
     await page.getByText('Review decision', { exact: true }).first().click();
@@ -195,7 +205,7 @@ export async function runMilestone3BrowserChecks(
     await page.reload();
     await page
       .getByRole('button', {
-        name: `View frozen result for ${date}`,
+        name: `View shift report for ${date}`,
         exact: true,
       })
       .waitFor();
@@ -207,13 +217,12 @@ export async function runMilestone3BrowserChecks(
 
     if (name === 'desktop') {
       await page
-        .getByRole('button', { name: 'Daily challenge', exact: true })
+        .getByRole('button', { name: 'Daily shift', exact: true })
         .click();
       await page
         .getByRole('button', { name: 'Play again', exact: true })
         .click();
       await playQueue(page, expected.content, initial.caseIds, {
-        daily: true,
         firstWrong: true,
       });
       await expectText(page, '5 of 6 correct · 625 of 750 points.');
@@ -238,6 +247,9 @@ export async function runMilestone3BrowserChecks(
         path: 'releases/browser-test-v2/bundle.json',
         sha256: createHash('sha256').update(bytes).digest('hex'),
       });
+      index.dailySchedule = index.dailySchedule.filter(
+        (entry) => entry.from < '2026-10-26',
+      );
       index.dailySchedule.push({
         from: '2026-10-26',
         contentVersion: newer.manifest.contentVersion,
@@ -257,7 +269,7 @@ export async function runMilestone3BrowserChecks(
       await page.goto(`${baseURL}/?mode=results`);
       await page
         .getByRole('button', {
-          name: `View frozen result for ${date}`,
+          name: `View shift report for ${date}`,
           exact: true,
         })
         .click();
@@ -270,7 +282,7 @@ export async function runMilestone3BrowserChecks(
         originalHistory,
       );
       await context.route(
-        `**/data/releases/${content.manifest.contentVersion}/bundle.json`,
+        `**/data/releases/${expected.selection.contentVersion}/bundle.json`,
         (route) => route.abort(),
       );
       await page.reload();
@@ -298,7 +310,7 @@ export async function runMilestone3BrowserChecks(
   await midnightPage.clock.install({ time: new Date('2026-10-25T23:59:30Z') });
   await midnightPage.goto(`${baseURL}/?mode=daily`);
   await midnightPage
-    .getByRole('button', { name: 'Start daily challenge', exact: true })
+    .getByRole('button', { name: 'Start daily shift', exact: true })
     .click();
   const before = await savedDaily(midnightPage);
   await midnightPage.clock.fastForward(60_000);
@@ -315,7 +327,7 @@ export async function runMilestone3BrowserChecks(
     .getByRole('button', { name: "Play today's challenge", exact: true })
     .click();
   await midnightPage
-    .getByRole('button', { name: 'Start daily challenge', exact: true })
+    .getByRole('button', { name: 'Start daily shift', exact: true })
     .waitFor();
   await midnight.close();
   console.log(
