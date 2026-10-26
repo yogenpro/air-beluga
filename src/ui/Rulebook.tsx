@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { PassengerCase, RuleSnapshot } from '../core/types';
+import { Icon } from './Icons';
 
 export function RuleSources({ rule }: { rule: RuleSnapshot['rules'][number] }) {
   return rule.sources.length ? (
@@ -25,10 +26,12 @@ export function Rulebook({
   snapshot,
   itinerary,
   onOpenRule,
+  onBack,
 }: {
   snapshot: RuleSnapshot;
   itinerary: PassengerCase['itinerary'];
   onOpenRule: (ruleId: string) => void;
+  onBack: () => void;
 }) {
   const [query, setQuery] = useState('');
   const [country, setCountry] = useState('');
@@ -60,11 +63,17 @@ export function Rulebook({
   );
   return (
     <aside className="panel rulebook" aria-labelledby="rulebook-heading">
+      <div className="reference-title">
+        <Icon name="book" />
+        <span className="eyebrow">YOUR DESK MANUAL</span>
+      </div>
       <h2 id="rulebook-heading" tabIndex={-1}>
         Travel reference
       </h2>
       <p>
-        <a href="#passenger-heading">Back to passenger</a>
+        <a href="#passenger-heading" onClick={onBack}>
+          Back to passenger
+        </a>
       </p>
       <p>
         {snapshot.verificationStatus === 'ILLUSTRATIVE_ONLY'
@@ -74,6 +83,7 @@ export function Rulebook({
       </p>
       <label htmlFor="rule-search">Search rules</label>
       <input
+        placeholder="Find a requirement…"
         id="rule-search"
         type="search"
         value={query}
@@ -92,7 +102,7 @@ export function Rulebook({
           </option>
         ))}
       </select>
-      <p role="status">
+      <p role="status" className="reference-count">
         {rules.length} matching {rules.length === 1 ? 'rule' : 'rules'}
       </p>
       {rules.length === 0 && <p>Try another search or jurisdiction.</p>}
