@@ -28,9 +28,9 @@
     "check": "npm run typecheck && npm run lint && npm run format:check && npm test && npm run build"
   },
   "dependencies": {
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "zod": "4.3.6"
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
@@ -39,13 +39,13 @@
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "5.2.0",
     "eslint": "9.39.4",
-    "playwright": "1.62.1",
-    "prettier": "3.8.1",
-    "tsx": "4.21.0",
+    "playwright": "1.64.1",
+    "prettier": "3.9.10",
+    "tsx": "4.23.15",
     "typescript": "5.9.3",
-    "typescript-eslint": "^8.0.0",
+    "typescript-eslint": "^8.72.1",
     "vite": "7.3.6",
     "vitest": "4.0.18",
-    "wrangler": "4.152.0"
+    "wrangler": "4.153.0"
   }
 }
