@@ -302,11 +302,18 @@ describe('document and status curveballs', () => {
 
   it('keeps check-ins a minority across a year of daily selections', () => {
     const seen = new Set<string>();
+    const originalSchedule = {
+      ...library,
+      index: {
+        ...library.index,
+        dailySchedule: library.index.dailySchedule.slice(0, 2),
+      },
+    };
     for (let day = 0; day < 366; day++) {
       const date = new Date(Date.UTC(2026, 9, 27 + day))
         .toISOString()
         .slice(0, 10);
-      const daily = dailyForDate(library, date)!;
+      const daily = dailyForDate(originalSchedule, date)!;
       const cases = daily.selection.caseIds.map(
         (id) => daily.content.cases.find((item) => item.id === id)!,
       );

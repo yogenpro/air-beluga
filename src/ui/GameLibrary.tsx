@@ -83,6 +83,26 @@ export function GameLibrary({ library }: { library: ContentLibrary }) {
   }
   const daily = useMemo(() => getDaily(library, date), [library, date]);
   const todaysDaily = getDaily(library, today);
+  const dailyStage =
+    'error' in daily
+      ? undefined
+      : daily.content.stages.find(
+          (stage) =>
+            stage.id ===
+            daily.content.dailyPools.find(
+              (pool) => pool.id === daily.selection.poolId,
+            )?.stageId,
+        );
+  const todaysStage =
+    'error' in todaysDaily
+      ? undefined
+      : todaysDaily.content.stages.find(
+          (stage) =>
+            stage.id ===
+            todaysDaily.content.dailyPools.find(
+              (pool) => pool.id === todaysDaily.selection.poolId,
+            )?.stageId,
+        );
   const todaysSession =
     'error' in todaysDaily
       ? null
@@ -192,7 +212,9 @@ export function GameLibrary({ library }: { library: ContentLibrary }) {
                   <span>
                     <span className="card-title">Today’s shift</span>
                     <span className="card-description">
-                      Different passengers. One desk. Your call.
+                      {todaysStage
+                        ? `${todaysStage.departureAirport} · ${todaysStage.title}`
+                        : 'Different passengers. One desk. Your call.'}
                     </span>
                   </span>
                   <span className="daily-count">
@@ -303,8 +325,10 @@ export function GameLibrary({ library }: { library: ContentLibrary }) {
                     )}
                     onExit={goHome}
                     metadata={{
-                      title: 'Daily documents desk',
-                      flightLabel: 'Air Beluga · curated passenger queue',
+                      title: dailyStage?.title ?? 'Daily documents desk',
+                      flightLabel:
+                        dailyStage?.flightLabel ??
+                        'Air Beluga · curated passenger queue',
                       departureLabel: `Travel date: ${[...new Set(daily.selection.caseIds.map((id) => daily.content.cases.find((item) => item.id === id)!.travelDate))].join(', ')}`,
                       notice: daily.content.dailyPools.find(
                         (pool) => pool.id === daily.selection.poolId,
@@ -320,7 +344,9 @@ export function GameLibrary({ library }: { library: ContentLibrary }) {
                           ),
                         ),
                       ].join(' / '),
+                      network: dailyStage?.network,
                       tutorial:
+                        dailyStage?.tutorial ??
                         'Welcome to your shift. Read each passenger’s itinerary, inspect their documents, and ask a good question when something is missing. Everyone gets the same queue. Your first completed result is kept on this device.',
                     }}
                   />
@@ -368,6 +394,7 @@ export function GameLibrary({ library }: { library: ContentLibrary }) {
                         : 'PRACTICE',
                     airport: stage.departureAirport,
                     historical: stage.historical,
+                    network: stage.network,
                   }}
                 />
               </>
@@ -396,21 +423,29 @@ export function GameLibrary({ library }: { library: ContentLibrary }) {
                         <span className="catalog-route">
                           <span>{item.departureAirport}</span>
                           <Icon name="plane" />
-                          <span>
-                            {
-                              content.cases
-                                .find(
-                                  (passenger) =>
-                                    passenger.id === item.caseIds[0],
-                                )!
-                                .itinerary.at(-1)!.to
+                          <span
+                            className={
+                              item.network && item.network.hubs.length > 1
+                                ? 'network-hubs'
+                                : undefined
                             }
+                          >
+                            {item.network
+                              ? item.network.hubs.join(' / ')
+                              : content.cases
+                                  .find(
+                                    (passenger) =>
+                                      passenger.id === item.caseIds[0],
+                                  )!
+                                  .itinerary.at(-1)!.to}
                           </span>
                         </span>
                         <span className="eyebrow">
-                          {item.historical
-                            ? `HISTORICAL · ${item.scheduledDeparture.slice(0, 10)}`
-                            : 'SOURCE-REVIEWED'}{' '}
+                          {item.network
+                            ? `Modeled on ${item.network.modeledOn} · via ${item.network.hubs.join(' / ')}`
+                            : item.historical
+                              ? `HISTORICAL · ${item.scheduledDeparture.slice(0, 10)}`
+                              : 'SOURCE-REVIEWED'}{' '}
                           · {item.caseIds.length} PASSENGERS
                         </span>
                         <span className="card-title">{item.title}</span>

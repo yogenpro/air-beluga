@@ -93,6 +93,7 @@ export const RuleSnapshotSchema = z
             id,
             title: text,
             body: text,
+            jurisdictionCountry: country.optional(),
             scope: z
               .object({
                 departureAirports: z.array(airport).min(1),
@@ -202,6 +203,7 @@ export const PassengerCaseSchema = z
         z
           .object({
             from: airport,
+            transportMode: z.enum(['AIR', 'GROUND']).optional(),
             scheduledDeparture: InstantSchema.optional(),
             to: airport,
             destinationCountry: country,
@@ -270,6 +272,15 @@ export const StageSchema = z
     title: text,
     departureAirport: airport,
     airline: z.literal('Air Beluga'),
+    network: z
+      .object({
+        modeledOn: text,
+        homeCountry: country,
+        hubs: z.array(airport).min(1),
+        sources: z.array(SourceSchema).min(1),
+      })
+      .strict()
+      .optional(),
     historical: z.boolean().optional(),
     flightLabel: text,
     scheduledDeparture: z.iso.datetime(),
@@ -291,6 +302,7 @@ const DifficultyLimitSchema = z
 export const DailyPoolSchema = z
   .object({
     id,
+    stageId: id.optional(),
     verificationStatus: VerificationSchema,
     notice: text,
     dailyAlgorithmVersion: z.literal('fnv1a32-mulberry32-v1'),

@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it, vi } from 'vitest';
-import { loadContentFromDisk, DEFAULT_DATA_ROOT } from '../scripts/lib/content';
+import { DEFAULT_DATA_ROOT } from '../scripts/lib/content';
 import { validateLibraryFromDisk } from '../scripts/lib/releases';
 import { validateContent } from '../src/content/validate';
 import { testEvidenceIssues } from '../src/content/health';
@@ -13,7 +13,15 @@ import {
 } from '../src/core/engine';
 import type { Decision, GameSession } from '../src/core/types';
 
-const content = await loadContentFromDisk();
+// Keep this historical release's contracts independent of later additions.
+const content = validateContent(
+  JSON.parse(
+    await readFile(
+      `${DEFAULT_DATA_ROOT}/releases/historical-covid-2026-10-26-v3/bundle.json`,
+      'utf8',
+    ),
+  ),
+);
 const library = await validateLibraryFromDisk();
 const stageId = '004-del-yvr-2021';
 const snapshot = content.ruleSnapshots.find(
@@ -92,7 +100,7 @@ describe('historical COVID-era shift', () => {
     expect(oldIndex.sha256).toBe(
       '3496c1da87e82ce082709d4a7c186824c808394a93a90f2f65ec44163ffa5ef1',
     );
-    expect(library.index.dailySchedule).toEqual([
+    expect(library.index.dailySchedule.slice(0, 2)).toEqual([
       {
         from: '2026-10-25',
         contentVersion: 'canada-2026-10-25-v1',

@@ -13,12 +13,19 @@ const paths = {
   back: 'M20 12H5m6-6-6 6 6 6',
   chat: 'M3 4h18v13H9l-6 4V4Zm5 5h8m-8 4h5',
   close: 'm6 6 12 12M6 18 18 6',
+  alert: 'M12 3 2 20h20L12 3Zm0 6v5m0 3h.01',
+  shield: 'M12 3 4 7v6c0 5 3.5 7.5 8 9 4.5-1.5 8-4 8-9V7l-8-4Z',
+  search: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 4 4',
+  chip: 'M4 7h16v10H4V7Zm4 3h8v4H8v-4Zm-4 2h4m8 0h4M12 7v3m0 4v3',
+  lab: 'M9 3h6m-5 0v6l-5 9a1 1 0 0 0 1 2h12a1 1 0 0 0 1-2l-5-9V3M8 14h8',
+  info: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 8v5m0-8h.01',
 } as const;
+export type IconName = keyof typeof paths;
 export function Icon({
   name,
   className = '',
 }: {
-  name: keyof typeof paths;
+  name: IconName;
   className?: string;
 }) {
   return (

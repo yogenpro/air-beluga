@@ -1,0 +1,106 @@
+{
+  "id": "ana-007",
+  "version": 1,
+  "title": "SFO–NRT–HKG: Arjun Basu",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-11-03",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the finite route, passport conditions, entry/transit exceptions and available evidence against the cited official sources. See docs/content-review-networks-2026-11-03.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "HARD",
+  "ruleSnapshotId": "network-rules-2026-11-03-v1",
+  "travelDate": "2026-11-03",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "NRT",
+      "destinationCountry": "JP",
+      "transit": "AIRSIDE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-03T19:00:00Z"
+    },
+    {
+      "from": "NRT",
+      "to": "HKG",
+      "destinationCountry": "HK",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Arjun Basu",
+    "nationality": "IN"
+  },
+  "assumptions": [
+    "All passengers and documents are synthetic. Travel begins on 2026-11-03; connections arrive at the hub on 2026-11-04. Flight clocks are invented for this puzzle, not a live timetable. All unmentioned identity, security, funds, return/onward bookings, health and departure checks are stipulated satisfied. SG Arrival Card submission is complete where needed; it is never a visa substitute.",
+    "Only the documents and facts shown or obtainable through the offered checks are available. Unless expressly identified, the traveller has an ordinary passport, no additional citizenship, no destination residence, special passport, crew, e-Channel or other exemption. Short tourism only; no work. Routine entry permissions for an untested leg are not silently assumed when that leg is part of the puzzle.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. Escalate a material eligibility, identity or transfer conflict that remains unresolved after those checks; deny a confirmed requirement failure once relevant obtainable alternatives are excluded. Unfamiliarity alone is insufficient. No live airline or government systems are called."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "IN",
+      "holder": "Arjun Basu",
+      "validFrom": "2024-01-01",
+      "validUntil": "2032-01-01",
+      "attributes": {
+        "number": "IN-SYN-ANA-007",
+        "category": "Ordinary passport",
+        "passportKind": "ORDINARY",
+        "biometric": true
+      }
+    },
+    {
+      "id": "hk-par",
+      "type": "ELECTRONIC_AUTHORIZATION",
+      "issuingCountry": "HK",
+      "holder": "Arjun Basu",
+      "validFrom": "2026-10-01",
+      "validUntil": "2026-12-31",
+      "attributes": {
+        "category": "Successful HK registration; notification slip held",
+        "status": "APPROVED",
+        "destinationCountry": "HK",
+        "linkedPassportNumber": "IN-SYN-ANA-007"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "hk-par"],
+  "clues": [
+    "My ticket says airside, but this transfer message tells me to collect a bag."
+  ],
+  "questions": [
+    {
+      "id": "verify-handling",
+      "label": "Resolve Tokyo baggage instructions",
+      "response": "The booking says through baggage, while the handling message says collect at arrivals. The transfer desk cannot establish which instruction applies; whether Japanese immigration is required remains unresolved.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "DOCUMENT_CHECK"
+    },
+    {
+      "id": "ask-japan-permission",
+      "label": "Ask for Japanese permission or alternative passport",
+      "response": "No Japanese visa, other passport, residence status, registration or other exemption is available.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "ESCALATE",
+    "paths": [
+      {
+        "id": "reviewed-evidence",
+        "requiredDocumentIds": ["passport", "hk-par"],
+        "requiredQuestionIds": ["verify-handling", "ask-japan-permission"]
+      }
+    ]
+  },
+  "rationale": "Hong Kong permission is sufficient. The material gap is whether the Tokyo transfer actually requires entry, for which this traveller lacks Japanese permission. The airside label cannot settle conflicting operational evidence. Escalate after the available verification fails.",
+  "ruleIds": ["net-jp-transit", "net-jp-entry", "net-hk-par"]
+}

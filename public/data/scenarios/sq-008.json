@@ -1,0 +1,101 @@
+{
+  "id": "sq-008",
+  "version": 1,
+  "title": "LHR–SIN–NRT: Asha Venn",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-11-03",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the finite route, passport conditions, entry/transit exceptions and available evidence against the cited official sources. See docs/content-review-networks-2026-11-03.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "HARD",
+  "ruleSnapshotId": "network-rules-2026-11-03-v1",
+  "travelDate": "2026-11-03",
+  "itinerary": [
+    {
+      "from": "LHR",
+      "to": "SIN",
+      "destinationCountry": "SG",
+      "transit": "AIRSIDE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-03T10:00:00Z"
+    },
+    {
+      "from": "SIN",
+      "to": "NRT",
+      "destinationCountry": "JP",
+      "transit": "NONE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-04T12:00:00+08:00"
+    }
+  ],
+  "passenger": {
+    "displayName": "Asha Venn",
+    "nationality": "IN"
+  },
+  "assumptions": [
+    "All passengers and documents are synthetic. Travel begins on 2026-11-03; connections arrive at the hub on 2026-11-04. Flight clocks are invented for this puzzle, not a live timetable. All unmentioned identity, security, funds, return/onward bookings, health and departure checks are stipulated satisfied. SG Arrival Card submission is complete where needed; it is never a visa substitute.",
+    "Only the documents and facts shown or obtainable through the offered checks are available. Unless expressly identified, the traveller has an ordinary passport, no additional citizenship, no destination residence, special passport, crew, e-Channel or other exemption. Short tourism only; no work. Routine entry permissions for an untested leg are not silently assumed when that leg is part of the puzzle.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. Escalate a material eligibility, identity or transfer conflict that remains unresolved after those checks; deny a confirmed requirement failure once relevant obtainable alternatives are excluded. Unfamiliarity alone is insufficient. No live airline or government systems are called.",
+    "Singapore hub arrival is 2026-11-04T08:00:00+08:00. Where a Japanese visa is shown it is an unused sticker visa for the onward tourism visit. No used single-journey-visa return to India is involved.",
+    "The traveller is a qualifying UK resident for eVISA application. Singapore airside handling is confirmed. The live notice has a different holder surname despite the same passport number; no alternative Japanese visa or exemption is available."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "IN",
+      "holder": "Asha Venn",
+      "validFrom": "2024-01-01",
+      "validUntil": "2032-01-01",
+      "attributes": {
+        "number": "IN-SYN-SQ-008",
+        "category": "Ordinary passport",
+        "passportKind": "ORDINARY",
+        "biometric": true
+      }
+    },
+    {
+      "id": "jp-evisa",
+      "type": "ELECTRONIC_AUTHORIZATION",
+      "issuingCountry": "JP",
+      "holder": "Asha Benn",
+      "validFrom": "2026-10-01",
+      "validUntil": "2026-12-31",
+      "attributes": {
+        "category": "Live JAPAN eVISA notice with holder discrepancy",
+        "status": "LIVE DISPLAY — IDENTITY LINK UNRESOLVED",
+        "destinationCountry": "JP",
+        "linkedPassportNumber": "IN-SYN-SQ-008"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "jp-evisa"],
+  "clues": [
+    "The live notice opens. The surname is the typo I asked them to fix."
+  ],
+  "questions": [
+    {
+      "id": "verify-evisa-holder",
+      "label": "Verify Japan eVISA holder correction",
+      "response": "The issuer verification cannot resolve the conflicting holder surname. No correction notice or other evidence establishes that the eVISA belongs to this passenger.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "DOCUMENT_CHECK"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "ESCALATE",
+    "paths": [
+      {
+        "id": "reviewed-evidence",
+        "requiredDocumentIds": ["passport", "jp-evisa"],
+        "requiredQuestionIds": ["verify-evisa-holder"]
+      }
+    ]
+  },
+  "rationale": "A live page alone does not resolve an identity discrepancy. Singapore transit is sufficient, but the Japanese notice and passport disagree about the holder. Escalate the remaining material link after the offered correction check.",
+  "ruleIds": ["net-sg-transit", "net-jp-entry", "net-jp-evisa"]
+}

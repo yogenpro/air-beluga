@@ -434,6 +434,13 @@ export function validateContent(input: unknown): ContentBundle {
         item.ruleIds.includes(entry.id),
       )) {
         if (
+          rule.jurisdictionCountry &&
+          !item.itinerary.some(
+            (leg) => leg.destinationCountry === rule.jurisdictionCountry,
+          )
+        )
+          fail(context, `rule ${rule.id} jurisdiction is outside itinerary`);
+        if (
           !rule.scope.departureAirports.includes(firstLeg.from) ||
           !rule.scope.destinationCountries.includes(destination) ||
           transitCountries.some(
@@ -498,6 +505,18 @@ export function validateContent(input: unknown): ContentBundle {
   }
   for (const pool of bundle.dailyPools) {
     notice(pool, pool.id);
+    if (pool.stageId) {
+      const stage = bundle.stages.find((item) => item.id === pool.stageId);
+      if (!stage) fail(pool.id, 'unknown daily stage');
+      else {
+        references(pool.caseIds, stage.caseIds, `${pool.id}.stage`);
+        if (
+          pool.verificationStatus === 'VERIFIED' &&
+          stage.verificationStatus !== 'VERIFIED'
+        )
+          fail(pool.id, 'verified daily pool requires a verified stage');
+      }
+    }
     references(
       pool.caseIds,
       bundle.cases.map((item) => item.id),

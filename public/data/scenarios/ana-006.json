@@ -1,0 +1,85 @@
+{
+  "id": "ana-006",
+  "version": 1,
+  "title": "SFO–NRT: Rani Prasetya",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-11-03",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the finite route, passport conditions, entry/transit exceptions and available evidence against the cited official sources. See docs/content-review-networks-2026-11-03.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "HARD",
+  "ruleSnapshotId": "network-rules-2026-11-03-v1",
+  "travelDate": "2026-11-03",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "NRT",
+      "destinationCountry": "JP",
+      "transit": "NONE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-03T19:00:00Z"
+    }
+  ],
+  "passenger": {
+    "displayName": "Rani Prasetya",
+    "nationality": "ID"
+  },
+  "assumptions": [
+    "All passengers and documents are synthetic. Travel begins on 2026-11-03; connections arrive at the hub on 2026-11-04. Flight clocks are invented for this puzzle, not a live timetable. All unmentioned identity, security, funds, return/onward bookings, health and departure checks are stipulated satisfied. SG Arrival Card submission is complete where needed; it is never a visa substitute.",
+    "Only the documents and facts shown or obtainable through the offered checks are available. Unless expressly identified, the traveller has an ordinary passport, no additional citizenship, no destination residence, special passport, crew, e-Channel or other exemption. Short tourism only; no work. Routine entry permissions for an untested leg are not silently assumed when that leg is part of the puzzle.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. Escalate a material eligibility, identity or transfer conflict that remains unresolved after those checks; deny a confirmed requirement failure once relevant obtainable alternatives are excluded. Unfamiliarity alone is insufficient. No live airline or government systems are called."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "ID",
+      "holder": "Rani Prasetya",
+      "validFrom": "2024-01-01",
+      "validUntil": "2032-01-01",
+      "attributes": {
+        "number": "ID-SYN-ANA-006",
+        "category": "Ordinary passport",
+        "passportKind": "ORDINARY",
+        "biometric": true
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": [
+    "My electronic passport was registered for Japan. The registration receipt in my account has a different number."
+  ],
+  "questions": [
+    {
+      "id": "ask-registration",
+      "label": "Ask about Japanese passport registration",
+      "response": "I renewed my passport. I was told the new electronic passport had also been registered, but the receipt available here only lists the old booklet.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    },
+    {
+      "id": "verify-registration",
+      "label": "Verify registration for the current passport",
+      "response": "The current-passport registration claim cannot be confirmed from the available record or issuer response. No Japanese visa or other exemption is available.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "DOCUMENT_CHECK"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "ESCALATE",
+    "paths": [
+      {
+        "id": "reviewed-evidence",
+        "requiredDocumentIds": ["passport"],
+        "requiredQuestionIds": ["ask-registration", "verify-registration"]
+      }
+    ]
+  },
+  "rationale": "An Indonesian electronic passport requires qualifying registration; an old booklet receipt does not establish registration of the replacement. The current registration claim remains specifically unresolved after verification. Escalate under fictional Air Beluga procedure instead of assuming approval or a definitive absence of registration.",
+  "ruleIds": ["net-jp-entry"]
+}

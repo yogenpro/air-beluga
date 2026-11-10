@@ -1,0 +1,32 @@
+{
+  "id": "sq-network-pool-v1",
+  "stageId": "007-lhr-singapore-network",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "dailyAlgorithmVersion": "fnv1a32-mulberry32-v1",
+  "caseIds": [
+    "sq-001",
+    "sq-002",
+    "sq-003",
+    "sq-004",
+    "sq-005",
+    "sq-006",
+    "sq-007",
+    "sq-008"
+  ],
+  "count": 6,
+  "difficulty": {
+    "EASY": {
+      "min": 1,
+      "max": 1
+    },
+    "MEDIUM": {
+      "min": 2,
+      "max": 2
+    },
+    "HARD": {
+      "min": 3,
+      "max": 3
+    }
+  }
+}

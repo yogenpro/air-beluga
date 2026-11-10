@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "contentVersion": "historical-covid-2026-10-26-v3",
+  "contentVersion": "airline-networks-2026-11-03-v4",
   "scoring": {
     "correctDecision": 100,
     "appropriateInquiry": 15,
@@ -23,6 +23,10 @@
     {
       "id": "canada-covid-rules-2021-10-15-v1",
       "path": "rules/canada-covid-rules-2021-10-15-v1.json"
+    },
+    {
+      "id": "network-rules-2026-11-03-v1",
+      "path": "rules/networks-2026-11-03-v1.json"
     }
   ],
   "cases": [
@@ -201,6 +205,102 @@
     {
       "id": "hist-012",
       "path": "scenarios/hist-012.json"
+    },
+    {
+      "id": "ana-001",
+      "path": "scenarios/ana-001.json"
+    },
+    {
+      "id": "ana-002",
+      "path": "scenarios/ana-002.json"
+    },
+    {
+      "id": "ana-003",
+      "path": "scenarios/ana-003.json"
+    },
+    {
+      "id": "ana-004",
+      "path": "scenarios/ana-004.json"
+    },
+    {
+      "id": "ana-005",
+      "path": "scenarios/ana-005.json"
+    },
+    {
+      "id": "ana-006",
+      "path": "scenarios/ana-006.json"
+    },
+    {
+      "id": "ana-007",
+      "path": "scenarios/ana-007.json"
+    },
+    {
+      "id": "ana-008",
+      "path": "scenarios/ana-008.json"
+    },
+    {
+      "id": "cx-001",
+      "path": "scenarios/cx-001.json"
+    },
+    {
+      "id": "cx-002",
+      "path": "scenarios/cx-002.json"
+    },
+    {
+      "id": "cx-003",
+      "path": "scenarios/cx-003.json"
+    },
+    {
+      "id": "cx-004",
+      "path": "scenarios/cx-004.json"
+    },
+    {
+      "id": "cx-005",
+      "path": "scenarios/cx-005.json"
+    },
+    {
+      "id": "cx-006",
+      "path": "scenarios/cx-006.json"
+    },
+    {
+      "id": "cx-007",
+      "path": "scenarios/cx-007.json"
+    },
+    {
+      "id": "cx-008",
+      "path": "scenarios/cx-008.json"
+    },
+    {
+      "id": "sq-001",
+      "path": "scenarios/sq-001.json"
+    },
+    {
+      "id": "sq-002",
+      "path": "scenarios/sq-002.json"
+    },
+    {
+      "id": "sq-003",
+      "path": "scenarios/sq-003.json"
+    },
+    {
+      "id": "sq-004",
+      "path": "scenarios/sq-004.json"
+    },
+    {
+      "id": "sq-005",
+      "path": "scenarios/sq-005.json"
+    },
+    {
+      "id": "sq-006",
+      "path": "scenarios/sq-006.json"
+    },
+    {
+      "id": "sq-007",
+      "path": "scenarios/sq-007.json"
+    },
+    {
+      "id": "sq-008",
+      "path": "scenarios/sq-008.json"
     }
   ],
   "stages": [
@@ -219,6 +319,18 @@
     {
       "id": "004-del-yvr-2021",
       "path": "stages/004-del-yvr-2021.json"
+    },
+    {
+      "id": "005-sfo-tokyo-network",
+      "path": "stages/005-sfo-tokyo-network.json"
+    },
+    {
+      "id": "006-lax-hong-kong-network",
+      "path": "stages/006-lax-hong-kong-network.json"
+    },
+    {
+      "id": "007-lhr-singapore-network",
+      "path": "stages/007-lhr-singapore-network.json"
     }
   ],
   "dailyPools": [
@@ -233,6 +345,18 @@
     {
       "id": "canada-documents-pool-v2",
       "path": "daily/canada-documents-pool-v2.json"
+    },
+    {
+      "id": "ana-network-pool-v1",
+      "path": "daily/ana-network-pool-v1.json"
+    },
+    {
+      "id": "cx-network-pool-v1",
+      "path": "daily/cx-network-pool-v1.json"
+    },
+    {
+      "id": "sq-network-pool-v1",
+      "path": "daily/sq-network-pool-v1.json"
     }
   ]
 }

@@ -1,0 +1,140 @@
+{
+  "id": "network-rules-2026-11-03-v1",
+  "asOfDate": "2026-11-03",
+  "reviewedDate": "2026-11-03",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "rules": [
+    {
+      "id": "net-jp-entry",
+      "title": "Japan: entry and passport-specific exemptions",
+      "body": "For these short tourism visits, an Indian ordinary passport needs Japanese permission. Thai visa exemption requires an ICAO-compliant electronic passport. Indonesian exemption requires prior registration of the qualifying electronic passport; registration is linked to that passport and lasts at most three years or until its expiry. A different country’s residence permit does not itself establish a Japanese exemption.",
+      "scope": {
+        "departureAirports": ["SFO", "LAX", "LHR"],
+        "destinationCountries": ["JP", "HK", "SG"],
+        "transitCountries": ["JP", "HK", "SG"]
+      },
+      "sources": [
+        {
+          "url": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html",
+          "publisher": "Ministry of Foreign Affairs of Japan",
+          "verifiedDate": "2026-11-03"
+        }
+      ],
+      "jurisdictionCountry": "JP"
+    },
+    {
+      "id": "net-jp-transit",
+      "title": "Japan: airside transfer or entry?",
+      "body": "Immediate international connections without immigration clearance do not require a Japanese visa. Leaving the transit area, collecting baggage landside, or transferring between Narita and Haneda requires entry eligibility. Apply any relevant passport-based exemption or issued Japanese permission; do not infer an airside transfer from the word connection. Japan’s separate transit visa category was discontinued on 1 July 2026; non-exempt entry for transit purposes uses the temporary visitor route.",
+      "scope": {
+        "departureAirports": ["SFO", "LAX", "LHR"],
+        "destinationCountries": ["JP", "HK", "SG"],
+        "transitCountries": ["JP", "HK", "SG"]
+      },
+      "sources": [
+        {
+          "url": "https://www.palau.emb-japan.go.jp/itpr_en/visa_info.html",
+          "publisher": "Embassy of Japan in Palau",
+          "verifiedDate": "2026-11-03"
+        }
+      ],
+      "jurisdictionCountry": "JP"
+    },
+    {
+      "id": "net-jp-evisa",
+      "title": "Japan: live eVISA issuance notice",
+      "body": "An eVISA holder must display the live Visa issuance notice with internet access at the airport. A screenshot, saved PDF or printout cannot substitute. Match the notice to the traveller and numbered passport. These cases stipulate eligible residence and an ordinary passport; the simulated check can establish live display, or leave a specific verification gap.",
+      "scope": {
+        "departureAirports": ["SFO", "LAX", "LHR"],
+        "destinationCountries": ["JP", "HK", "SG"],
+        "transitCountries": ["JP", "HK", "SG"]
+      },
+      "sources": [
+        {
+          "url": "https://www.mofa.go.jp/j_info/visit/visa/visaonline.html",
+          "publisher": "Ministry of Foreign Affairs of Japan",
+          "verifiedDate": "2026-11-03"
+        }
+      ],
+      "jurisdictionCountry": "JP"
+    },
+    {
+      "id": "net-hk-par",
+      "title": "Hong Kong: Indian registration and exceptions",
+      "body": "Indian ordinary-passport visitors staying at most 14 days need successful pre-arrival registration or applicable alternative permission. Registration uses a passport with at least six months validity and remains tied to the specified valid passport; bring the valid notification slip. Direct airside transit does not need registration. Valid Indian diplomatic or official passports also have a registration exception. A failed registration is not permission.",
+      "scope": {
+        "departureAirports": ["SFO", "LAX", "LHR"],
+        "destinationCountries": ["JP", "HK", "SG"],
+        "transitCountries": ["JP", "HK", "SG"]
+      },
+      "sources": [
+        {
+          "url": "https://www.immd.gov.hk/eng/services/visas/pre-arrival_registration_for_indian_nationals.html",
+          "publisher": "Hong Kong Immigration Department",
+          "verifiedDate": "2026-11-03"
+        }
+      ],
+      "jurisdictionCountry": "HK"
+    },
+    {
+      "id": "net-sg-transit",
+      "title": "Singapore: immigration clearance determines the check",
+      "body": "Remaining in international transit without clearing arrival immigration does not require Singapore entry permission. If baggage collection, boarding-pass collection or a planned visit requires clearing immigration, apply Singapore entry requirements. Separate tickets are a prompt to verify actual handling, not proof that clearance is required.",
+      "scope": {
+        "departureAirports": ["SFO", "LAX", "LHR"],
+        "destinationCountries": ["JP", "HK", "SG"],
+        "transitCountries": ["JP", "HK", "SG"]
+      },
+      "sources": [
+        {
+          "url": "https://www.ica.gov.sg/enter-transit-depart/transiting-singapore",
+          "publisher": "Immigration & Checkpoints Authority of Singapore",
+          "verifiedDate": "2026-11-03"
+        }
+      ],
+      "jurisdictionCountry": "SG"
+    },
+    {
+      "id": "net-sg-entry",
+      "title": "Singapore: entry visa, arrival card and passport",
+      "body": "Indian ordinary-passport visitors need a Singapore entry visa unless a qualifying exception applies. The SG Arrival Card is a declaration, not a visa. Visitors entering Singapore need at least six months passport validity after arrival. These scenarios stipulate other entry requirements; permission and passport sufficiency do not guarantee admission.",
+      "scope": {
+        "departureAirports": ["SFO", "LAX", "LHR"],
+        "destinationCountries": ["JP", "HK", "SG"],
+        "transitCountries": ["JP", "HK", "SG"]
+      },
+      "sources": [
+        {
+          "url": "https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements",
+          "publisher": "Immigration & Checkpoints Authority of Singapore",
+          "verifiedDate": "2026-11-03"
+        },
+        {
+          "url": "https://paris.mfa.gov.sg/consular-services/visa-information/",
+          "publisher": "Embassy of Singapore in Paris",
+          "verifiedDate": "2026-11-03"
+        }
+      ],
+      "jurisdictionCountry": "SG"
+    },
+    {
+      "id": "net-sg-vftf",
+      "title": "Singapore: Indian travellers and the 96-hour facility",
+      "body": "For the Indian transit cases here, VFTF requires an onward flight to a third country within 96 hours and a qualifying visa or long-term pass valid at least one month from Singapore entry. Qualifying issuers include Japan, the UK and the US. Check both elapsed time and the actual holder. A booked visit longer than 96 hours cannot use this facility. The used single-journey-visa return exception is excluded by these case facts. ICA decides admission.",
+      "scope": {
+        "departureAirports": ["SFO", "LAX", "LHR"],
+        "destinationCountries": ["JP", "HK", "SG"],
+        "transitCountries": ["JP", "HK", "SG"]
+      },
+      "sources": [
+        {
+          "url": "https://www.ica.gov.sg/information-and-e-services/entry-and-departure/entering-singapore/entry-requirements/visa-free-transit-facility",
+          "publisher": "Immigration & Checkpoints Authority of Singapore",
+          "verifiedDate": "2026-11-03"
+        }
+      ],
+      "jurisdictionCountry": "SG"
+    }
+  ]
+}

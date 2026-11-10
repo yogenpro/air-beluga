@@ -54,6 +54,14 @@ For a content change:
 
 The browser selects the last editorial boundary on or before a chosen UTC date, then applies the unchanged deterministic selector to that release. A later release cannot replace yesterday's answers just because it is now current. The daily selection date is distinct from each case's authored travel date, which always remains visible.
 
+## Airline networks and rotating daily desks
+
+Daily variety should change the reasoning and the network, not only passenger order. Model real airline hub networks using reviewed airline route publications; keep Air Beluga explicitly fictional. A stage can record `network.modeledOn`, `homeCountry`, `hubs` and dated primary `sources`. Build cases around multiple final destinations and the actual airside/landside consequences of connections. Rotate check-in bases as well as hubs. See the [network coverage and source review](content-review-networks-2026-11-03.md).
+
+Link each network daily pool to its `stageId`; pool cases must belong to that stage. A new release boundary may use an ordered, unique `poolIds` array instead of a single `poolId`. UTC days since that boundary cycle through the array, beginning with its first pool; each selected pool still uses the existing versioned passenger selector. Never change an existing boundary or array after publication. Add a future boundary and release for later rotations.
+
+Use `itinerary[].transportMode: "GROUND"` for an explicit surface transfer between airports, preserving connected endpoints and exposing the border crossing. Older legs implicitly represent air travel. Rules spanning several countries can state `jurisdictionCountry` to keep the travel reference and its jurisdiction filter relevant. Routine facts can be stipulated, but every material condition and unresolved conflict must remain visible or obtainable.
+
 ## Saved daily results
 
 Daily progress uses a key containing the entire versioned challenge ID. Completed results are kept separately at `air-beluga:daily-results:v1`, including completion time and the complete session: content version, UTC day, pool, algorithm version, case versions, rule snapshot IDs, dispositions, explanations, and score breakdowns.

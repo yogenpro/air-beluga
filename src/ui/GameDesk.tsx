@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from 'react';
 import type { Action } from '../core/actions';
 import { reduceSession } from '../core/engine';
-import type { ContentBundle, GameSession } from '../core/types';
+import type { ContentBundle, GameSession, Stage } from '../core/types';
 import {
   browserStorage,
   restoreSessionProgress,
@@ -24,6 +24,7 @@ export interface DeskMetadata {
   kind: 'DAILY' | 'PRACTICE' | 'TRAINING';
   airport: string;
   historical?: boolean;
+  network?: Stage['network'];
 }
 
 interface DeskState {
@@ -161,6 +162,7 @@ export function GameDesk({
                   : 'PRACTICE SHIFT'}
           </p>
           <h2>{metadata.title}</h2>
+          <p className="shift-route">{metadata.flightLabel}</p>
           <p>{metadata.departureLabel}</p>
         </div>
         <div className="shift-score">
@@ -221,6 +223,21 @@ export function GameDesk({
             <p className="eyebrow">A FEW THINGS BEFORE WE BEGIN</p>
             <h2 id="intro-heading">Make yourself comfortable.</h2>
             <p>{metadata.tutorial}</p>
+            {metadata.network && (
+              <p>
+                Network modeled on {metadata.network.modeledOn} · home country:{' '}
+                {metadata.network.homeCountry} · hubs:{' '}
+                {metadata.network.hubs.join(' / ')}. Real route references:{' '}
+                {metadata.network.sources.map((source, index) => (
+                  <span key={source.url}>
+                    {index > 0 && ' · '}
+                    <a href={source.url} target="_blank" rel="noreferrer">
+                      {source.publisher} network {index + 1}
+                    </a>
+                  </span>
+                ))}
+              </p>
+            )}
             <ol className="briefing-steps">
               <li>
                 <strong>Meet your passenger</strong>
@@ -291,6 +308,20 @@ export function GameDesk({
         />
       ) : (
         <>
+          {session.status === 'AWAITING_NEXT' && (
+            <ResultView
+              key={passengerCase!.id}
+              result={session.results.at(-1)!}
+              passengerCase={passengerCase!}
+              snapshot={snapshot!}
+              isLast={session.passengerIndex === session.caseIds.length - 1}
+              onNext={() => {
+                setPane('PASSENGER');
+                dispatch({ type: 'NEXT_PASSENGER' });
+              }}
+              summaryLabel="View shift report"
+            />
+          )}
           <nav className="desk-tabs" aria-label="Desk panels">
             <button
               type="button"
@@ -342,20 +373,6 @@ export function GameDesk({
               />
             </div>
           </div>
-          {session.status === 'AWAITING_NEXT' && (
-            <ResultView
-              key={passengerCase!.id}
-              result={session.results.at(-1)!}
-              passengerCase={passengerCase!}
-              snapshot={snapshot!}
-              isLast={session.passengerIndex === session.caseIds.length - 1}
-              onNext={() => {
-                setPane('PASSENGER');
-                dispatch({ type: 'NEXT_PASSENGER' });
-              }}
-              summaryLabel="View shift report"
-            />
-          )}
           {confirmRestart ? (
             <section
               className="panel restart-confirmation"
