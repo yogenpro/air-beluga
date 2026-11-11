@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { TravelDocument } from '../core/types';
 import { countryName, DOCUMENT_LABELS } from './labels';
-import { Icon, type IconName } from './Icons';
+import { Icon, PassengerPortrait, type IconName } from './Icons';
 import { displayInstant } from './time';
 
 function documentIcon(type: TravelDocument['type']): IconName {
@@ -45,6 +45,18 @@ export function DocumentView({
   const attributes = document.attributes;
   const test =
     document.type === 'COVID_TEST' ? attributes.covidTest : undefined;
+  const format =
+    document.type === 'PASSPORT' || document.type === 'TRAVEL_DOCUMENT'
+      ? 'booklet'
+      : document.type === 'VISA' ||
+          document.type === 'PERMANENT_RESIDENT_TRAVEL_DOCUMENT'
+        ? 'sticker'
+        : document.type === 'RESIDENCE_PERMIT'
+          ? 'card'
+          : document.type === 'ONWARD_TICKET'
+            ? 'ticket'
+            : 'letter';
+  const hasPortrait = ['booklet', 'sticker', 'card'].includes(format);
 
   const isExpired =
     document.type !== 'COVID_TEST' && Boolean(travelDate)
@@ -81,7 +93,7 @@ export function DocumentView({
 
   return (
     <article
-      className={`document document-${document.type.toLowerCase()} ${expanded ? 'is-open' : ''} ${inspected ? 'is-inspected' : ''}`}
+      className={`document document-${document.type.toLowerCase()} document-format-${format} ${expanded ? 'is-open' : ''} ${inspected ? 'is-inspected' : ''}`}
     >
       <button
         type="button"
@@ -172,253 +184,302 @@ export function DocumentView({
         </span>
       </button>
       {expanded && (
-        <dl id={`document-${document.id}`} className="document-details">
-          <div className="doc-field">
-            <dt>Holder</dt>
-            <dd>
-              <span>{document.holder}</span>
-              {holderMismatch ? (
-                <span className="doc-pill doc-pill-danger">
-                  Mismatch ({passengerName})
-                </span>
-              ) : (
-                passengerName && (
-                  <span className="doc-pill doc-pill-ok">Matches booking</span>
-                )
-              )}
-            </dd>
-          </div>
-          {attributes.number && (
-            <div className="doc-field">
-              <dt>Document number</dt>
-              <dd className="doc-mono">{attributes.number}</dd>
-            </div>
-          )}
-          <div className="doc-field">
-            <dt>Issued by</dt>
-            <dd>
-              <strong>{document.issuingCountry}</strong>{' '}
-              <span className="muted">
-                ({countryName(document.issuingCountry)})
+        <section
+          id={`document-${document.id}`}
+          className="document-specimen"
+          aria-label={`Fictional ${DOCUMENT_LABELS[document.type]}`}
+        >
+          <header className="specimen-heading">
+            <Icon name={documentIcon(document.type)} />
+            <div>
+              <span className="specimen-issuer">
+                {countryName(document.issuingCountry)}
               </span>
-            </dd>
-          </div>
-          {document.type !== 'COVID_TEST' && (
-            <>
-              <div className="doc-field">
-                <dt>Valid from</dt>
-                <dd className="doc-mono">{document.validFrom}</dd>
+              <strong>{DOCUMENT_LABELS[document.type]}</strong>
+            </div>
+            <span className="specimen-mark">
+              GAME
+              <br />
+              SPECIMEN
+            </span>
+          </header>
+          <div
+            className={`specimen-body ${hasPortrait ? 'specimen-with-photo' : ''}`}
+          >
+            {hasPortrait && (
+              <div className="specimen-photo" aria-hidden="true">
+                <PassengerPortrait name={document.holder} />
+                <span>PIXEL PORTRAIT</span>
+                <span className="specimen-photo-code">
+                  AB · {document.issuingCountry}
+                </span>
               </div>
+            )}
+            <dl className="document-details">
               <div className="doc-field">
-                <dt>Valid until</dt>
+                <dt>Holder</dt>
                 <dd>
-                  <span className="doc-mono">{document.validUntil}</span>
-                  {isExpired ? (
+                  <span>{document.holder}</span>
+                  {holderMismatch ? (
                     <span className="doc-pill doc-pill-danger">
-                      Expired before {travelDate}
-                    </span>
-                  ) : daysRemaining !== undefined && daysRemaining < 30 ? (
-                    <span className="doc-pill doc-pill-warn">
-                      {daysRemaining}d after travel (&lt; 1 month)
-                    </span>
-                  ) : daysRemaining !== undefined && daysRemaining < 180 ? (
-                    <span className="doc-pill doc-pill-warn">
-                      ~{Math.floor(daysRemaining / 30)} mo after travel (&lt; 6
-                      months)
+                      Mismatch ({passengerName})
                     </span>
                   ) : (
-                    travelDate && (
+                    passengerName && (
                       <span className="doc-pill doc-pill-ok">
-                        Current on {travelDate}
+                        Matches booking
                       </span>
                     )
                   )}
                 </dd>
               </div>
-            </>
-          )}
-          {test && (
-            <>
-              <div className="doc-field doc-field-wide">
-                <dt>Sample collected</dt>
+              {attributes.number && (
+                <div className="doc-field">
+                  <dt>Document number</dt>
+                  <dd className="doc-mono">{attributes.number}</dd>
+                </div>
+              )}
+              <div className="doc-field">
+                <dt>Issued by</dt>
                 <dd>
-                  <span className="doc-mono">
-                    {test.sampleCollectedAt
-                      ? displayInstant(test.sampleCollectedAt)
-                      : test.sampleTimeLabel}
+                  <strong>{document.issuingCountry}</strong>{' '}
+                  <span className="muted">
+                    ({countryName(document.issuingCountry)})
                   </span>
-                  {elapsedHours !== undefined ? (
+                </dd>
+              </div>
+              {document.type !== 'COVID_TEST' && (
+                <>
+                  <div className="doc-field">
+                    <dt>Valid from</dt>
+                    <dd className="doc-mono">{document.validFrom}</dd>
+                  </div>
+                  <div className="doc-field">
+                    <dt>Valid until</dt>
+                    <dd>
+                      <span className="doc-mono">{document.validUntil}</span>
+                      {isExpired ? (
+                        <span className="doc-pill doc-pill-danger">
+                          Expired before {travelDate}
+                        </span>
+                      ) : daysRemaining !== undefined && daysRemaining < 30 ? (
+                        <span className="doc-pill doc-pill-warn">
+                          {daysRemaining}d after travel (&lt; 1 month)
+                        </span>
+                      ) : daysRemaining !== undefined && daysRemaining < 180 ? (
+                        <span className="doc-pill doc-pill-warn">
+                          ~{Math.floor(daysRemaining / 30)} mo after travel
+                          (&lt; 6 months)
+                        </span>
+                      ) : (
+                        travelDate && (
+                          <span className="doc-pill doc-pill-ok">
+                            Current on {travelDate}
+                          </span>
+                        )
+                      )}
+                    </dd>
+                  </div>
+                </>
+              )}
+              {test && (
+                <>
+                  <div className="doc-field doc-field-wide">
+                    <dt>Sample collected</dt>
+                    <dd>
+                      <span className="doc-mono">
+                        {test.sampleCollectedAt
+                          ? displayInstant(test.sampleCollectedAt)
+                          : test.sampleTimeLabel}
+                      </span>
+                      {elapsedHours !== undefined ? (
+                        <span
+                          className={`doc-pill ${elapsedHours <= 18 && elapsedHours >= 0 ? 'doc-pill-ok' : 'doc-pill-danger'}`}
+                        >
+                          {elapsedHours}h before departure
+                        </span>
+                      ) : (
+                        <span className="doc-pill doc-pill-warn">
+                          Offset unverified
+                        </span>
+                      )}
+                    </dd>
+                  </div>
+                  <div className="doc-field doc-field-wide">
+                    <dt>Report issued</dt>
+                    <dd className="doc-mono">
+                      {displayInstant(test.reportedAt)}
+                    </dd>
+                  </div>
+                  <div className="doc-field">
+                    <dt>Test method</dt>
+                    <dd>
+                      <span>{test.method}</span>
+                      <span
+                        className={`doc-pill ${test.testType === 'MOLECULAR' ? 'doc-pill-ok' : 'doc-pill-warn'}`}
+                      >
+                        {test.testType}
+                      </span>
+                    </dd>
+                  </div>
+                  <div className="doc-field">
+                    <dt>Result</dt>
+                    <dd>
+                      <span>{test.result.toLowerCase()}</span>
+                      <span
+                        className={`doc-pill ${test.result === 'NEGATIVE' ? 'doc-pill-ok' : 'doc-pill-danger'}`}
+                      >
+                        {test.result}
+                      </span>
+                    </dd>
+                  </div>
+                  <div className="doc-field">
+                    <dt>Laboratory</dt>
+                    <dd>{test.laboratory}</dd>
+                  </div>
+                  <div className="doc-field">
+                    <dt>Collection site</dt>
+                    <dd>{test.laboratoryLocation}</dd>
+                  </div>
+                  <div className="doc-field doc-field-wide">
+                    <dt>Laboratory identity</dt>
+                    <dd>
+                      <span>
+                        {test.laboratoryIdentity === 'CONFIRMED'
+                          ? 'Confirmed in this fictional report'
+                          : 'Unresolved — verify the report'}
+                      </span>
+                      <span
+                        className={`doc-pill ${test.laboratoryIdentity === 'CONFIRMED' ? 'doc-pill-ok' : 'doc-pill-warn'}`}
+                      >
+                        {test.laboratoryIdentity}
+                      </span>
+                    </dd>
+                  </div>
+                </>
+              )}
+              {attributes.category && (
+                <div className="doc-field doc-field-wide">
+                  <dt>Category</dt>
+                  <dd>{attributes.category}</dd>
+                </div>
+              )}
+              {attributes.passportKind && (
+                <div className="doc-field">
+                  <dt>Passport type</dt>
+                  <dd>
+                    <span>{attributes.passportKind.toLowerCase()}</span>
+                    {attributes.passportKind !== 'ORDINARY' && (
+                      <span className="doc-pill doc-pill-warn">
+                        Special classification
+                      </span>
+                    )}
+                  </dd>
+                </div>
+              )}
+              {attributes.biometric !== undefined && (
+                <div className="doc-field">
+                  <dt>Electronic passport</dt>
+                  <dd>
+                    <span>
+                      {attributes.biometric
+                        ? 'Yes · electronic chip'
+                        : 'No · non-electronic'}
+                    </span>
                     <span
-                      className={`doc-pill ${elapsedHours <= 18 && elapsedHours >= 0 ? 'doc-pill-ok' : 'doc-pill-danger'}`}
+                      className={`doc-pill ${attributes.biometric ? 'doc-pill-ok' : 'doc-pill-warn'}`}
                     >
-                      {elapsedHours}h before departure
+                      {attributes.biometric ? 'Biometric' : 'Non-biometric'}
                     </span>
-                  ) : (
-                    <span className="doc-pill doc-pill-warn">
-                      Offset unverified
+                  </dd>
+                </div>
+              )}
+              {attributes.documentCode && (
+                <div className="doc-field">
+                  <dt>Document form</dt>
+                  <dd>
+                    <span className="doc-pill doc-pill-code">
+                      {attributes.documentCode}
                     </span>
-                  )}
-                </dd>
-              </div>
-              <div className="doc-field doc-field-wide">
-                <dt>Report issued</dt>
-                <dd className="doc-mono">{displayInstant(test.reportedAt)}</dd>
-              </div>
-              <div className="doc-field">
-                <dt>Test method</dt>
-                <dd>
-                  <span>{test.method}</span>
-                  <span
-                    className={`doc-pill ${test.testType === 'MOLECULAR' ? 'doc-pill-ok' : 'doc-pill-warn'}`}
-                  >
-                    {test.testType}
-                  </span>
-                </dd>
-              </div>
-              <div className="doc-field">
-                <dt>Result</dt>
-                <dd>
-                  <span>{test.result.toLowerCase()}</span>
-                  <span
-                    className={`doc-pill ${test.result === 'NEGATIVE' ? 'doc-pill-ok' : 'doc-pill-danger'}`}
-                  >
-                    {test.result}
-                  </span>
-                </dd>
-              </div>
-              <div className="doc-field">
-                <dt>Laboratory</dt>
-                <dd>{test.laboratory}</dd>
-              </div>
-              <div className="doc-field">
-                <dt>Collection site</dt>
-                <dd>{test.laboratoryLocation}</dd>
-              </div>
-              <div className="doc-field doc-field-wide">
-                <dt>Laboratory identity</dt>
-                <dd>
-                  <span>
-                    {test.laboratoryIdentity === 'CONFIRMED'
-                      ? 'Confirmed in this fictional report'
-                      : 'Unresolved — verify the report'}
-                  </span>
-                  <span
-                    className={`doc-pill ${test.laboratoryIdentity === 'CONFIRMED' ? 'doc-pill-ok' : 'doc-pill-warn'}`}
-                  >
-                    {test.laboratoryIdentity}
-                  </span>
-                </dd>
-              </div>
-            </>
-          )}
-          {attributes.category && (
-            <div className="doc-field doc-field-wide">
-              <dt>Category</dt>
-              <dd>{attributes.category}</dd>
-            </div>
-          )}
-          {attributes.passportKind && (
-            <div className="doc-field">
-              <dt>Passport type</dt>
-              <dd>
-                <span>{attributes.passportKind.toLowerCase()}</span>
-                {attributes.passportKind !== 'ORDINARY' && (
-                  <span className="doc-pill doc-pill-warn">
-                    Special classification
-                  </span>
-                )}
-              </dd>
-            </div>
-          )}
-          {attributes.biometric !== undefined && (
-            <div className="doc-field">
-              <dt>Electronic passport</dt>
-              <dd>
-                <span>
-                  {attributes.biometric
-                    ? 'Yes · electronic chip'
-                    : 'No · non-electronic'}
-                </span>
-                <span
-                  className={`doc-pill ${attributes.biometric ? 'doc-pill-ok' : 'doc-pill-warn'}`}
-                >
-                  {attributes.biometric ? 'Biometric' : 'Non-biometric'}
-                </span>
-              </dd>
-            </div>
-          )}
-          {attributes.documentCode && (
-            <div className="doc-field">
-              <dt>Document form</dt>
-              <dd>
-                <span className="doc-pill doc-pill-code">
-                  {attributes.documentCode}
-                </span>
-              </dd>
-            </div>
-          )}
-          {attributes.destinationCountry && (
-            <div className="doc-field">
-              <dt>Destination country</dt>
-              <dd>
-                <strong>{attributes.destinationCountry}</strong>{' '}
-                <span className="muted">
-                  ({countryName(attributes.destinationCountry)})
-                </span>
-              </dd>
-            </div>
-          )}
-          {attributes.entriesRemaining !== undefined && (
-            <div className="doc-field">
-              <dt>Entries remaining</dt>
-              <dd>
-                <span>{attributes.entriesRemaining}</span>
-                <span
-                  className={`doc-pill ${attributes.entriesRemaining > 0 ? 'doc-pill-ok' : 'doc-pill-danger'}`}
-                >
-                  {attributes.entriesRemaining > 0 ? 'Available' : 'Exhausted'}
-                </span>
-              </dd>
-            </div>
-          )}
-          {attributes.status && (
-            <div className="doc-field">
-              <dt>Status</dt>
-              <dd>
-                <span className="doc-pill doc-pill-code">
-                  {attributes.status}
-                </span>
-              </dd>
-            </div>
-          )}
-          {attributes.bookingReference && (
-            <div className="doc-field">
-              <dt>Booking reference</dt>
-              <dd className="doc-mono">{attributes.bookingReference}</dd>
-            </div>
-          )}
-          {attributes.linkedPassportNumber && (
-            <div className="doc-field doc-field-wide">
-              <dt>Linked passport number</dt>
-              <dd>
-                <span className="doc-mono">
-                  {attributes.linkedPassportNumber}
-                </span>
-                {linkMismatch ? (
-                  <span className="doc-pill doc-pill-danger">
-                    Does not match passport ({presentedPassportNumber})
-                  </span>
-                ) : (
-                  presentedPassportNumber && (
-                    <span className="doc-pill doc-pill-ok">
-                      Matches presented passport
+                  </dd>
+                </div>
+              )}
+              {attributes.destinationCountry && (
+                <div className="doc-field">
+                  <dt>Destination country</dt>
+                  <dd>
+                    <strong>{attributes.destinationCountry}</strong>{' '}
+                    <span className="muted">
+                      ({countryName(attributes.destinationCountry)})
                     </span>
-                  )
-                )}
-              </dd>
-            </div>
-          )}
-        </dl>
+                  </dd>
+                </div>
+              )}
+              {attributes.entriesRemaining !== undefined && (
+                <div className="doc-field">
+                  <dt>Entries remaining</dt>
+                  <dd>
+                    <span>{attributes.entriesRemaining}</span>
+                    <span
+                      className={`doc-pill ${attributes.entriesRemaining > 0 ? 'doc-pill-ok' : 'doc-pill-danger'}`}
+                    >
+                      {attributes.entriesRemaining > 0
+                        ? 'Available'
+                        : 'Exhausted'}
+                    </span>
+                  </dd>
+                </div>
+              )}
+              {attributes.status && (
+                <div className="doc-field">
+                  <dt>Status</dt>
+                  <dd>
+                    <span className="doc-pill doc-pill-code">
+                      {attributes.status}
+                    </span>
+                  </dd>
+                </div>
+              )}
+              {attributes.bookingReference && (
+                <div className="doc-field">
+                  <dt>Booking reference</dt>
+                  <dd className="doc-mono">{attributes.bookingReference}</dd>
+                </div>
+              )}
+              {attributes.linkedPassportNumber && (
+                <div className="doc-field doc-field-wide">
+                  <dt>Linked passport number</dt>
+                  <dd>
+                    <span className="doc-mono">
+                      {attributes.linkedPassportNumber}
+                    </span>
+                    {linkMismatch ? (
+                      <span className="doc-pill doc-pill-danger">
+                        Does not match passport ({presentedPassportNumber})
+                      </span>
+                    ) : (
+                      presentedPassportNumber && (
+                        <span className="doc-pill doc-pill-ok">
+                          Matches presented passport
+                        </span>
+                      )
+                    )}
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </div>
+          <footer className="specimen-footer">
+            <span>
+              AIR BELUGA · FICTIONAL GAME DOCUMENT · NOT VALID FOR TRAVEL
+            </span>
+            {hasPortrait && (
+              <span className="specimen-readline" aria-hidden="true">
+                {'<< AIR<BELUGA << GAME<SPECIMEN <<'}
+              </span>
+            )}
+          </footer>
+        </section>
       )}
     </article>
   );
