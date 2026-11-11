@@ -3114,3 +3114,188 @@ ul {
     margin-top: 4px;
   }
 }
+
+/* Fictional desk props: booklet paper, visa stickers, cards and notices. */
+.document-specimen {
+  --document-paper: #f5edd6;
+  --document-ink: #355752;
+  --document-rule: #b3baa0;
+  color: var(--document-ink);
+  background: var(--document-paper);
+  border: 2px solid var(--document-rule);
+  box-shadow: 3px 3px 0 #243e3826;
+  margin: 0 4px 4px;
+  overflow: hidden;
+}
+.specimen-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 2px solid var(--document-rule);
+  padding: 12px;
+}
+.specimen-heading > .icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+.specimen-heading > div {
+  min-width: 0;
+  flex: 1;
+}
+.specimen-issuer {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.specimen-heading strong {
+  display: block;
+  font-family: Silkscreen, monospace;
+  font-size: 13px;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.specimen-mark {
+  border: 2px solid currentColor;
+  padding: 4px 6px;
+  font:
+    9px/1.4 Silkscreen,
+    monospace;
+  text-align: center;
+  flex-shrink: 0;
+}
+.specimen-body {
+  padding: 12px;
+}
+.specimen-with-photo {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 12px;
+}
+.specimen-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: start;
+  gap: 6px;
+  font:
+    7px/1.5 Silkscreen,
+    monospace;
+  text-align: center;
+}
+.specimen-photo .passenger-portrait {
+  width: 80px;
+  height: 96px;
+  border: 2px solid var(--document-rule);
+  border-radius: 0;
+  background: #d7dfcc;
+  box-shadow: none;
+  image-rendering: pixelated;
+}
+.specimen-photo-code {
+  border-top: 1px solid var(--document-rule);
+  padding-top: 6px;
+  width: 100%;
+}
+.document .document-specimen dl.document-details {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  gap: 10px 12px;
+}
+.document-specimen .doc-field {
+  padding: 0 0 6px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--document-rule);
+  border-radius: 0;
+}
+.document-specimen dt {
+  font-size: 9px;
+  color: var(--document-ink);
+}
+.document-specimen dd {
+  font-size: 12px;
+}
+.specimen-footer {
+  padding: 8px 12px;
+  border-top: 2px solid var(--document-rule);
+  font:
+    8px/1.6 Silkscreen,
+    monospace;
+}
+.specimen-readline {
+  display: block;
+  margin-top: 7px;
+  font: bold 12px/1.8 monospace;
+  letter-spacing: 2px;
+  overflow-wrap: anywhere;
+}
+.document-format-booklet .document-specimen {
+  border-left: 7px solid #355752;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0 5px,
+    #35575205 5px 6px
+  );
+}
+.document-format-sticker .document-specimen {
+  --document-paper: #f0e4db;
+  --document-ink: #735246;
+  --document-rule: #c5a99b;
+  border-style: dashed;
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 12px,
+    #73524606 12px 14px
+  );
+}
+.document-format-card .document-specimen {
+  --document-paper: #deebe1;
+  --document-ink: #305c53;
+  --document-rule: #a4beae;
+  border-radius: 8px;
+}
+.document-format-card .specimen-heading {
+  background: #305c53;
+  color: #fff4da;
+}
+.document-format-letter .document-specimen {
+  --document-paper: #f9f8ed;
+  --document-ink: #34565d;
+  --document-rule: #afc2c3;
+  border-top: 5px solid #567b80;
+}
+.document-format-ticket .document-specimen {
+  --document-paper: #fff1d1;
+  --document-ink: #6b5332;
+  --document-rule: #c7b48e;
+}
+.document-format-ticket .specimen-footer {
+  border-top-style: dashed;
+}
+@media (max-width: 600px) {
+  .specimen-with-photo {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 10px;
+  }
+  .specimen-photo .passenger-portrait {
+    width: 60px;
+    height: 76px;
+  }
+  .document .document-specimen dl.document-details {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .specimen-heading {
+    padding: 10px;
+    gap: 8px;
+  }
+  .specimen-heading strong {
+    font-size: 11px;
+  }
+  .specimen-body {
+    padding: 10px;
+  }
+}
