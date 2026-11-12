@@ -538,11 +538,24 @@ export function getDocumentDesign(
           'Simulated issued UK immigration status record'
       )
         return ukStatus;
-      // Current US cards may omit the form, but a conflicting form is unsupported.
+      // Keep exact legacy evidence compatible without classifying every future
+      // residence document as a permanent-resident card or a physical UK BRP.
       if (
         country === 'US' &&
-        document.attributes.documentCode !== undefined &&
-        document.attributes.documentCode !== 'I-551'
+        code !== 'I-551' &&
+        document.attributes.status !== 'Lawful permanent resident — Form I-551'
+      )
+        return undefined;
+      if (
+        country === 'CA' &&
+        document.attributes.status !== 'Canadian permanent resident — PR card'
+      )
+        return undefined;
+      if (
+        country === 'GB' &&
+        !['TRAINING-RESIDENT', 'TRAINING-MANUAL-REVIEW'].includes(
+          document.attributes.status ?? '',
+        )
       )
         return undefined;
       return lookup(residenceCards, country);

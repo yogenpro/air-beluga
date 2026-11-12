@@ -88,8 +88,38 @@ describe('country and form document designs', () => {
     ['ONWARD_TICKET', 'SG', 'ticket'],
   ];
   it.each(layouts)('selects %s/%s layout %s', (type, country, layout) => {
-    expect(getDocumentDesign(sample(type, country))?.layout).toBe(layout);
+    const residentEvidence: Record<string, TravelDocument['attributes']> = {
+      US: { documentCode: 'I-551' },
+      CA: { status: 'Canadian permanent resident — PR card' },
+      GB: { status: 'TRAINING-RESIDENT' },
+    };
+    expect(
+      getDocumentDesign(
+        sample(
+          type,
+          country,
+          type === 'RESIDENCE_PERMIT' ? residentEvidence[country] : {},
+        ),
+      )?.layout,
+    ).toBe(layout);
   });
+
+  it.each(['US', 'CA', 'GB'])(
+    'does not give an unknown %s residence document a reviewed card title',
+    (country) => {
+      expect(
+        getDocumentDesign(sample('RESIDENCE_PERMIT', country)),
+      ).toBeUndefined();
+      expect(
+        getDocumentDesign(
+          sample('RESIDENCE_PERMIT', country, {
+            category: 'Temporary residence document',
+            status: 'TEMPORARY',
+          }),
+        ),
+      ).toBeUndefined();
+    },
+  );
 
   it('selects the fictional laboratory report from real current data', () => {
     const report = documents.find((item) => item.type === 'COVID_TEST')!;

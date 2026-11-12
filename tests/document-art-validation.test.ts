@@ -20,6 +20,18 @@ function unsupported(): TravelDocument {
 }
 
 describe('document art coverage gate', () => {
+  it('requires review for a temporary residence document instead of mislabelling it as a permanent-resident card', () => {
+    const document: TravelDocument = {
+      ...passport,
+      type: 'RESIDENCE_PERMIT',
+      issuingCountry: 'US',
+      attributes: {
+        category: 'Temporary residence document',
+        status: 'TEMPORARY',
+      },
+    };
+    expect(documentArtIssues(document)).not.toEqual([]);
+  });
   it('covers authoring and every immutable release, including illustrative fixtures', async () => {
     const result = await validateDocumentArtFromDisk();
     expect(result.sourceDocuments).toBeGreaterThan(0);
