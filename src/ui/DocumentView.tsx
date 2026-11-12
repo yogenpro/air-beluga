@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import type { TravelDocument } from '../core/types';
 import { countryName, DOCUMENT_LABELS } from './labels';
-import { Icon, PassengerPortrait, type IconName } from './Icons';
+import { Icon, type IconName } from './Icons';
+import { DocumentArtwork } from './DocumentArtwork';
 import { displayInstant } from './time';
 
 function documentIcon(type: TravelDocument['type']): IconName {
@@ -56,7 +57,6 @@ export function DocumentView({
           : document.type === 'ONWARD_TICKET'
             ? 'ticket'
             : 'letter';
-  const hasPortrait = ['booklet', 'sticker', 'card'].includes(format);
 
   const isExpired =
     document.type !== 'COVID_TEST' && Boolean(travelDate)
@@ -186,35 +186,12 @@ export function DocumentView({
       {expanded && (
         <section
           id={`document-${document.id}`}
-          className="document-specimen"
+          className="document-inspection"
           aria-label={`Fictional ${DOCUMENT_LABELS[document.type]}`}
         >
-          <header className="specimen-heading">
-            <Icon name={documentIcon(document.type)} />
-            <div>
-              <span className="specimen-issuer">
-                {countryName(document.issuingCountry)}
-              </span>
-              <strong>{DOCUMENT_LABELS[document.type]}</strong>
-            </div>
-            <span className="specimen-mark">
-              GAME
-              <br />
-              SPECIMEN
-            </span>
-          </header>
-          <div
-            className={`specimen-body ${hasPortrait ? 'specimen-with-photo' : ''}`}
-          >
-            {hasPortrait && (
-              <div className="specimen-photo" aria-hidden="true">
-                <PassengerPortrait name={document.holder} />
-                <span>PIXEL PORTRAIT</span>
-                <span className="specimen-photo-code">
-                  AB · {document.issuingCountry}
-                </span>
-              </div>
-            )}
+          <DocumentArtwork document={document} passengerName={passengerName} />
+          <details className="document-inspection-notes">
+            <summary>Inspection notes &amp; comparisons</summary>
             <dl className="document-details">
               <div className="doc-field">
                 <dt>Holder</dt>
@@ -468,17 +445,7 @@ export function DocumentView({
                 </div>
               )}
             </dl>
-          </div>
-          <footer className="specimen-footer">
-            <span>
-              AIR BELUGA · FICTIONAL GAME DOCUMENT · NOT VALID FOR TRAVEL
-            </span>
-            {hasPortrait && (
-              <span className="specimen-readline" aria-hidden="true">
-                {'<< AIR<BELUGA << GAME<SPECIMEN <<'}
-              </span>
-            )}
-          </footer>
+          </details>
         </section>
       )}
     </article>

@@ -9,6 +9,8 @@ import { runUiBrowserChecks } from './lib/browser-ui';
 import { runDocumentBrowserChecks } from './lib/browser-documents';
 import { runHistoricalBrowserChecks } from './lib/browser-historical';
 import { runNetworkBrowserChecks } from './lib/browser-networks';
+import { runDocumentArtBrowserChecks } from './lib/browser-art';
+import { runPortraitBrowserChecks } from './lib/browser-portraits';
 
 // Test the production static build, not a backend or a browser simulation.
 const browser = await chromium.launch();
@@ -329,6 +331,16 @@ try {
     await validateLibraryFromDisk(),
   );
   await runNetworkBrowserChecks(
+    browser,
+    baseURL,
+    await validateLibraryFromDisk(),
+  );
+  await runDocumentArtBrowserChecks(
+    browser,
+    baseURL,
+    await validateLibraryFromDisk(),
+  );
+  await runPortraitBrowserChecks(
     browser,
     baseURL,
     await validateLibraryFromDisk(),

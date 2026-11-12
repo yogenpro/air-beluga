@@ -1,9 +1,18 @@
 import { loadContentFromDisk } from './lib/content';
 import { validateLibraryFromDisk } from './lib/releases';
+import { validateDocumentArtFromDisk } from './validate-document-art';
+import { access } from 'node:fs/promises';
 
 try {
   const content = await loadContentFromDisk(process.argv[2]);
   const library = await validateLibraryFromDisk(process.argv[2]);
+  const art = await validateDocumentArtFromDisk(process.argv[2]);
+  await access(
+    new URL('../public/art/documents/issuer-patterns-v1.png', import.meta.url),
+  );
+  console.log(
+    `Document art: ${art.sourceDocuments} source documents and ${art.archiveDocuments} archived documents have explicit visual profiles.`,
+  );
   const illustrative = content.cases.filter(
     (item) => item.verificationStatus === 'ILLUSTRATIVE_ONLY',
   ).length;
