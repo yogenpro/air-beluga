@@ -1,0 +1,128 @@
+{
+  "id": "sq-003",
+  "version": 1,
+  "title": "LHR–SIN–NRT: Meera Sood",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-11-03",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the finite route, passport conditions, entry/transit exceptions and available evidence against the cited official sources. See docs/content-review-networks-2026-11-03.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "network-rules-2026-11-03-v1",
+  "travelDate": "2026-11-03",
+  "itinerary": [
+    {
+      "from": "LHR",
+      "to": "SIN",
+      "destinationCountry": "SG",
+      "transit": "LANDSIDE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-03T10:00:00Z"
+    },
+    {
+      "from": "SIN",
+      "to": "NRT",
+      "destinationCountry": "JP",
+      "transit": "NONE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-08T12:00:00+08:00"
+    }
+  ],
+  "passenger": {
+    "displayName": "Meera Sood",
+    "nationality": "IN"
+  },
+  "assumptions": [
+    "All passengers and documents are synthetic. Travel begins on 2026-11-03; connections arrive at the hub on 2026-11-04. Flight clocks are invented for this puzzle, not a live timetable. All unmentioned identity, security, funds, return/onward bookings, health and departure checks are stipulated satisfied. SG Arrival Card submission is complete where needed; it is never a visa substitute.",
+    "Only the documents and facts shown or obtainable through the offered checks are available. Unless expressly identified, the traveller has an ordinary passport, no additional citizenship, no destination residence, special passport, crew, e-Channel or other exemption. Short tourism only; no work. Routine entry permissions for an untested leg are not silently assumed when that leg is part of the puzzle.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. Escalate a material eligibility, identity or transfer conflict that remains unresolved after those checks; deny a confirmed requirement failure once relevant obtainable alternatives are excluded. Unfamiliarity alone is insufficient. No live airline or government systems are called.",
+    "Singapore hub arrival is 2026-11-04T08:00:00+08:00. Where a Japanese visa is shown it is an unused sticker visa for the onward tourism visit. No used single-journey-visa return to India is involved.",
+    "The landside Singapore stay is exactly 100 hours. No earlier flight or airside alternative is available; the puzzle concerns this confirmed booking."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "IN",
+      "holder": "Meera Sood",
+      "validFrom": "2024-01-01",
+      "validUntil": "2032-01-01",
+      "attributes": {
+        "number": "IN-SYN-SQ-003",
+        "category": "Ordinary passport",
+        "passportKind": "ORDINARY",
+        "biometric": true
+      }
+    },
+    {
+      "id": "uk-pass",
+      "type": "RESIDENCE_PERMIT",
+      "issuingCountry": "GB",
+      "holder": "Meera Sood",
+      "validFrom": "2025-01-01",
+      "validUntil": "2027-12-01",
+      "attributes": {
+        "category": "Simulated issued UK immigration status record",
+        "destinationCountry": "GB",
+        "status": "ISSUED — current long-term residence permission",
+        "number": "GB-SYN-LTP"
+      }
+    },
+    {
+      "id": "jp-visa",
+      "type": "VISA",
+      "issuingCountry": "JP",
+      "holder": "Meera Sood",
+      "validFrom": "2026-10-01",
+      "validUntil": "2027-03-01",
+      "attributes": {
+        "category": "Short-stay visitor visa",
+        "destinationCountry": "JP",
+        "entriesRemaining": 1,
+        "number": "SYN-JP-jp-visa"
+      }
+    },
+    {
+      "id": "onward",
+      "type": "ONWARD_TICKET",
+      "issuingCountry": "SG",
+      "holder": "Meera Sood",
+      "validFrom": "2026-10-01",
+      "validUntil": "2026-11-10",
+      "attributes": {
+        "category": "Confirmed SIN–NRT flight departing 2026-11-08T12:00:00+08:00",
+        "destinationCountry": "JP",
+        "bookingReference": "SYN-ONWARD"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "uk-pass", "jp-visa", "onward"],
+  "clues": [
+    "I arrive Wednesday at eight and fly out Sunday at noon. That is roughly four days."
+  ],
+  "questions": [
+    {
+      "id": "ask-sg-permission",
+      "label": "Ask for Singapore visa or qualifying alternative",
+      "response": "No Singapore visa or Singapore residence status is available. I hold no other citizenship or qualifying permission beyond the documents in this case.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "DENY",
+    "paths": [
+      {
+        "id": "reviewed-evidence",
+        "requiredDocumentIds": ["passport", "uk-pass", "jp-visa", "onward"],
+        "requiredQuestionIds": ["ask-sg-permission"]
+      }
+    ]
+  },
+  "rationale": "The confirmed onward flight leaves 100 hours after Singapore arrival, outside the 96-hour facility. The qualifying UK pass cannot extend that limit. No Singapore visa or valid itinerary alternative is available.",
+  "ruleIds": ["net-sg-entry", "net-sg-vftf", "net-jp-entry"]
+}

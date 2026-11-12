@@ -1,0 +1,75 @@
+{
+  "id": "ana-002",
+  "version": 1,
+  "title": "SFO–NRT: Kanya Arun",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-11-03",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the finite route, passport conditions, entry/transit exceptions and available evidence against the cited official sources. See docs/content-review-networks-2026-11-03.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "network-rules-2026-11-03-v1",
+  "travelDate": "2026-11-03",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "NRT",
+      "destinationCountry": "JP",
+      "transit": "NONE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-03T19:00:00Z"
+    }
+  ],
+  "passenger": {
+    "displayName": "Kanya Arun",
+    "nationality": "TH"
+  },
+  "assumptions": [
+    "All passengers and documents are synthetic. Travel begins on 2026-11-03; connections arrive at the hub on 2026-11-04. Flight clocks are invented for this puzzle, not a live timetable. All unmentioned identity, security, funds, return/onward bookings, health and departure checks are stipulated satisfied. SG Arrival Card submission is complete where needed; it is never a visa substitute.",
+    "Only the documents and facts shown or obtainable through the offered checks are available. Unless expressly identified, the traveller has an ordinary passport, no additional citizenship, no destination residence, special passport, crew, e-Channel or other exemption. Short tourism only; no work. Routine entry permissions for an untested leg are not silently assumed when that leg is part of the puzzle.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. Escalate a material eligibility, identity or transfer conflict that remains unresolved after those checks; deny a confirmed requirement failure once relevant obtainable alternatives are excluded. Unfamiliarity alone is insufficient. No live airline or government systems are called."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "TH",
+      "holder": "Kanya Arun",
+      "validFrom": "2024-01-01",
+      "validUntil": "2032-01-01",
+      "attributes": {
+        "number": "TH-SYN-ANA-002",
+        "category": "Ordinary passport",
+        "passportKind": "ORDINARY",
+        "biometric": false
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": ["This is my older passport. It still has years left."],
+  "questions": [
+    {
+      "id": "ask-japan-permission",
+      "label": "Ask for Japanese permission or alternative passport",
+      "response": "No Japanese visa, other passport, residence status, registration or other exemption is available.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "DENY",
+    "paths": [
+      {
+        "id": "reviewed-evidence",
+        "requiredDocumentIds": ["passport"],
+        "requiredQuestionIds": ["ask-japan-permission"]
+      }
+    ]
+  },
+  "rationale": "A valid Thai passport is not enough for this exemption: the booklet is explicitly non-electronic. No Japanese visa or qualifying alternative is available. The failure is established, so deny rather than escalate.",
+  "ruleIds": ["net-jp-entry"]
+}

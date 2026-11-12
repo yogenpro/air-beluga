@@ -7,6 +7,8 @@ import { validateLibraryFromDisk } from './lib/releases';
 import { runMilestone3BrowserChecks } from './lib/browser-milestone3';
 import { runUiBrowserChecks } from './lib/browser-ui';
 import { runDocumentBrowserChecks } from './lib/browser-documents';
+import { runHistoricalBrowserChecks } from './lib/browser-historical';
+import { runNetworkBrowserChecks } from './lib/browser-networks';
 
 // Test the production static build, not a backend or a browser simulation.
 const browser = await chromium.launch();
@@ -317,6 +319,16 @@ try {
   );
   await runUiBrowserChecks(browser, baseURL, await validateLibraryFromDisk());
   await runDocumentBrowserChecks(
+    browser,
+    baseURL,
+    await validateLibraryFromDisk(),
+  );
+  await runHistoricalBrowserChecks(
+    browser,
+    baseURL,
+    await validateLibraryFromDisk(),
+  );
+  await runNetworkBrowserChecks(
     browser,
     baseURL,
     await validateLibraryFromDisk(),

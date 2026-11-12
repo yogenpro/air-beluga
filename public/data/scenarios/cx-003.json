@@ -1,0 +1,85 @@
+{
+  "id": "cx-003",
+  "version": 1,
+  "title": "LAX–HKG–SIN: Rowan Finch",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-11-03",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the finite route, passport conditions, entry/transit exceptions and available evidence against the cited official sources. See docs/content-review-networks-2026-11-03.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "network-rules-2026-11-03-v1",
+  "travelDate": "2026-11-03",
+  "itinerary": [
+    {
+      "from": "LAX",
+      "to": "HKG",
+      "destinationCountry": "HK",
+      "transit": "AIRSIDE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-03T20:00:00Z"
+    },
+    {
+      "from": "HKG",
+      "to": "SIN",
+      "destinationCountry": "SG",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Rowan Finch",
+    "nationality": "US"
+  },
+  "assumptions": [
+    "All passengers and documents are synthetic. Travel begins on 2026-11-03; connections arrive at the hub on 2026-11-04. Flight clocks are invented for this puzzle, not a live timetable. All unmentioned identity, security, funds, return/onward bookings, health and departure checks are stipulated satisfied. SG Arrival Card submission is complete where needed; it is never a visa substitute.",
+    "Only the documents and facts shown or obtainable through the offered checks are available. Unless expressly identified, the traveller has an ordinary passport, no additional citizenship, no destination residence, special passport, crew, e-Channel or other exemption. Short tourism only; no work. Routine entry permissions for an untested leg are not silently assumed when that leg is part of the puzzle.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. Escalate a material eligibility, identity or transfer conflict that remains unresolved after those checks; deny a confirmed requirement failure once relevant obtainable alternatives are excluded. Unfamiliarity alone is insufficient. No live airline or government systems are called.",
+    "Hong Kong transit remains airside. Singapore arrival is 2026-11-04 for a seven-day visit; U.S. ordinary-passport visa requirements and all other checks are satisfied."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "US",
+      "holder": "Rowan Finch",
+      "validFrom": "2024-01-01",
+      "validUntil": "2027-04-04",
+      "attributes": {
+        "number": "US-SYN-CX-003",
+        "category": "Ordinary passport",
+        "passportKind": "ORDINARY",
+        "biometric": true
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": [
+    "The passport is valid through April. I am only staying a week in Singapore."
+  ],
+  "questions": [
+    {
+      "id": "ask-replacement",
+      "label": "Ask for a replacement passport",
+      "response": "This is my only passport; I have no replacement document available.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "DENY",
+    "paths": [
+      {
+        "id": "reviewed-evidence",
+        "requiredDocumentIds": ["passport"],
+        "requiredQuestionIds": ["ask-replacement"]
+      }
+    ]
+  },
+  "rationale": "The passport is unexpired but has only five months remaining on Singapore arrival. The six-month entry requirement fails; the short visit does not repair it, and there is no replacement.",
+  "ruleIds": ["net-sg-entry"]
+}

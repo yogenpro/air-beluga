@@ -1,0 +1,38 @@
+{
+  "id": "007-lhr-singapore-network",
+  "title": "Singapore connections",
+  "departureAirport": "LHR",
+  "airline": "Air Beluga",
+  "network": {
+    "modeledOn": "Singapore Airlines",
+    "homeCountry": "SG",
+    "hubs": ["SIN"],
+    "sources": [
+      {
+        "url": "https://www.singaporeair.com/en_UK/gb/plan-travel/destinations/where-we-fly/",
+        "publisher": "Singapore Airlines",
+        "verifiedDate": "2026-11-03"
+      },
+      {
+        "url": "https://www.singaporeair.com/en_UK/jp/plan-travel/destinations/details/",
+        "publisher": "Singapore Airlines",
+        "verifiedDate": "2026-11-03"
+      }
+    ]
+  },
+  "flightLabel": "Air Beluga · LHR → Singapore (SIN) → Tokyo · Network modeled on Singapore Airlines",
+  "scheduledDeparture": "2026-11-03T10:00:00Z",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "caseIds": [
+    "sq-001",
+    "sq-002",
+    "sq-003",
+    "sq-004",
+    "sq-005",
+    "sq-006",
+    "sq-007",
+    "sq-008"
+  ],
+  "tutorial": "You are checking in at LHR for a fictional Air Beluga shift modeled on Singapore Airlines's hub network. Read the final destination and each connection: entry rules change when the traveller crosses a border. Travel date: 3 November 2026. The named real airline is network inspiration, with no affiliation."
+}

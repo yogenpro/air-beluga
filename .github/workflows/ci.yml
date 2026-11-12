@@ -21,3 +21,24 @@ jobs:
       - run: npm run deploy:check
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
+
+  deploy-dev:
+    needs: check
+    if: github.repository == 'yogenpro/air-beluga' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency:
+      group: air-beluga-deploy-dev
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Request checked development build
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          AIR_BELUGA_DEV_HOOK: ${{ secrets.AIR_BELUGA_DEV_HOOK }}
+        run: node scripts/request-dev-deploy.ts

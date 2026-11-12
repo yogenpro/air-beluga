@@ -1,0 +1,90 @@
+{
+  "id": "ana-004",
+  "version": 1,
+  "title": "SFO–NRT: Isha Kale",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-11-03",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the finite route, passport conditions, entry/transit exceptions and available evidence against the cited official sources. See docs/content-review-networks-2026-11-03.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "HARD",
+  "ruleSnapshotId": "network-rules-2026-11-03-v1",
+  "travelDate": "2026-11-03",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "NRT",
+      "destinationCountry": "JP",
+      "transit": "NONE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-03T19:00:00Z"
+    }
+  ],
+  "passenger": {
+    "displayName": "Isha Kale",
+    "nationality": "IN"
+  },
+  "assumptions": [
+    "All passengers and documents are synthetic. Travel begins on 2026-11-03; connections arrive at the hub on 2026-11-04. Flight clocks are invented for this puzzle, not a live timetable. All unmentioned identity, security, funds, return/onward bookings, health and departure checks are stipulated satisfied. SG Arrival Card submission is complete where needed; it is never a visa substitute.",
+    "Only the documents and facts shown or obtainable through the offered checks are available. Unless expressly identified, the traveller has an ordinary passport, no additional citizenship, no destination residence, special passport, crew, e-Channel or other exemption. Short tourism only; no work. Routine entry permissions for an untested leg are not silently assumed when that leg is part of the puzzle.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. Escalate a material eligibility, identity or transfer conflict that remains unresolved after those checks; deny a confirmed requirement failure once relevant obtainable alternatives are excluded. Unfamiliarity alone is insufficient. No live airline or government systems are called.",
+    "The traveller resides legally in the United States and was issued an unused tourism eVISA through the eligible application route. The numbered passport matches the live notice; no residence-document puzzle is being tested."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "IN",
+      "holder": "Isha Kale",
+      "validFrom": "2024-01-01",
+      "validUntil": "2032-01-01",
+      "attributes": {
+        "number": "IN-SYN-ANA-004",
+        "category": "Ordinary passport",
+        "passportKind": "ORDINARY",
+        "biometric": true
+      }
+    },
+    {
+      "id": "jp-evisa",
+      "type": "ELECTRONIC_AUTHORIZATION",
+      "issuingCountry": "JP",
+      "holder": "Isha Kale",
+      "validFrom": "2026-10-01",
+      "validUntil": "2026-12-31",
+      "attributes": {
+        "category": "JAPAN eVISA live Visa issuance notice",
+        "status": "APPROVED",
+        "destinationCountry": "JP",
+        "linkedPassportNumber": "IN-SYN-ANA-004"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": ["I saved a screenshot, but I can log in if you need me to."],
+  "questions": [
+    {
+      "id": "display-live",
+      "label": "Request live Japan eVISA notice",
+      "response": "With connectivity restored, the traveller displays the live Visa issuance notice. Name, passport number, unused permission and dates all match. This is a simulation of the passenger showing the official notice, not a carrier database substitute.",
+      "revealsDocumentIds": ["jp-evisa"],
+      "justified": true,
+      "kind": "DOCUMENT_CHECK"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "CHECK_IN",
+    "paths": [
+      {
+        "id": "reviewed-evidence",
+        "requiredDocumentIds": ["passport", "jp-evisa"],
+        "requiredQuestionIds": ["display-live"]
+      }
+    ]
+  },
+  "rationale": "The screenshot initially offered is insufficient. The obtainable live issuance notice establishes the matching current eVISA. Complete that check, then check in; an electronic visa is not an automatic escalation cue.",
+  "ruleIds": ["net-jp-entry", "net-jp-evisa"]
+}

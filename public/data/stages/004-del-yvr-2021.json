@@ -1,0 +1,26 @@
+{
+  "id": "004-del-yvr-2021",
+  "title": "15 October 2021: the 18-hour desk",
+  "departureAirport": "DEL",
+  "airline": "Air Beluga",
+  "historical": true,
+  "flightLabel": "Air Beluga AB 404 · DEL → YVR",
+  "scheduledDeparture": "2021-10-15T06:30:00Z",
+  "verificationStatus": "VERIFIED",
+  "notice": "Historical shift: 15 October 2021. Apply the rules for this travel date, not current requirements. Fictional passengers and reports; historical official sources reviewed on 2026-10-26 by Codex, without independent human approval.",
+  "caseIds": [
+    "hist-001",
+    "hist-007",
+    "hist-003",
+    "hist-005",
+    "hist-006",
+    "hist-002",
+    "hist-008",
+    "hist-009",
+    "hist-010",
+    "hist-004",
+    "hist-012",
+    "hist-011"
+  ],
+  "tutorial": "It is 15 October 2021. Direct flights from India have resumed under extra health-document rules. Work from the historical desk manual: distinguish molecular tests from antigen tests, confirm the designated laboratory, and measure the specimen’s age using the printed time zone. Departure is 12:00 IST (06:30 UTC). This is a hand-picked historical puzzle, not today’s travel guidance."
+}

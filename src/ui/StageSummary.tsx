@@ -98,54 +98,59 @@ export function StageSummary({
         <span>A little reflection goes a long way.</span>
       </div>
       <ol className="stage-results">
-        {session.results.map((result, index) => (
-          <li key={result.caseId}>
-            <div className="result-row">
-              <span
-                className={`result-symbol ${result.correct ? 'correct' : 'incorrect'}`}
-              >
-                <Icon name={result.correct ? 'check' : 'close'} />
-                <span className="sr-only">
-                  {result.correct ? 'Correct' : 'Incorrect'}
+        {session.results.map((result, index) => {
+          const item = content.cases.find(
+            (entry) => entry.id === result.caseId,
+          )!;
+          const routeLabel = [
+            item.itinerary[0]!.from,
+            ...item.itinerary.map((leg) => leg.to),
+          ].join(' → ');
+          return (
+            <li key={result.caseId}>
+              <div className="result-row">
+                <span
+                  className={`result-symbol ${result.correct ? 'correct' : 'incorrect'}`}
+                >
+                  <Icon name={result.correct ? 'check' : 'close'} />
+                  <span className="sr-only">
+                    {result.correct ? 'Correct' : 'Incorrect'}
+                  </span>
                 </span>
-              </span>
-              <span>
-                <span className="eyebrow">
-                  PASSENGER {String(index + 1).padStart(2, '0')}
-                </span>
-                <strong>
-                  {
-                    content.cases.find((item) => item.id === result.caseId)!
-                      .passenger.displayName
-                  }
-                </strong>
                 <span>
-                  {DECISION_LABELS[result.decision]}
-                  {!result.correct &&
-                    ` · Expected ${DECISION_LABELS[result.expectedDecision]}`}
+                  <span className="eyebrow">
+                    PASSENGER {String(index + 1).padStart(2, '0')} ·{' '}
+                    {item.passenger.nationality} · {routeLabel}
+                  </span>
+                  <strong>{item.passenger.displayName}</strong>
+                  <span>
+                    {DECISION_LABELS[result.decision]}
+                    {!result.correct &&
+                      ` · Expected ${DECISION_LABELS[result.expectedDecision]}`}
+                  </span>
                 </span>
-              </span>
-              <span className="result-points">
-                +{result.score.total}
-                <small>points</small>
-              </span>
-            </div>
-            <details>
-              <summary>Review decision</summary>
-              <p>{result.rationale}</p>
-              {content.ruleSnapshots
-                .find((snapshot) => snapshot.id === result.ruleSnapshotId)!
-                .rules.filter((rule) => result.ruleIds.includes(rule.id))
-                .map((rule) => (
-                  <div className="review-rule" key={rule.id}>
-                    <strong>{rule.title}</strong>
-                    <p>{rule.body}</p>
-                    <RuleSources rule={rule} />
-                  </div>
-                ))}
-            </details>
-          </li>
-        ))}
+                <span className="result-points">
+                  +{result.score.total}
+                  <small>points</small>
+                </span>
+              </div>
+              <details>
+                <summary>Review decision</summary>
+                <p>{result.rationale}</p>
+                {content.ruleSnapshots
+                  .find((snapshot) => snapshot.id === result.ruleSnapshotId)!
+                  .rules.filter((rule) => result.ruleIds.includes(rule.id))
+                  .map((rule) => (
+                    <div className="review-rule" key={rule.id}>
+                      <strong>{rule.title}</strong>
+                      <p>{rule.body}</p>
+                      <RuleSources rule={rule} />
+                    </div>
+                  ))}
+              </details>
+            </li>
+          );
+        })}
       </ol>
       <details className="content-details">
         <summary>About this shift’s rules and saved result</summary>

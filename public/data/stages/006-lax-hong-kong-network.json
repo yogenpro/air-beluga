@@ -1,0 +1,38 @@
+{
+  "id": "006-lax-hong-kong-network",
+  "title": "Hong Kong connections",
+  "departureAirport": "LAX",
+  "airline": "Air Beluga",
+  "network": {
+    "modeledOn": "Cathay Pacific",
+    "homeCountry": "HK",
+    "hubs": ["HKG"],
+    "sources": [
+      {
+        "url": "https://flights.cathaypacific.com/destinations/en_US//flights-from-los-angeles-to-tokyo",
+        "publisher": "Cathay Pacific",
+        "verifiedDate": "2026-11-03"
+      },
+      {
+        "url": "https://flights.cathaypacific.com/destinations/en_US/flights-from-los-angeles-to-singapore",
+        "publisher": "Cathay Pacific",
+        "verifiedDate": "2026-11-03"
+      }
+    ]
+  },
+  "flightLabel": "Air Beluga · LAX → Hong Kong (HKG) → Tokyo / Singapore · Network modeled on Cathay Pacific",
+  "scheduledDeparture": "2026-11-03T20:00:00Z",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "caseIds": [
+    "cx-001",
+    "cx-002",
+    "cx-003",
+    "cx-004",
+    "cx-005",
+    "cx-006",
+    "cx-007",
+    "cx-008"
+  ],
+  "tutorial": "You are checking in at LAX for a fictional Air Beluga shift modeled on Cathay Pacific's hub network. Read the final destination and each connection: entry rules change when the traveller crosses a border. Travel date: 3 November 2026. The named real airline is network inspiration, with no affiliation."
+}

@@ -317,7 +317,7 @@ describe('fixture contract and content validation', () => {
     const expired = content.cases.find(
       (item) => item.id === 'fixture-03-expired',
     )!;
-    expect(expired.documents[0]!.validUntil < expired.travelDate).toBe(true);
+    expect(expired.documents[0]!.validUntil! < expired.travelDate).toBe(true);
     expect(() => validateContent(content)).not.toThrow();
   });
 

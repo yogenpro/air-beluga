@@ -61,6 +61,31 @@ Each hostname has separate browser storage, so progress and daily results in dev
 
 See Cloudflare's [environment setup](https://developers.cloudflare.com/workers/ci-cd/builds/advanced-setups/) and [build settings](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
 
+## Development deployment after CI
+
+For `yogenpro/air-beluga`, every push or merge into `dev` runs the full CI check,
+including packaging and browser tests. After it passes, `deploy-dev` asks
+Cloudflare Workers Builds to build the development branch through a branch-specific
+[Deploy Hook](https://developers.cloudflare.com/workers/ci-cd/builds/deploy-hooks/).
+Cloudflare installs dependencies, runs its configured build/check command, and
+publishes with its existing deployment token. The job reports the build UUID;
+a queued request is not a successful deployment receipt. Verify its outcome in
+Cloudflare build history.
+
+The deployment owner creates a hook for the development Worker and `dev` branch,
+stores its URL in the repository secret `AIR_BELUGA_DEV_HOOK`, and disables native
+automatic push builds on that Worker to avoid duplicate deployments. The URL is
+a credential and must never be committed or logged. No Cloudflare API token is
+stored in GitHub. Missing configuration or a failed build request fails the job.
+Forks, PR runs, feature branches, and `main` cannot invoke this job. Production
+release remains separate.
+
+The job skips stale runs when `dev` has moved. A hook builds the branch head when
+Cloudflare receives it, so the Cloudflare build's recorded commit is the deployment
+source of truth. Cloudflare's own check command also validates a newer head if one
+arrives between the GitHub head check and the request. Existing branch build and
+Access settings remain the deployment owner's responsibility.
+
 ## Verify without publishing
 
 After installing dependencies:

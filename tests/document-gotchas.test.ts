@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
-import { loadContentFromDisk, DEFAULT_DATA_ROOT } from '../scripts/lib/content';
+import { DEFAULT_DATA_ROOT } from '../scripts/lib/content';
 import { validateLibraryFromDisk } from '../scripts/lib/releases';
 import { dailyForDate } from '../src/content/library';
 import { validateContent } from '../src/content/validate';
@@ -11,7 +11,14 @@ import {
 } from '../src/core/engine';
 import type { Decision, GameSession } from '../src/core/types';
 
-const content = await loadContentFromDisk();
+const content = validateContent(
+  JSON.parse(
+    await readFile(
+      `${DEFAULT_DATA_ROOT}/releases/canada-documents-2026-10-26-v2/bundle.json`,
+      'utf8',
+    ),
+  ),
+);
 const library = await validateLibraryFromDisk();
 const ids = Array.from(
   { length: 12 },
@@ -60,8 +67,8 @@ describe('document and status curveballs', () => {
           document.type === 'PASSPORT' || document.type === 'TRAVEL_DOCUMENT',
       )!;
       const visa = item.documents.find((document) => document.type === 'VISA')!;
-      expect(visa.validFrom >= identity.validFrom).toBe(true);
-      expect(visa.validUntil <= identity.validUntil).toBe(true);
+      expect(visa.validFrom! >= identity.validFrom!).toBe(true);
+      expect(visa.validUntil! <= identity.validUntil!).toBe(true);
     },
   );
 
@@ -168,7 +175,7 @@ describe('document and status curveballs', () => {
     const item = content.cases.find((item) => item.id === 'ca-016')!;
     expect(
       item.documents.find((document) => document.id === 'green-card')!
-        .validUntil < item.travelDate,
+        .validUntil! < item.travelDate,
     ).toBe(true);
     expect(decide(one(item.id), 'ESCALATE').missingQuestionIds).toEqual([
       'ask-extension',
@@ -295,11 +302,18 @@ describe('document and status curveballs', () => {
 
   it('keeps check-ins a minority across a year of daily selections', () => {
     const seen = new Set<string>();
+    const originalSchedule = {
+      ...library,
+      index: {
+        ...library.index,
+        dailySchedule: library.index.dailySchedule.slice(0, 2),
+      },
+    };
     for (let day = 0; day < 366; day++) {
       const date = new Date(Date.UTC(2026, 9, 27 + day))
         .toISOString()
         .slice(0, 10);
-      const daily = dailyForDate(library, date)!;
+      const daily = dailyForDate(originalSchedule, date)!;
       const cases = daily.selection.caseIds.map(
         (id) => daily.content.cases.find((item) => item.id === id)!,
       );

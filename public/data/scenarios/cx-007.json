@@ -1,0 +1,85 @@
+{
+  "id": "cx-007",
+  "version": 1,
+  "title": "LAX–HKG–NRT: Mali Chai",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-11-03",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the finite route, passport conditions, entry/transit exceptions and available evidence against the cited official sources. See docs/content-review-networks-2026-11-03.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "HARD",
+  "ruleSnapshotId": "network-rules-2026-11-03-v1",
+  "travelDate": "2026-11-03",
+  "itinerary": [
+    {
+      "from": "LAX",
+      "to": "HKG",
+      "destinationCountry": "HK",
+      "transit": "AIRSIDE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-03T20:00:00Z"
+    },
+    {
+      "from": "HKG",
+      "to": "NRT",
+      "destinationCountry": "JP",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Mali Chai",
+    "nationality": "TH"
+  },
+  "assumptions": [
+    "All passengers and documents are synthetic. Travel begins on 2026-11-03; connections arrive at the hub on 2026-11-04. Flight clocks are invented for this puzzle, not a live timetable. All unmentioned identity, security, funds, return/onward bookings, health and departure checks are stipulated satisfied. SG Arrival Card submission is complete where needed; it is never a visa substitute.",
+    "Only the documents and facts shown or obtainable through the offered checks are available. Unless expressly identified, the traveller has an ordinary passport, no additional citizenship, no destination residence, special passport, crew, e-Channel or other exemption. Short tourism only; no work. Routine entry permissions for an untested leg are not silently assumed when that leg is part of the puzzle.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. Escalate a material eligibility, identity or transfer conflict that remains unresolved after those checks; deny a confirmed requirement failure once relevant obtainable alternatives are excluded. Unfamiliarity alone is insufficient. No live airline or government systems are called.",
+    "Hong Kong airside handling and entry/transit permissions unrelated to the Japanese passport-classification issue are stipulated sufficient."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "TH",
+      "holder": "Mali Chai",
+      "validFrom": "2024-01-01",
+      "validUntil": "2032-01-01",
+      "attributes": {
+        "number": "TH-SYN-CX-007",
+        "category": "Passport — booklet and issuer classification disagree",
+        "passportKind": "ORDINARY",
+        "biometric": false
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport"],
+  "clues": [
+    "The issuer record says electronic, but this replacement booklet has no chip symbol."
+  ],
+  "questions": [
+    {
+      "id": "verify-electronic",
+      "label": "Resolve electronic-passport classification",
+      "response": "The booklet evidence indicates a non-electronic passport, but the issuer extract classifies this number as electronic. The document desk cannot resolve the discrepancy. No Japanese visa or other qualifying passport is available.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "DOCUMENT_CHECK"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "ESCALATE",
+    "paths": [
+      {
+        "id": "reviewed-evidence",
+        "requiredDocumentIds": ["passport"],
+        "requiredQuestionIds": ["verify-electronic"]
+      }
+    ]
+  },
+  "rationale": "The Thai exemption depends on a qualifying electronic passport. Booklet and issuer evidence conflict on that decisive fact. The available check fails to resolve it; escalate instead of guessing the document category.",
+  "ruleIds": ["net-jp-entry"]
+}

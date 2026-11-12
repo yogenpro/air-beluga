@@ -1,0 +1,32 @@
+{
+  "id": "ana-network-pool-v1",
+  "stageId": "005-sfo-tokyo-network",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "dailyAlgorithmVersion": "fnv1a32-mulberry32-v1",
+  "caseIds": [
+    "ana-001",
+    "ana-002",
+    "ana-003",
+    "ana-004",
+    "ana-005",
+    "ana-006",
+    "ana-007",
+    "ana-008"
+  ],
+  "count": 6,
+  "difficulty": {
+    "EASY": {
+      "min": 1,
+      "max": 1
+    },
+    "MEDIUM": {
+      "min": 2,
+      "max": 2
+    },
+    "HARD": {
+      "min": 3,
+      "max": 3
+    }
+  }
+}

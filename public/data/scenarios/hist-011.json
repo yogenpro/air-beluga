@@ -1,0 +1,104 @@
+{
+  "id": "hist-011",
+  "version": 1,
+  "title": "Delhi, 15 October 2021: Remy Singh",
+  "verificationStatus": "VERIFIED",
+  "notice": "Historical shift: 15 October 2021. Apply the rules for this travel date, not current requirements. Fictional passengers and reports; historical official sources reviewed on 2026-10-26 by Codex, without independent human approval.",
+  "review": {
+    "reviewer": "Codex (historical official-source cross-check)",
+    "reviewedDate": "2026-10-26",
+    "method": "HISTORICAL_OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the 2021 route-specific requirement using Transport Canada and the retrospective CBSA timeline. Later removal on 2022-01-28 cross-checked separately. Fictional carrier escalation procedure is explicit. See docs/content-review-historical-2021-10-15.md; not independent human or government approval."
+  },
+  "difficulty": "HARD",
+  "ruleSnapshotId": "canada-covid-rules-2021-10-15-v1",
+  "travelDate": "2021-10-15",
+  "itinerary": [
+    {
+      "from": "DEL",
+      "to": "YVR",
+      "destinationCountry": "CA",
+      "transit": "NONE",
+      "separateTicket": false,
+      "scheduledDeparture": "2021-10-15T12:00:00+05:30"
+    }
+  ],
+  "passenger": {
+    "displayName": "Remy Singh",
+    "nationality": "CA"
+  },
+  "assumptions": [
+    "This shift takes place on 15 October 2021, not the present day. Direct commercial DEL–YVR flight, scheduled for 12:00 IST (UTC+05:30), equivalent to 06:30 UTC. All passengers are adults and Canadian citizens returning with genuine, current Canadian passports.",
+    "Vaccination, eligibility to enter, ArriveCAN, quarantine arrangements, mask and symptom checks, identity matching and unrelated carrier requirements are stipulated satisfied. No previous-positive recovery evidence, medical or other testing exemption applies. This puzzle isolates the historical pre-departure test requirement.",
+    "All identities, numbers and individual reports are fictional. A real historical laboratory name is used to teach the designated-provider rule; these are not real laboratory findings or live verifications. Other clinic names are fictional.",
+    "The flight clock is fixed. Report timestamps use their printed offsets, independently of your device clock or time zone. Only the reports initially shown or obtainable through the offered inquiries are held.",
+    "Air Beluga fictional training procedure: use the offered checks to resolve material conflicts. Escalate a conflict only when it still cannot be resolved at this desk; deny a definite failure after obtainable alternatives are exhausted."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "CA",
+      "holder": "Remy Singh",
+      "validFrom": "2018-03-01",
+      "validUntil": "2028-03-01",
+      "attributes": {
+        "number": "CA-HIST-SYNTHETIC-011",
+        "category": "Ordinary Canadian passport",
+        "passportKind": "ORDINARY",
+        "biometric": true
+      }
+    },
+    {
+      "id": "test",
+      "type": "COVID_TEST",
+      "issuingCountry": "IN",
+      "holder": "Remy Singh",
+      "attributes": {
+        "number": "HIST-REPORT-011-test",
+        "category": "Fictional laboratory test report",
+        "covidTest": {
+          "reportedAt": "2021-10-15T04:00:00+05:30",
+          "testType": "UNKNOWN",
+          "method": "Method fields conflict: PCR / antigen",
+          "result": "NEGATIVE",
+          "laboratory": "Genestrings Laboratory",
+          "laboratoryLocation": "Delhi airport",
+          "laboratoryIdentity": "CONFIRMED",
+          "sampleCollectedAt": "2021-10-14T21:00:00+05:30"
+        }
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "test"],
+  "clues": ["Both test labels appear on the copy I received."],
+  "questions": [
+    {
+      "id": "check-method",
+      "label": "Verify the test methodology",
+      "response": "Simulated laboratory inquiry: the inconsistent method fields cannot be resolved before referral. The desk cannot establish whether this was molecular or antigen.",
+      "revealsDocumentIds": [],
+      "kind": "DOCUMENT_CHECK",
+      "justified": true
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "ESCALATE",
+    "paths": [
+      {
+        "id": "historical-resolution",
+        "requiredDocumentIds": ["passport", "test"],
+        "requiredQuestionIds": ["check-method"]
+      }
+    ]
+  },
+  "rationale": "A recent negative result is insufficient when the report does not establish the required methodology. The available check leaves the PCR/antigen conflict unresolved, so escalate under the fictional desk procedure instead of guessing.",
+  "ruleIds": [
+    "hist-del-testing",
+    "hist-clock",
+    "hist-method",
+    "hist-provider",
+    "hist-vaccinated",
+    "hist-desk"
+  ]
+}

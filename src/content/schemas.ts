@@ -34,10 +34,56 @@ const SourceSchema = z
   })
   .strict();
 
+export const InstantSchema = z.iso
+  .datetime({ offset: true })
+  .refine(
+    (value) =>
+      DateSchema.safeParse(value.slice(0, 10)).success &&
+      Number.isFinite(Date.parse(value)),
+    'Must be a real timestamp with an explicit UTC offset',
+  );
+
+const TestTypeSchema = z.enum(['MOLECULAR', 'ANTIGEN', 'ANTIBODY', 'UNKNOWN']);
+const CovidTestEvidenceSchema = z
+  .object({
+    sampleCollectedAt: InstantSchema.optional(),
+    sampleTimeLabel: text.optional(),
+    reportedAt: InstantSchema,
+    testType: TestTypeSchema,
+    method: text,
+    result: z.enum(['NEGATIVE', 'POSITIVE', 'INCONCLUSIVE']),
+    laboratory: text,
+    laboratoryLocation: text,
+    laboratoryIdentity: z.enum(['CONFIRMED', 'UNRESOLVED']),
+  })
+  .strict()
+  .refine(
+    (test) => Boolean(test.sampleCollectedAt || test.sampleTimeLabel),
+    'Provide a collection timestamp or the unresolved printed time',
+  )
+  .refine(
+    (test) =>
+      !test.sampleCollectedAt ||
+      Date.parse(test.sampleCollectedAt) <= Date.parse(test.reportedAt),
+    'A report cannot predate collection',
+  );
+
 export const RuleSnapshotSchema = z
   .object({
     id,
     asOfDate: DateSchema,
+    reviewedDate: DateSchema.optional(),
+    historical: z.boolean().optional(),
+    testingRequirement: z
+      .object({
+        ruleId: id,
+        maxAgeHours: z.number().positive(),
+        acceptedTestTypes: z.array(TestTypeSchema).min(1),
+        requiredLaboratory: text,
+        requiredLaboratoryLocation: text,
+      })
+      .strict()
+      .optional(),
     verificationStatus: VerificationSchema,
     notice: text,
     rules: z
@@ -47,6 +93,7 @@ export const RuleSnapshotSchema = z
             id,
             title: text,
             body: text,
+            jurisdictionCountry: country.optional(),
             scope: z
               .object({
                 departureAirports: z.array(airport).min(1),
@@ -62,7 +109,32 @@ export const RuleSnapshotSchema = z
   })
   .strict();
 
-export const TravelDocumentSchema = z
+const DocumentAttributesSchema = z
+  .object({
+    covidTest: CovidTestEvidenceSchema.optional(),
+    category: text.optional(),
+    passportKind: z
+      .enum([
+        'ORDINARY',
+        'DIPLOMATIC',
+        'OFFICIAL',
+        'SERVICE',
+        'TEMPORARY',
+        'EMERGENCY',
+      ])
+      .optional(),
+    biometric: z.boolean().optional(),
+    documentCode: text.optional(),
+    destinationCountry: country.optional(),
+    entriesRemaining: z.number().int().nonnegative().optional(),
+    status: text.optional(),
+    bookingReference: text.optional(),
+    number: text.optional(),
+    linkedPassportNumber: text.optional(),
+  })
+  .strict();
+
+const StandardTravelDocumentSchema = z
   .object({
     id,
     type: z.enum([
@@ -79,35 +151,33 @@ export const TravelDocumentSchema = z
     holder: text,
     validFrom: DateSchema,
     validUntil: DateSchema,
-    attributes: z
-      .object({
-        category: text.optional(),
-        passportKind: z
-          .enum([
-            'ORDINARY',
-            'DIPLOMATIC',
-            'OFFICIAL',
-            'SERVICE',
-            'TEMPORARY',
-            'EMERGENCY',
-          ])
-          .optional(),
-        biometric: z.boolean().optional(),
-        documentCode: text.optional(),
-        destinationCountry: country.optional(),
-        entriesRemaining: z.number().int().nonnegative().optional(),
-        status: text.optional(),
-        bookingReference: text.optional(),
-        number: text.optional(),
-        linkedPassportNumber: text.optional(),
-      })
-      .strict(),
+    attributes: DocumentAttributesSchema,
   })
   .strict()
   .refine((document) => document.validFrom <= document.validUntil, {
     message: 'Document validity range is reversed',
     path: ['validUntil'],
   });
+
+const CovidTravelDocumentSchema = z
+  .object({
+    id,
+    type: z.literal('COVID_TEST'),
+    issuingCountry: country,
+    holder: text,
+    // A test report has collection/report timestamps, not a made-up expiry date.
+    validFrom: z.never().optional(),
+    validUntil: z.never().optional(),
+    attributes: DocumentAttributesSchema.extend({
+      covidTest: CovidTestEvidenceSchema,
+    }),
+  })
+  .strict();
+
+export const TravelDocumentSchema = z.union([
+  StandardTravelDocumentSchema,
+  CovidTravelDocumentSchema,
+]);
 
 export const PassengerCaseSchema = z
   .object({
@@ -133,6 +203,8 @@ export const PassengerCaseSchema = z
         z
           .object({
             from: airport,
+            transportMode: z.enum(['AIR', 'GROUND']).optional(),
+            scheduledDeparture: InstantSchema.optional(),
             to: airport,
             destinationCountry: country,
             transit: z.enum(['NONE', 'AIRSIDE', 'LANDSIDE']),
@@ -200,6 +272,16 @@ export const StageSchema = z
     title: text,
     departureAirport: airport,
     airline: z.literal('Air Beluga'),
+    network: z
+      .object({
+        modeledOn: text,
+        homeCountry: country,
+        hubs: z.array(airport).min(1),
+        sources: z.array(SourceSchema).min(1),
+      })
+      .strict()
+      .optional(),
+    historical: z.boolean().optional(),
     flightLabel: text,
     scheduledDeparture: z.iso.datetime(),
     verificationStatus: VerificationSchema,
@@ -220,6 +302,7 @@ const DifficultyLimitSchema = z
 export const DailyPoolSchema = z
   .object({
     id,
+    stageId: id.optional(),
     verificationStatus: VerificationSchema,
     notice: text,
     dailyAlgorithmVersion: z.literal('fnv1a32-mulberry32-v1'),

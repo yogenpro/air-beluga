@@ -22,13 +22,28 @@ export const ReleaseIndexSchema = z
       )
       .min(1),
     dailySchedule: z.array(
-      z
-        .object({
-          from: DateSchema,
-          contentVersion: version,
-          poolId: version,
-        })
-        .strict(),
+      z.union([
+        z
+          .object({
+            from: DateSchema,
+            contentVersion: version,
+            poolId: version,
+          })
+          .strict(),
+        z
+          .object({
+            from: DateSchema,
+            contentVersion: version,
+            poolIds: z
+              .array(version)
+              .min(2)
+              .refine(
+                (ids) => new Set(ids).size === ids.length,
+                'Rotation pools must be unique',
+              ),
+          })
+          .strict(),
+      ]),
     ),
   })
   .strict()
@@ -103,22 +118,28 @@ export async function loadLibrary(
   for (const schedule of index.dailySchedule) {
     const content = versions[schedule.contentVersion];
     if (!content) continue;
-    // Validate that a scheduled daily can be played without fixture opt-ins.
-    selectDaily(content, schedule.poolId, schedule.from);
-    if (
-      content.cases.some(
-        (item) =>
-          content.dailyPools
-            .find((pool) => pool.id === schedule.poolId)!
-            .caseIds.includes(item.id) && item.travelDate > schedule.from,
-      )
-    ) {
-      throw new Error(
-        'Daily publication predates its authored travel snapshot',
-      );
+    for (const poolId of scheduledPoolIds(schedule)) {
+      // Validate that a scheduled daily can be played without fixture opt-ins.
+      selectDaily(content, poolId, schedule.from);
+      if (
+        content.cases.some(
+          (item) =>
+            content.dailyPools
+              .find((pool) => pool.id === poolId)!
+              .caseIds.includes(item.id) && item.travelDate > schedule.from,
+        )
+      ) {
+        throw new Error(
+          'Daily publication predates its authored travel snapshot',
+        );
+      }
     }
   }
   return { index, current, versions, unavailableVersions };
+}
+
+function scheduledPoolIds(schedule: ReleaseIndex['dailySchedule'][number]) {
+  return 'poolIds' in schedule ? schedule.poolIds : [schedule.poolId];
 }
 
 /** Editorial UTC boundaries pin past days to their original content release. */
@@ -133,5 +154,13 @@ export function dailyForDate(library: ContentLibrary, date: string) {
     throw new Error(
       'The frozen content for this daily is unavailable. Saved results have been kept.',
     );
-  return { content, selection: selectDaily(content, schedule.poolId, date) };
+  const pools = scheduledPoolIds(schedule);
+  // UTC calendar arithmetic: the boundary starts at index zero. The frozen
+  // editorial order guarantees each network a turn, independent of the client.
+  const day =
+    (Date.parse(`${date}T00:00:00Z`) -
+      Date.parse(`${schedule.from}T00:00:00Z`)) /
+    86_400_000;
+  const poolId = pools[day % pools.length]!;
+  return { content, selection: selectDaily(content, poolId, date) };
 }

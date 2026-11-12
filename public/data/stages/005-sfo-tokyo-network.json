@@ -1,0 +1,33 @@
+{
+  "id": "005-sfo-tokyo-network",
+  "title": "Tokyo connections",
+  "departureAirport": "SFO",
+  "airline": "Air Beluga",
+  "network": {
+    "modeledOn": "ANA",
+    "homeCountry": "JP",
+    "hubs": ["NRT", "HND"],
+    "sources": [
+      {
+        "url": "https://www.ana.co.jp/en/us/plan-book/routes/international-route-information/",
+        "publisher": "ANA",
+        "verifiedDate": "2026-11-03"
+      }
+    ]
+  },
+  "flightLabel": "Air Beluga · SFO → Tokyo (NRT / HND) → Hong Kong / Singapore · Network modeled on ANA",
+  "scheduledDeparture": "2026-11-03T19:00:00Z",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "caseIds": [
+    "ana-001",
+    "ana-002",
+    "ana-003",
+    "ana-004",
+    "ana-005",
+    "ana-006",
+    "ana-007",
+    "ana-008"
+  ],
+  "tutorial": "You are checking in at SFO for a fictional Air Beluga shift modeled on ANA's hub network. Read the final destination and each connection: entry rules change when the traveller crosses a border. Travel date: 3 November 2026. The named real airline is network inspiration, with no affiliation."
+}

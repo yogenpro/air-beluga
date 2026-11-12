@@ -1,0 +1,107 @@
+{
+  "id": "ana-003",
+  "version": 1,
+  "title": "SFO–NRT–SIN: Dev Menon",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-11-03",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the finite route, passport conditions, entry/transit exceptions and available evidence against the cited official sources. See docs/content-review-networks-2026-11-03.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "network-rules-2026-11-03-v1",
+  "travelDate": "2026-11-03",
+  "itinerary": [
+    {
+      "from": "SFO",
+      "to": "NRT",
+      "destinationCountry": "JP",
+      "transit": "LANDSIDE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-03T19:00:00Z"
+    },
+    {
+      "from": "NRT",
+      "to": "HND",
+      "destinationCountry": "JP",
+      "transportMode": "GROUND",
+      "transit": "LANDSIDE",
+      "separateTicket": false
+    },
+    {
+      "from": "HND",
+      "to": "SIN",
+      "destinationCountry": "SG",
+      "transit": "NONE",
+      "separateTicket": false
+    }
+  ],
+  "passenger": {
+    "displayName": "Dev Menon",
+    "nationality": "IN"
+  },
+  "assumptions": [
+    "All passengers and documents are synthetic. Travel begins on 2026-11-03; connections arrive at the hub on 2026-11-04. Flight clocks are invented for this puzzle, not a live timetable. All unmentioned identity, security, funds, return/onward bookings, health and departure checks are stipulated satisfied. SG Arrival Card submission is complete where needed; it is never a visa substitute.",
+    "Only the documents and facts shown or obtainable through the offered checks are available. Unless expressly identified, the traveller has an ordinary passport, no additional citizenship, no destination residence, special passport, crew, e-Channel or other exemption. Short tourism only; no work. Routine entry permissions for an untested leg are not silently assumed when that leg is part of the puzzle.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. Escalate a material eligibility, identity or transfer conflict that remains unresolved after those checks; deny a confirmed requirement failure once relevant obtainable alternatives are excluded. Unfamiliarity alone is insufficient. No live airline or government systems are called.",
+    "The Tokyo transfer is NRT arrival followed by ground transport to HND for the booked HND–SIN flight. The itinerary second leg is HND–SIN; there is no airside NRT–HND connection."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "IN",
+      "holder": "Dev Menon",
+      "validFrom": "2024-01-01",
+      "validUntil": "2032-01-01",
+      "attributes": {
+        "number": "IN-SYN-ANA-003",
+        "category": "Ordinary passport",
+        "passportKind": "ORDINARY",
+        "biometric": true
+      }
+    },
+    {
+      "id": "sg-visa",
+      "type": "VISA",
+      "issuingCountry": "SG",
+      "holder": "Dev Menon",
+      "validFrom": "2026-10-01",
+      "validUntil": "2027-03-01",
+      "attributes": {
+        "category": "Short-stay visitor visa",
+        "destinationCountry": "SG",
+        "entriesRemaining": 1,
+        "number": "SYN-SG-sg-visa"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "sg-visa"],
+  "clues": [
+    "The transfer voucher says a bus across Tokyo. My Singapore visa is ready."
+  ],
+  "questions": [
+    {
+      "id": "ask-japan-permission",
+      "label": "Ask for Japanese permission or alternative passport",
+      "response": "No Japanese visa, other passport, residence status, registration or other exemption is available.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "DENY",
+    "paths": [
+      {
+        "id": "reviewed-evidence",
+        "requiredDocumentIds": ["passport", "sg-visa"],
+        "requiredQuestionIds": ["ask-japan-permission"]
+      }
+    ]
+  },
+  "rationale": "Changing Tokyo airports requires entry into Japan. The Singapore visa solves the destination requirement but does not supply Japanese permission. No qualifying Japanese document or exemption is available.",
+  "ruleIds": ["net-jp-transit", "net-jp-entry", "net-sg-entry"]
+}

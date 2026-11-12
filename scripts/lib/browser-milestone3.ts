@@ -27,6 +27,7 @@ export async function playQueue(
     firstWrong?: boolean;
     offline?: () => Promise<void>;
     afterInspect?: (caseId: string) => Promise<void>;
+    afterQuestions?: (caseId: string) => Promise<void>;
   },
 ) {
   for (const [index, id] of caseIds.entries()) {
@@ -56,6 +57,7 @@ export async function playQueue(
         .click();
       await expectText(page, question.response);
     }
+    await options.afterQuestions?.(id);
     if (options.reload && index === 1) {
       await page.reload();
       await expectText(page, 'Your saved progress has been restored.');
@@ -80,10 +82,16 @@ export async function playQueue(
     await page
       .getByText('Rules and sources behind this decision', { exact: true })
       .click();
+    const snapshot = content.ruleSnapshots.find(
+      (snapshot) => snapshot.id === item.ruleSnapshotId,
+    )!;
+    const publisher = snapshot.rules.find(
+      (rule) => item.ruleIds.includes(rule.id) && rule.sources.length,
+    )!.sources[0]!.publisher;
     assert(
       (await page
         .getByRole('link', {
-          name: 'Immigration, Refugees and Citizenship Canada (IRCC)',
+          name: publisher,
           exact: true,
         })
         .count()) > 0,

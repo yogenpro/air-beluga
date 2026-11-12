@@ -1,0 +1,93 @@
+{
+  "id": "sq-002",
+  "version": 1,
+  "title": "LHR–SIN: Amit Lal",
+  "verificationStatus": "VERIFIED",
+  "notice": "Source-reviewed on 2026-11-03. Air Beluga, passengers, documents and operational checks are fictional. Real airline networks inspire the routes; no affiliation or independent human review is claimed.",
+  "review": {
+    "reviewer": "Codex (official-source cross-check)",
+    "reviewedDate": "2026-11-03",
+    "method": "OFFICIAL_SOURCE_CROSS_CHECK",
+    "notes": "Reviewed the finite route, passport conditions, entry/transit exceptions and available evidence against the cited official sources. See docs/content-review-networks-2026-11-03.md. This is an agent source review, not independent human or immigration-authority approval."
+  },
+  "difficulty": "MEDIUM",
+  "ruleSnapshotId": "network-rules-2026-11-03-v1",
+  "travelDate": "2026-11-03",
+  "itinerary": [
+    {
+      "from": "LHR",
+      "to": "SIN",
+      "destinationCountry": "SG",
+      "transit": "NONE",
+      "separateTicket": false,
+      "scheduledDeparture": "2026-11-03T10:00:00Z"
+    }
+  ],
+  "passenger": {
+    "displayName": "Amit Lal",
+    "nationality": "IN"
+  },
+  "assumptions": [
+    "All passengers and documents are synthetic. Travel begins on 2026-11-03; connections arrive at the hub on 2026-11-04. Flight clocks are invented for this puzzle, not a live timetable. All unmentioned identity, security, funds, return/onward bookings, health and departure checks are stipulated satisfied. SG Arrival Card submission is complete where needed; it is never a visa substitute.",
+    "Only the documents and facts shown or obtainable through the offered checks are available. Unless expressly identified, the traveller has an ordinary passport, no additional citizenship, no destination residence, special passport, crew, e-Channel or other exemption. Short tourism only; no work. Routine entry permissions for an untested leg are not silently assumed when that leg is part of the puzzle.",
+    "Air Beluga training procedure (fictional carrier policy): complete the offered checks. Escalate a material eligibility, identity or transfer conflict that remains unresolved after those checks; deny a confirmed requirement failure once relevant obtainable alternatives are excluded. Unfamiliarity alone is insufficient. No live airline or government systems are called.",
+    "Singapore is the final destination for an eight-day visit and then return to London. There is no qualifying third-country transit itinerary.",
+    "The booked Singapore stay exceeds 96 hours, and no confirmed onward departure within 96 hours is available."
+  ],
+  "documents": [
+    {
+      "id": "passport",
+      "type": "PASSPORT",
+      "issuingCountry": "IN",
+      "holder": "Amit Lal",
+      "validFrom": "2024-01-01",
+      "validUntil": "2032-01-01",
+      "attributes": {
+        "number": "IN-SYN-SQ-002",
+        "category": "Ordinary passport",
+        "passportKind": "ORDINARY",
+        "biometric": true
+      }
+    },
+    {
+      "id": "arrival-card",
+      "type": "ELECTRONIC_AUTHORIZATION",
+      "issuingCountry": "SG",
+      "holder": "Amit Lal",
+      "validFrom": "2026-10-01",
+      "validUntil": "2026-12-31",
+      "attributes": {
+        "category": "SG Arrival Card submission receipt",
+        "status": "SUBMITTED — DECLARATION ONLY",
+        "destinationCountry": "SG",
+        "linkedPassportNumber": "IN-SYN-SQ-002"
+      }
+    }
+  ],
+  "initiallyPresentedDocumentIds": ["passport", "arrival-card"],
+  "clues": [
+    "The arrival-card email says submitted. Is that the approval you need?"
+  ],
+  "questions": [
+    {
+      "id": "ask-sg-permission",
+      "label": "Ask for Singapore visa or qualifying alternative",
+      "response": "No Singapore visa or Singapore residence status is available. I hold no other citizenship or qualifying permission beyond the documents in this case.",
+      "revealsDocumentIds": [],
+      "justified": true,
+      "kind": "PASSENGER"
+    }
+  ],
+  "resolution": {
+    "expectedDecision": "DENY",
+    "paths": [
+      {
+        "id": "reviewed-evidence",
+        "requiredDocumentIds": ["passport", "arrival-card"],
+        "requiredQuestionIds": ["ask-sg-permission"]
+      }
+    ]
+  },
+  "rationale": "This destination stay exceeds 96 hours, with no confirmed onward departure inside that window. The transit facility cannot cover the booked journey. No Singapore entry visa or other applicable alternative is available. The arrival-card receipt is a declaration, not a visa.",
+  "ruleIds": ["net-sg-entry", "net-sg-vftf"]
+}
