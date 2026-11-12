@@ -1,0 +1,873 @@
+/* Live, selectable case evidence over country-specific, fictional pixel artwork. */
+.document-inspection {
+  margin: 0 2px;
+  padding: 10px 0 0;
+}
+.document-artwork {
+  container-type: inline-size;
+  min-width: 0;
+}
+.art-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.art-tools > span {
+  color: #60716b;
+  font-size: 10px;
+}
+.art-tools > div {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.art-tools button,
+.document-art-dialog button {
+  min-height: 36px;
+  padding: 6px 9px;
+  background: #f6edda;
+  color: #315b54;
+  border: 1px solid #a4b3a1;
+  box-shadow: 0 2px 0 #314e4120;
+  font-size: 11px;
+}
+.art-tools button:hover,
+.document-art-dialog button:hover {
+  background: #e6eddf;
+}
+.document-art {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #253e45;
+  background: var(--art-paper);
+  border: 2px solid var(--art-accent);
+  border-radius: 4px;
+  box-shadow: 3px 4px 0 #233d3720;
+  font-family: Silkscreen, monospace;
+  font-size: clamp(9px, 2.1cqw, 12px);
+  line-height: 1.5;
+}
+.document-art > :not(.art-pattern) {
+  position: relative;
+}
+.art-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url('/art/documents/issuer-patterns-v1.png');
+  background-size: 401% 301%;
+  background-position: var(--art-pattern-x) var(--art-pattern-y);
+  image-rendering: pixelated;
+  opacity: 0.72;
+}
+.art-no-pattern .art-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent 0 10px,
+    #668b7c12 10px 12px
+  );
+}
+.art-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  color: var(--art-accent);
+  border-bottom: 1px solid #37595433;
+}
+.art-heading > div {
+  flex: 1;
+  min-width: 0;
+}
+.art-heading span:not(.art-specimen) {
+  display: block;
+  font-size: 0.7em;
+  letter-spacing: 0.08em;
+}
+.art-heading strong {
+  display: block;
+  font-size: 1.2em;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.art-heading small {
+  display: block;
+  font:
+    10px/1.4 'DM Sans',
+    sans-serif;
+  margin-top: 3px;
+}
+.art-seal {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  color: var(--art-accent);
+}
+.art-specimen {
+  font-size: 0.64em;
+  line-height: 1.5;
+  border: 2px solid currentColor;
+  padding: 3px 5px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.document-art dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 12px;
+  min-width: 0;
+  margin: 0;
+}
+.document-art .art-field {
+  min-width: 0;
+}
+.document-art .art-field-wide {
+  grid-column: 1/-1;
+}
+.document-art dt {
+  font:
+    0.65em/1.5 Silkscreen,
+    monospace;
+  font-weight: 400;
+  color: var(--art-accent);
+  margin: 0 0 2px;
+}
+.document-art dd {
+  display: block;
+  font: inherit;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  color: #243a41;
+  margin: 0;
+}
+.art-photo {
+  align-self: end;
+  min-width: 0;
+}
+.art-photo .passenger-portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 48/56;
+  border: 2px solid #6c827d;
+  border-radius: 0;
+  box-shadow: none;
+}
+.art-photo > span {
+  display: block;
+  font-size: 0.5em;
+  text-align: center;
+  margin-top: 4px;
+  color: #4a625c;
+}
+.art-ghost {
+  opacity: 0.22;
+  width: 54px;
+  align-self: center;
+}
+.art-ghost .passenger-portrait {
+  border: 0;
+}
+.art-footer {
+  padding: 8px 12px;
+  background: #fff6dfb8;
+  border-top: 1px solid #49615a44;
+}
+.art-footer > span {
+  display: block;
+  font-size: 0.62em;
+  line-height: 1.8;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+.art-nonscannable {
+  font-size: 0.96em;
+  line-height: 1.8;
+  letter-spacing: 0.06em;
+  overflow-wrap: anywhere;
+  margin-bottom: 5px;
+}
+.art-document-category {
+  padding: 0 14px 10px;
+  font:
+    10px/1.5 'DM Sans',
+    sans-serif;
+  overflow-wrap: anywhere;
+}
+.art-document-category:empty {
+  display: none;
+}
+/* Passport bio pages share ICAO field families, not an ID-card frame. */
+.art-layout-passport,
+.art-layout-travel-booklet {
+  border-left-width: 7px;
+}
+.art-booklet-leaf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--art-accent);
+  color: #fff0cf;
+  font-size: 0.7em;
+  border-bottom: 4px double #ddc7a7;
+}
+.art-booklet-leaf .art-seal {
+  color: #eed097;
+  width: 25px;
+  height: 25px;
+}
+.art-passport-bio {
+  display: grid;
+  grid-template-columns: 24% minmax(0, 1fr);
+  gap: 14px;
+  padding: 16px 14px 12px;
+}
+.art-passport-bio .art-photo {
+  align-self: start;
+}
+.art-passport-bio dl {
+  z-index: 1;
+}
+.art-watermark {
+  position: absolute;
+  width: 95px;
+  height: 95px;
+  right: 10px;
+  bottom: 5px;
+  opacity: 0.1;
+  z-index: 0;
+}
+.art-layout-travel-booklet .art-booklet-leaf {
+  padding: 14px;
+  border-bottom-style: dashed;
+}
+.art-layout-travel-booklet .art-heading {
+  background: #fff7dc70;
+}
+.art-issuer-in.art-layout-passport .art-heading {
+  border-top: 4px solid #d5a375;
+  border-bottom: 4px solid #9db5a5;
+}
+.art-issuer-cn.art-layout-passport .art-heading {
+  border-bottom: 3px double #b0895b;
+}
+.art-issuer-fr.art-layout-passport .art-heading {
+  border-left: 5px solid #6883b2;
+  border-right: 5px solid #c490a5;
+}
+.art-issuer-ro.art-layout-passport .art-heading {
+  border-right: 5px solid #d7b85b;
+}
+/* Cards: UK lower-left photo / narrow center / heraldic right panel. */
+.art-layout-uk-residence-card {
+  background: linear-gradient(
+    90deg,
+    #ebbdca 0 26%,
+    #c3dff0 26% 74%,
+    #e9bdc9 74%
+  );
+  border-color: #a97f91;
+  border-radius: 9px;
+}
+.art-layout-uk-residence-card .art-pattern {
+  opacity: 0.43;
+}
+.art-layout-uk-residence-card .art-heading {
+  border: 0;
+  padding-bottom: 5px;
+}
+.art-layout-uk-residence-card .art-heading strong {
+  font-size: 1.12em;
+}
+.art-resident-face {
+  display: grid;
+  grid-template-columns: 24% minmax(0, 1fr) 16%;
+  gap: 12px;
+  padding: 8px 12px 14px;
+  min-height: 210px;
+}
+.art-resident-face dl {
+  grid-template-columns: 1fr;
+  gap: 7px;
+}
+.art-resident-decoration {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--art-accent);
+}
+.art-resident-decoration > .art-seal {
+  width: 100%;
+  height: auto;
+  opacity: 0.65;
+}
+.art-resident-decoration > span {
+  font-size: 0.55em;
+}
+.art-resident-decoration .art-ghost {
+  width: 85%;
+}
+.art-signature {
+  font-size: 1em !important;
+  font-style: italic;
+}
+.art-layout-us-residence-card {
+  border-color: #7e9d90;
+  border-radius: 9px;
+}
+.art-layout-us-residence-card .art-heading {
+  background: #f8f4e78a;
+  border-bottom: 3px double var(--art-accent);
+}
+.art-layout-us-residence-card .art-heading > .art-seal {
+  order: 2;
+}
+.art-layout-us-residence-card .art-heading strong {
+  font-size: 1.28em;
+}
+.art-layout-us-residence-card .art-resident-face {
+  grid-template-columns: 26% minmax(0, 1fr) 14%;
+}
+.art-layout-us-residence-card .art-photo {
+  align-self: start;
+}
+.art-layout-us-residence-card .art-resident-face dl {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.art-layout-ca-residence-card {
+  border-color: #7296b0;
+  border-radius: 9px;
+}
+.art-layout-ca-residence-card .art-heading {
+  border-top: 5px solid #bd899a;
+  background: #e2edf880;
+}
+.art-layout-ca-residence-card .art-heading strong {
+  font-size: 1.02em;
+}
+.art-layout-ca-residence-card .art-resident-face {
+  grid-template-columns: 28% minmax(0, 1fr) 14%;
+}
+.art-layout-ca-residence-card .art-resident-face dl {
+  border-left: 1px solid #6b8da366;
+  padding-left: 10px;
+}
+.art-card-back-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  padding: 12px;
+  border-bottom: 1px solid #56746750;
+  font-size: 0.65em;
+}
+.art-card-back-heading strong {
+  flex: 1;
+  font-weight: 400;
+}
+.art-card-reverse {
+  display: grid;
+  grid-template-columns: 18% minmax(0, 1fr) 14%;
+  gap: 12px;
+  padding: 18px 12px;
+  min-height: 200px;
+}
+.art-chip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  max-width: 70px;
+  height: 55px;
+  background: #ddbd61;
+  border: 3px solid #967c35;
+  align-self: center;
+}
+.art-chip span {
+  border: 1px solid #b29545;
+}
+/* Physical visa labels and their issuer-specific portrait placement. */
+.art-layout-visa-sticker,
+.art-layout-japan-visa,
+.art-layout-us-visa {
+  border-style: dashed;
+}
+.art-visa-face {
+  display: grid;
+  grid-template-columns: 14% minmax(0, 1fr) 22%;
+  gap: 12px;
+  padding: 14px 12px;
+  min-height: 190px;
+}
+.art-visa-crest {
+  align-self: center;
+  text-align: center;
+  color: var(--art-accent);
+}
+.art-visa-crest .art-seal {
+  width: 100%;
+  height: auto;
+}
+.art-visa-crest span {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.8em;
+}
+.art-visa-face .art-photo {
+  align-self: start;
+}
+.art-layout-us-visa .art-visa-face {
+  grid-template-columns: 25% minmax(0, 1fr);
+}
+.art-layout-us-visa .art-visa-crest {
+  display: none;
+}
+.art-layout-us-visa .art-visa-face > .art-photo {
+  grid-column: 1;
+  grid-row: 1;
+}
+.art-layout-us-visa .art-visa-face > dl {
+  grid-column: 2;
+}
+.art-layout-us-visa .art-heading {
+  border-bottom: 5px solid #c89da4;
+}
+.art-layout-japan-visa .art-visa-face {
+  grid-template-columns: minmax(0, 1fr) 26%;
+}
+.art-layout-japan-visa .art-visa-crest {
+  display: none;
+}
+.art-layout-japan-visa .art-heading {
+  text-align: center;
+  border-top: 5px solid #738eae;
+}
+.art-layout-visa-sticker.art-issuer-gb .art-visa-face {
+  grid-template-columns: 23% minmax(0, 1fr);
+}
+.art-layout-visa-sticker.art-issuer-gb .art-visa-crest {
+  display: none;
+}
+.art-layout-visa-sticker.art-issuer-gb .art-photo {
+  grid-column: 1;
+  grid-row: 1;
+}
+.art-layout-visa-sticker.art-issuer-gb dl {
+  grid-column: 2;
+}
+/* Canadian study permits are portrait-format security-paper forms. */
+.art-layout-study-permit {
+  max-width: 480px;
+  margin-inline: auto;
+  border: 4px double #779e88;
+}
+.art-layout-study-permit .art-pattern {
+  opacity: 0.38;
+}
+.art-permit-title {
+  text-align: center;
+  padding: 20px 14px;
+  font-size: 1.4em;
+  border-bottom: 2px solid #315e5933;
+}
+.art-permit-title .art-seal {
+  display: block;
+  width: 55px;
+  height: 55px;
+  margin: 12px auto 0;
+}
+.art-permit-content {
+  padding: 18px;
+}
+.art-permit-content dl {
+  grid-template-columns: 1fr;
+  gap: 13px;
+}
+.art-permit-content .art-field {
+  border-bottom: 1px solid #56785b40;
+  padding-bottom: 7px;
+}
+.art-paper-notice {
+  font:
+    10px/1.5 'DM Sans',
+    sans-serif;
+  margin: 0 0 18px;
+}
+.art-paper-signoff {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 2px solid #587b6544;
+  margin-top: 22px;
+  padding-top: 14px;
+  font-size: 0.65em;
+}
+/* Lab papers contain evidence, not invented medical branding or expiry. */
+.art-layout-lab-report {
+  background: #fffcf3;
+  border-color: #668d98;
+  border-radius: 0;
+}
+.art-layout-lab-report .art-pattern {
+  display: none;
+}
+.art-layout-lab-report .art-heading {
+  border-top: 6px solid #7cabb3;
+}
+.art-lab-letterhead {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px;
+  font:
+    12px/1.6 'DM Sans',
+    sans-serif;
+}
+.art-lab-letterhead strong {
+  font-size: 16px;
+}
+.art-report-title {
+  margin: 0 18px 14px;
+  padding: 8px 0;
+  border-block: 2px solid #a9c0c6;
+  font-weight: 400;
+  text-align: center;
+}
+.document-art .art-report-fields {
+  margin: 0 18px 18px;
+  gap: 12px;
+}
+.art-report-fields .art-field {
+  padding: 0 0 8px;
+  border-bottom: 1px solid #c8d6d6;
+}
+.art-lab-signoff {
+  margin: 10px 18px;
+  padding: 10px 0;
+  font:
+    10px/1.5 'DM Sans',
+    sans-serif;
+  border-top: 2px solid #7f9fa7;
+}
+/* Records are screens or notification papers, not physical permission cards. */
+.art-record-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  background: #24494b;
+  color: #f5ebd7;
+  padding: 8px 12px;
+  font-size: 0.65em;
+}
+.art-record-body {
+  padding: 16px;
+}
+.art-record-body > .art-photo {
+  width: 70px;
+  margin-bottom: 12px;
+}
+.art-record-body dl {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.art-record-body .art-field {
+  border-bottom: 1px solid #5d7e7130;
+  padding-bottom: 7px;
+}
+.art-record-notice {
+  padding: 10px 14px;
+  margin: 0;
+  background: #fff4d9;
+  color: #6e5737;
+  font:
+    11px/1.5 'DM Sans',
+    sans-serif;
+  border-block: 1px solid #cbb28a;
+}
+.art-layout-eta-record .art-pattern,
+.art-layout-japan-evisa .art-pattern,
+.art-layout-arrival-receipt .art-pattern,
+.art-layout-uk-status-record .art-pattern {
+  display: none;
+}
+.art-layout-eta-record {
+  background: #e6ede1;
+  border: 3px solid #355e55;
+}
+.art-layout-eta-record .art-record-body dl {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.art-layout-japan-evisa {
+  max-width: 360px;
+  margin-inline: auto;
+  border: 5px solid #35404a;
+  border-radius: 12px;
+  background: #f9fcf8;
+}
+.art-layout-japan-evisa .art-heading {
+  background: #dbe6ee;
+}
+.art-layout-japan-evisa .art-heading > .art-seal {
+  display: none;
+}
+.art-layout-hk-registration {
+  background: #fffdf0;
+  border: 3px double #86a59b;
+  border-radius: 0;
+}
+.art-layout-hk-registration .art-record-toolbar {
+  background: #e1e9e0;
+  color: #36554e;
+}
+.art-layout-hk-registration .art-pattern {
+  opacity: 0.15;
+}
+.art-layout-hk-registration .art-heading {
+  text-align: center;
+  padding-block: 20px;
+}
+.art-layout-hk-registration .art-record-body dl {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.art-layout-arrival-receipt {
+  background: #fffaf0;
+  border-top: 6px solid #af6662;
+}
+.art-layout-arrival-receipt .art-record-toolbar {
+  background: #a56060;
+}
+.art-layout-singapore-evisa {
+  border: 3px double #b38a73;
+  border-radius: 0;
+}
+.art-layout-singapore-evisa .art-record-toolbar {
+  background: #a96e61;
+}
+.art-layout-singapore-evisa .art-record-body {
+  padding-block: 25px;
+}
+.art-layout-singapore-evisa .art-record-body dl {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.art-layout-uk-status-record {
+  background: #f9f9ed;
+  border-radius: 0;
+}
+.art-layout-uk-status-record .art-record-body {
+  display: grid;
+  grid-template-columns: 22% minmax(0, 1fr);
+  gap: 18px;
+}
+/* Booking itinerary with a reservation stub; no invented gate, seat or barcode. */
+.art-layout-ticket {
+  border-radius: 0;
+}
+.art-layout-ticket .art-pattern {
+  opacity: 0.15;
+}
+.art-layout-ticket .art-heading {
+  background: #315e59;
+  color: #fff0d5;
+}
+.art-layout-ticket .art-heading .art-seal {
+  color: #eacb88;
+}
+.art-ticket-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30%;
+}
+.art-ticket-main {
+  padding: 18px 14px;
+}
+.art-ticket-label {
+  display: block;
+  font-size: 0.75em;
+  margin-bottom: 18px;
+}
+.art-ticket-stub {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  border-left: 2px dashed #b9a275;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.art-ticket-stub span,
+.art-ticket-stub small {
+  font-size: 0.65em;
+}
+.art-ticket-stub strong {
+  font-weight: 400;
+  font-size: 1.2em;
+}
+.document-inspection-notes {
+  margin-top: 10px;
+}
+.document-inspection-notes > summary {
+  color: #52665b;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 8px 4px;
+  min-height: 36px;
+}
+.document-inspection .document-inspection-notes dl.document-details {
+  border: 1px solid #b6c4ac;
+  margin-top: 4px;
+}
+.art-unsupported {
+  padding: 12px;
+  border: 1px solid #c5ae87;
+  background: #fff0d2;
+  font-size: 12px;
+}
+.document-art-dialog {
+  width: min(960px, calc(100vw - 24px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  padding: 18px;
+  background: #f5f0df;
+  border: 3px solid #355e59;
+  color: #2d4b44;
+}
+.document-art-dialog::backdrop {
+  background: #142d34cf;
+}
+.art-dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.art-dialog-heading > strong {
+  font-size: 16px;
+}
+.document-art-dialog > p {
+  font-size: 12px;
+}
+.art-enlarged-scroll {
+  overflow: auto;
+  margin-block: 14px;
+  padding: 2px 5px 8px 2px;
+}
+.art-enlarged-scroll .document-art {
+  width: 760px;
+  min-width: 760px;
+  margin-inline: auto;
+  font-size: 16px;
+}
+.art-enlarged-scroll .art-photo > span {
+  font-size: 9px;
+}
+.art-enlarged-scroll .art-layout-study-permit {
+  max-width: none;
+  width: 600px;
+  min-width: 600px;
+}
+@media (max-width: 600px) {
+  .art-tools {
+    align-items: start;
+  }
+  .art-tools > span {
+    max-width: 44%;
+    font-size: 9px;
+  }
+  .art-tools button {
+    min-height: 40px;
+    padding: 5px 7px;
+    font-size: 10px;
+  }
+  .art-heading {
+    padding: 10px;
+    gap: 6px;
+  }
+  .art-heading > .art-seal {
+    width: 24px;
+    height: 24px;
+  }
+  .art-heading small {
+    font-size: 8px;
+  }
+  .art-specimen {
+    font-size: 6px;
+  }
+  .art-passport-bio {
+    gap: 10px;
+    padding: 12px 10px;
+  }
+  .document-art dl {
+    gap: 8px;
+  }
+  .art-resident-face {
+    padding: 8px;
+    gap: 8px;
+    grid-template-columns: 24% minmax(0, 1fr) 14%;
+  }
+  .art-resident-face dl,
+  .art-layout-us-residence-card .art-resident-face dl {
+    grid-template-columns: 1fr;
+  }
+  .art-visa-face {
+    gap: 8px;
+    padding: 12px 8px;
+  }
+  .art-visa-face dl {
+    grid-template-columns: 1fr;
+  }
+  .art-ticket-stub {
+    padding: 8px;
+  }
+  .art-ticket-main {
+    padding: 14px 10px;
+  }
+  .art-footer {
+    padding: 8px;
+  }
+  .document-art-dialog {
+    padding: 12px;
+  }
+  .art-enlarged-scroll .document-art dl {
+    gap: 12px 16px;
+  }
+  .art-enlarged-scroll .art-visa-face dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.art-reverse-mark {
+  align-self: center;
+  text-align: center;
+  color: var(--art-accent);
+}
+.art-reverse-mark .art-seal {
+  width: 100%;
+  height: auto;
+}
+.art-reverse-mark span {
+  display: block;
+  font-size: 0.6em;
+  margin-top: 8px;
+}
+/* Canadian counterfoils put the identity photo on the left, maple panel right. */
+.art-layout-visa-sticker.art-issuer-ca .art-visa-face {
+  grid-template-columns: 23% minmax(0, 1fr) 13%;
+}
+.art-layout-visa-sticker.art-issuer-ca .art-photo {
+  grid-column: 1;
+  grid-row: 1;
+}
+.art-layout-visa-sticker.art-issuer-ca dl {
+  grid-column: 2;
+  grid-row: 1;
+}
+.art-layout-visa-sticker.art-issuer-ca .art-visa-crest {
+  grid-column: 3;
+  grid-row: 1;
+}
