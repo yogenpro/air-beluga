@@ -17,3 +17,9 @@ The user-approved UK BRP pixel redraw in `docs/design/uk-brp-approved-reference.
 - Every document says FICTIONAL GAME PROP / NOT VALID FOR TRAVEL. Decorative beluga emblems replace official seals. Avoid real security-feature replicas and valid machine-readable codes.
 - Enlarge uses a native modal dialog; Escape and Close restore focus. Residence reverse is a button. Both work offline. Atlas preload in index.html preserves offline shifts.
 - `npm run validate:content` gates source and archive profile coverage. New country/type/form combinations need a registry entry, layout/reference review and browser coverage before publication. See `docs/document-art-sources.md` and `docs/content-authoring.md`.
+
+## Passenger portraits and flight icons
+
+Passenger sprites vary by face shape, skin tone, hairstyle/color, glasses, facial hair, headwear, expression and clothing. `passengerAppearance.ts` selects a deterministic cosmetic combination from a normalized passenger identity; it does not infer gender, nationality or eligibility. `PassengerPortrait.tsx` renders native crisp SVG pixels. The booking passenger identity supplies all document/ghost portraits, including cases with a printed-name discrepancy, so presentation does not invent a separate photo mismatch. Preserve this consistency in future shifts. No portrait images or traits are baked into frozen content.
+
+The shared plane icon is a closed, filled, right-facing pixel silhouette in a 24×24 view box; other icons retain their stroke rendering. Keep wings/tail distinct at 16–24px and reuse the same icon in itineraries, terminal entries and desk headings. Ground-transfer legs keep their arrow.
