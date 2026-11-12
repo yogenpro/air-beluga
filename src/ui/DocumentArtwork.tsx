@@ -3,6 +3,8 @@ import {
   useId,
   useRef,
   useState,
+  createContext,
+  useContext,
   type CSSProperties,
   type ReactNode,
 } from 'react';
@@ -11,6 +13,8 @@ import { getDocumentDesign, type DocumentDesign } from './documentDesigns';
 import { countryName } from './labels';
 import { PassengerPortrait } from './Icons';
 import { displayInstant } from './time';
+
+const PortraitIdentity = createContext<string | undefined>(undefined);
 
 const TILE: Record<string, number> = {
   GB: 0,
@@ -71,9 +75,10 @@ function Portrait({
   document: TravelDocument;
   ghost?: boolean;
 }) {
+  const passengerName = useContext(PortraitIdentity);
   return (
     <div className={`art-photo ${ghost ? 'art-ghost' : ''}`} aria-hidden="true">
-      <PassengerPortrait name={document.holder} />
+      <PassengerPortrait name={passengerName ?? document.holder} />
       {!ghost && <span>GAME PORTRAIT</span>}
     </div>
   );
@@ -595,7 +600,13 @@ function Surface({
   );
 }
 
-export function DocumentArtwork({ document }: { document: TravelDocument }) {
+export function DocumentArtwork({
+  document,
+  passengerName,
+}: {
+  document: TravelDocument;
+  passengerName?: string;
+}) {
   const design = getDocumentDesign(document);
   const [back, setBack] = useState(false);
   const [enlarged, setEnlarged] = useState(false);
@@ -616,53 +627,59 @@ export function DocumentArtwork({ document }: { document: TravelDocument }) {
     );
   const flippable = design.layout.endsWith('residence-card');
   return (
-    <div className="document-artwork">
-      <div className="art-tools">
-        <span>{design.subtitle}</span>
-        <div>
-          {flippable && (
+    <PortraitIdentity value={passengerName}>
+      <div className="document-artwork">
+        <div className="art-tools">
+          <span>{design.subtitle}</span>
+          <div>
+            {flippable && (
+              <button
+                type="button"
+                onClick={() => setBack(!back)}
+                aria-label={`Show ${back ? 'front' : 'reverse'} of ${document.id}`}
+              >
+                {back ? 'Front' : 'Reverse'} ↺
+              </button>
+            )}
             <button
               type="button"
-              onClick={() => setBack(!back)}
-              aria-label={`Show ${back ? 'front' : 'reverse'} of ${document.id}`}
+              onClick={() => setEnlarged(true)}
+              aria-label={`Enlarge ${document.id}`}
             >
-              {back ? 'Front' : 'Reverse'} ↺
+              Enlarge ↗
             </button>
-          )}
-          <button
-            type="button"
-            onClick={() => setEnlarged(true)}
-            aria-label={`Enlarge ${document.id}`}
-          >
-            Enlarge ↗
-          </button>
+          </div>
         </div>
+        <Surface document={document} design={design} back={back} />
+        {enlarged && (
+          <dialog
+            ref={dialog}
+            className="document-art-dialog"
+            aria-labelledby={id}
+            onClose={() => setEnlarged(false)}
+          >
+            <div className="art-dialog-heading">
+              <strong id={id}>{design.title} · enlarged inspection</strong>
+              <button
+                type="button"
+                onClick={() => setEnlarged(false)}
+                autoFocus
+              >
+                Close ×
+              </button>
+            </div>
+            <p>Scroll across the document to read it at full size.</p>
+            <div className="art-enlarged-scroll">
+              <Surface document={document} design={design} back={back} />
+            </div>
+            {flippable && (
+              <button type="button" onClick={() => setBack(!back)}>
+                {back ? 'Show front' : 'Show reverse'} ↺
+              </button>
+            )}
+          </dialog>
+        )}
       </div>
-      <Surface document={document} design={design} back={back} />
-      {enlarged && (
-        <dialog
-          ref={dialog}
-          className="document-art-dialog"
-          aria-labelledby={id}
-          onClose={() => setEnlarged(false)}
-        >
-          <div className="art-dialog-heading">
-            <strong id={id}>{design.title} · enlarged inspection</strong>
-            <button type="button" onClick={() => setEnlarged(false)} autoFocus>
-              Close ×
-            </button>
-          </div>
-          <p>Scroll across the document to read it at full size.</p>
-          <div className="art-enlarged-scroll">
-            <Surface document={document} design={design} back={back} />
-          </div>
-          {flippable && (
-            <button type="button" onClick={() => setBack(!back)}>
-              {back ? 'Show front' : 'Show reverse'} ↺
-            </button>
-          )}
-        </dialog>
-      )}
-    </div>
+    </PortraitIdentity>
   );
 }

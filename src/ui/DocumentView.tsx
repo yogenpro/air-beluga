@@ -189,7 +189,7 @@ export function DocumentView({
           className="document-inspection"
           aria-label={`Fictional ${DOCUMENT_LABELS[document.type]}`}
         >
-          <DocumentArtwork document={document} />
+          <DocumentArtwork document={document} passengerName={passengerName} />
           <details className="document-inspection-notes">
             <summary>Inspection notes &amp; comparisons</summary>
             <dl className="document-details">
